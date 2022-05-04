@@ -43,6 +43,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  common:
+    dependency: "direct main"
+    description:
+      path: "shared_libraries/common"
+      relative: true
+    source: path
+    version: "0.0.1"
+  component:
+    dependency: "direct main"
+    description:
+      path: "shared_libraries/component"
+      relative: true
+    source: path
+    version: "0.0.1"
+  core:
+    dependency: "direct main"
+    description:
+      path: "shared_libraries/core"
+      relative: true
+    source: path
+    version: "0.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -50,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  dependencies:
+    dependency: "direct main"
+    description:
+      path: "shared_libraries/dependencies"
+      relative: true
+    source: path
+    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -109,6 +137,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  resources:
+    dependency: "direct main"
+    description:
+      path: "resources/resources"
+      relative: true
+    source: path
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -171,4 +206,5 @@ packages:
     source: hosted
     version: "2.1.1"
 sdks:
-  dart: ">=2.16.0 <3.0.0"
+  dart: ">=2.16.2 <3.0.0"
+  flutter: ">=1.17.0"
