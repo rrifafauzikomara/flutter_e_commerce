@@ -43,6 +43,14 @@ dependencies:
   profile:
     path: domains/profile
 
+  # Features
+  auth:
+    path: features/auth
+  home_page:
+    path: features/home_page
+  onboarding:
+    path: features/onboarding
+
   # Resources
   resources:
     path: resources/resources
