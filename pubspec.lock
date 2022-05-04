@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
+  auth:
+    dependency: "direct main"
+    description:
+      path: "features/auth"
+      relative: true
+    source: path
+    version: "0.0.1"
   authentication:
     dependency: "direct main"
     description:
@@ -116,6 +123,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  home_page:
+    dependency: "direct main"
+    description:
+      path: "features/home_page"
+      relative: true
+    source: path
+    version: "0.0.1"
   lints:
     dependency: transitive
     description:
@@ -144,6 +158,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  onboarding:
+    dependency: "direct main"
+    description:
+      path: "features/onboarding"
+      relative: true
+    source: path
+    version: "0.0.1"
   path:
     dependency: transitive
     description:
@@ -227,5 +248,4 @@ packages:
     source: hosted
     version: "2.1.1"
 sdks:
-  dart: ">=2.16.2 <3.0.0"
-  flutter: ">=1.17.0"
+  dart: ">=2.16.0 <3.0.0"
