@@ -38,6 +38,10 @@ dependencies:
   # Domains
   authentication:
     path: domains/authentication
+  home:
+    path: domains/home
+  profile:
+    path: domains/profile
 
   # Resources
   resources:
