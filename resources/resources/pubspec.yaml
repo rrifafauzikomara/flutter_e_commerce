@@ -10,12 +10,28 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dependencies:
+    path: ../../shared_libraries/dependencies
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.8
+  flutter_gen_runner: ^4.1.6
   flutter_lints: ^1.0.0
 
+# Generate shared resource image, color and font for marvle app
+flutter_gen:
+  output: lib
+  assets:
+    package_parameter_enabled: true
+
+  integrations:
+    flutter_svg: true
+
+  colors:
+    inputs:
+      - assets/color/main_color.xml
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -23,8 +39,9 @@ dev_dependencies:
 flutter:
 
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/logo/
+    - assets/images/onboarding/
   #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see
