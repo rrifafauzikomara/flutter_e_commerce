@@ -10,6 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dependencies:
+    path: ../../shared_libraries/dependencies
+  resources:
+    path: ../../resources/resources
 
 dev_dependencies:
   flutter_test:
