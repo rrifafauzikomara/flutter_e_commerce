@@ -1,10 +1,13 @@
+import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
 import 'package:onboarding/presentation/ui/splash_screen.dart';
+import 'injections/injections.dart';
 
 void main() {
+  Injections().initialize();
   runApp(const MyApp());
 }
 
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
             create: (_) => SplashCubit()..initSplash(),
           )
         ], child: const SplashScreen()),
+        navigatorKey: NavigationHelperImpl.navigatorKey,
       ),
     );
   }
