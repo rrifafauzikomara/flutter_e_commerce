@@ -6,8 +6,7 @@ class SharedLibDependencies {
     _registerCore();
   }
 
-  void _registerCore() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    sl.registerLazySingleton(() => sharedPreferences);
-  }
+  void _registerCore() => sl.registerLazySingletonAsync(
+        () => SharedPreferences.getInstance(),
+      );
 }

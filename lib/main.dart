@@ -29,16 +29,17 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (_) => SplashCubit()..initSplash(),
           )
-        ], child: const SplashScreen()),
+        ], child: SplashScreen()),
         navigatorKey: NavigationHelperImpl.navigatorKey,
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case AppRoutes.splash:
-              return MaterialPageRoute(builder: (_) => const SplashScreen());
+              return MaterialPageRoute(builder: (_) => SplashScreen());
             case AppRoutes.onboarding:
-              return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
+              return MaterialPageRoute(
+                  builder: (_) => const OnBoardingScreen());
             default:
-              return MaterialPageRoute(builder: (_) => const SplashScreen());
+              return MaterialPageRoute(builder: (_) => SplashScreen());
           }
         },
       ),
