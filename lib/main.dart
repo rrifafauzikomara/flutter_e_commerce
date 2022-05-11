@@ -3,7 +3,9 @@ import 'package:dependencies/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
+import 'package:onboarding/presentation/ui/on_boarding_screen.dart';
 import 'package:onboarding/presentation/ui/splash_screen.dart';
+import 'package:common/utils/navigation/router/app_routes.dart';
 import 'injections/injections.dart';
 
 void main() {
@@ -29,6 +31,16 @@ class MyApp extends StatelessWidget {
           )
         ], child: const SplashScreen()),
         navigatorKey: NavigationHelperImpl.navigatorKey,
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case AppRoutes.splash:
+              return MaterialPageRoute(builder: (_) => const SplashScreen());
+            case AppRoutes.onboarding:
+              return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
+            default:
+              return MaterialPageRoute(builder: (_) => const SplashScreen());
+          }
+        },
       ),
     );
   }
