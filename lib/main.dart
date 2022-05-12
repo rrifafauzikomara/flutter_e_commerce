@@ -1,3 +1,5 @@
+import 'package:auth/presentation/ui/sign_in_screen.dart';
+import 'package:auth/presentation/ui/sign_up_screen.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +38,11 @@ class MyApp extends StatelessWidget {
             case AppRoutes.splash:
               return MaterialPageRoute(builder: (_) => SplashScreen());
             case AppRoutes.onboarding:
-              return MaterialPageRoute(
-                  builder: (_) => const OnBoardingScreen());
+              return MaterialPageRoute(builder: (_) => OnBoardingScreen());
+            case AppRoutes.signIn:
+              return MaterialPageRoute(builder: (_) => SignInScreen());
+            case AppRoutes.signUp:
+              return MaterialPageRoute(builder: (_) => SignUpScreen());
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());
           }

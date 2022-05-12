@@ -26,8 +26,17 @@ class ColorName {
   /// Color: #F4F4F4
   static const Color textFieldBackgroundGrey = Color(0xFFF4F4F4);
 
+  /// Color: #BBBBBB
+  static const Color textFieldHintGrey = Color(0xFFBBBBBB);
+
   /// Color: #7B7B7B
   static const Color textGrey = Color(0xFF7B7B7B);
+
+  /// Color: #AAAAAA
+  static const Color textLightGrey = Color(0xFFAAAAAA);
+
+  /// Color: #FFFFFF
+  static const Color white = Color(0xFFFFFFFF);
 
   /// Color: #E5E5E5
   static const Color whiteBackground = Color(0xFFE5E5E5);

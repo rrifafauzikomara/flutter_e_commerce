@@ -10,6 +10,8 @@ abstract class NavigationHelper {
     String routeName, {
     dynamic arguments,
   });
+
+  void pop<T extends Object?>([T? result]);
 }
 
 class NavigationHelperImpl extends NavigationHelper {
@@ -31,4 +33,8 @@ class NavigationHelperImpl extends NavigationHelper {
         routeName,
         arguments: arguments,
       );
+
+  @override
+  void pop<T extends Object?>([T? result]) =>
+      navigatorKey.currentState!.pop(result);
 }

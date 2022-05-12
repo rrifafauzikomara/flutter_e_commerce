@@ -1,3 +1,5 @@
+import 'package:common/utils/navigation/router/auth_router.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:dependencies/introduction_screen/introduction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +7,8 @@ import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  const OnBoardingScreen({Key? key}) : super(key: key);
+  OnBoardingScreen({Key? key}) : super(key: key);
+  final AuthRouter _authRouter = sl();
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,7 @@ class OnBoardingScreen extends StatelessWidget {
             ),
           ),
         ],
-        onDone: () {},
+        onDone: () => _authRouter.navigateToSignIn(),
         showBackButton: false,
         showNextButton: false,
         showSkipButton: true,

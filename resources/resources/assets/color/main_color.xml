@@ -2,8 +2,11 @@
     <color name="orange">#F26627</color>
     <color name="light_orange">#F9A26C</color>
     <color name="white_background">#E5E5E5</color>
+    <color name="white">#FFFFFF</color>
     <color name="text_field_background_grey">#F4F4F4</color>
+    <color name="text_field_hint_grey">#BBBBBB</color>
     <color name="text_grey">#7B7B7B</color>
+    <color name="text_light_grey">#AAAAAA</color>
     <color name="text_black">#303030</color>
     <color name="text_dark_blue">#325D79</color>
 </xml>
