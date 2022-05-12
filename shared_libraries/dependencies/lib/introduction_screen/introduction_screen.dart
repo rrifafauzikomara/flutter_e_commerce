@@ -1,1 +1,1 @@
-export 'package:dependencies/introduction_screen/introduction_screen.dart';
+export 'package:introduction_screen/introduction_screen.dart';
