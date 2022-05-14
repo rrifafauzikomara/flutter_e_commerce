@@ -44,6 +44,8 @@ dependencies:
     path: domains/profile
 
   # Features
+  account:
+    path: features/account
   auth:
     path: features/auth
   home_page:
