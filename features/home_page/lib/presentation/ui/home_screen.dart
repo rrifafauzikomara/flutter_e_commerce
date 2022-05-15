@@ -246,7 +246,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 7.0),
+                  padding: const EdgeInsets.symmetric(vertical: 7.0),
                   child: Text(
                     "Makanan & Minuman",
                     style: TextStyle(
