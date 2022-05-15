@@ -5,7 +5,7 @@ import 'package:dependencies/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/home_cubit.dart';
-import 'package:home_page/presentation/ui/home_screen.dart';
+import 'package:home_page/presentation/ui/bottom_navigation.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
 import 'package:onboarding/presentation/ui/on_boarding_screen.dart';
 import 'package:onboarding/presentation/ui/splash_screen.dart';
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => BlocProvider<HomeCubit>(
                   create: (_) => HomeCubit(),
-                  child: const HomeScreen(),
+                  child: const BottomNavigation(),
                 ),
               );
             default:

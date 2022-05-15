@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   bloc: ^8.0.3
+  cached_network_image: ^3.1.0
   flutter_bloc: ^8.0.1
   flutter_screenutil: ^5.5.2
   flutter_svg: ^1.0.3
