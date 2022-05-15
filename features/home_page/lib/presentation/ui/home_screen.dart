@@ -235,7 +235,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: CachedNetworkImage(
                     width: 104.w,
-                    height: 88.h,
+                    height: 85.h,
                     imageUrl:
                         "https://cf.shopee.co.id/file/aa8afefde6c5a3293dfc9772d3d54205",
                     placeholder: (context, url) =>
@@ -246,7 +246,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: EdgeInsets.symmetric(vertical: 7.0),
                   child: Text(
                     "Makanan & Minuman",
                     style: TextStyle(
