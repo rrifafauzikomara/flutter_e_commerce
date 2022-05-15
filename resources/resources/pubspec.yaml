@@ -42,6 +42,7 @@ flutter:
   assets:
     - assets/images/logo/
     - assets/images/onboarding/
+    - assets/images/icon/
   #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see

@@ -12,9 +12,28 @@ import 'package:flutter/services.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  $AssetsImagesIconGen get icon => const $AssetsImagesIconGen();
   $AssetsImagesLogoGen get logo => const $AssetsImagesLogoGen();
   $AssetsImagesOnboardingGen get onboarding =>
       const $AssetsImagesOnboardingGen();
+}
+
+class $AssetsImagesIconGen {
+  const $AssetsImagesIconGen();
+
+  /// File path: assets/images/icon/account.svg
+  SvgGenImage get account =>
+      const SvgGenImage('assets/images/icon/account.svg');
+
+  /// File path: assets/images/icon/cart.svg
+  SvgGenImage get cart => const SvgGenImage('assets/images/icon/cart.svg');
+
+  /// File path: assets/images/icon/history.svg
+  SvgGenImage get history =>
+      const SvgGenImage('assets/images/icon/history.svg');
+
+  /// File path: assets/images/icon/home.svg
+  SvgGenImage get home => const SvgGenImage('assets/images/icon/home.svg');
 }
 
 class $AssetsImagesLogoGen {

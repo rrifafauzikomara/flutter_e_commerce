@@ -3,6 +3,7 @@ import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/presentation/bloc/home_cubit.dart';
 import 'package:home_page/presentation/bloc/home_state.dart';
+import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -61,17 +62,29 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 10.sp,
                 color: ColorName.iconGrey,
               ),
-              items: const <BottomNavigationBarItem>[
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
+                  icon: Assets.images.icon.home.svg(
+                    color: context.read<HomeCubit>().state.homeState.data == 0
+                        ? ColorName.orange
+                        : ColorName.iconGrey,
+                  ),
                   label: "Beranda",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.article_outlined),
+                  icon: Assets.images.icon.history.svg(
+                    color: context.read<HomeCubit>().state.homeState.data == 1
+                        ? ColorName.orange
+                        : ColorName.iconGrey,
+                  ),
                   label: "Riwayat",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline_outlined),
+                  icon: Assets.images.icon.account.svg(
+                    color: context.read<HomeCubit>().state.homeState.data == 2
+                        ? ColorName.orange
+                        : ColorName.iconGrey,
+                  ),
                   label: "Akun",
                 ),
               ],
