@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 class ColorName {
   ColorName._();
 
+  /// Color: #C4C4C4
+  static const Color iconGrey = Color(0xFFC4C4C4);
+
   /// Color: #F9A26C
   static const Color lightOrange = Color(0xFFF9A26C);
 

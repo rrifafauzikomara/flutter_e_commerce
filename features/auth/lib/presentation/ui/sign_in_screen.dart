@@ -49,7 +49,7 @@ class SignInScreen extends StatelessWidget {
           ),
           CustomButton(
             buttonText: "Masuk",
-            onTap: () {},
+            onTap: () => _authRouter.navigateToHome(),
           ),
           SizedBox(
             height: 34.h,
