@@ -28,6 +28,9 @@ class $AssetsImagesIconGen {
   /// File path: assets/images/icon/cart.svg
   SvgGenImage get cart => const SvgGenImage('assets/images/icon/cart.svg');
 
+  /// File path: assets/images/icon/edit.svg
+  SvgGenImage get edit => const SvgGenImage('assets/images/icon/edit.svg');
+
   /// File path: assets/images/icon/history.svg
   SvgGenImage get history =>
       const SvgGenImage('assets/images/icon/history.svg');

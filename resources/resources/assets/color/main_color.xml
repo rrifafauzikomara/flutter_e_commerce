@@ -4,6 +4,7 @@
     <color name="white_background">#E5E5E5</color>
     <color name="white">#FFFFFF</color>
     <color name="icon_grey">#C4C4C4</color>
+    <color name="icon_white">#DADADA</color>
     <color name="text_field_background_grey">#F4F4F4</color>
     <color name="text_field_hint_grey">#BBBBBB</color>
     <color name="text_grey">#7B7B7B</color>
