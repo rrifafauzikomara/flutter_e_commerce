@@ -41,23 +41,8 @@ class SignUpScreen extends StatelessWidget {
             height: 47.h,
           ),
           const CustomTextField(
-            labelText: "Nama",
+            labelText: "Username",
             textInputType: TextInputType.name,
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          const CustomTextField(
-            labelText: "No. Handphone",
-            textInputType: TextInputType.phone,
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          const CustomTextField(
-            labelText: "Email",
-            hintText: "example@gmail.com",
-            textInputType: TextInputType.emailAddress,
           ),
           SizedBox(
             height: 20.h,

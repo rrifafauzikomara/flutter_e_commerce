@@ -33,8 +33,7 @@ class SignInScreen extends StatelessWidget {
             height: 43.h,
           ),
           const CustomTextField(
-            labelText: "Email",
-            hintText: "example@gmail.com",
+            labelText: "Username",
             textInputType: TextInputType.emailAddress,
           ),
           SizedBox(
