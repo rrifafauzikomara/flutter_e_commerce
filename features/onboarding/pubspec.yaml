@@ -10,10 +10,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  #domain
+  authentication:
+    path: ../../domains/authentication
+
+  #shared
   common:
     path: ../../shared_libraries/common
   dependencies:
     path: ../../shared_libraries/dependencies
+
+  #resource
   resources:
     path: ../../resources/resources
 
