@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/home_cubit.dart';
 import 'package:home_page/presentation/ui/bottom_navigation.dart';
+import 'package:onboarding/presentation/bloc/onboarding_bloc/onboarding_cubit.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
 import 'package:onboarding/presentation/ui/on_boarding_screen.dart';
 import 'package:onboarding/presentation/ui/splash_screen.dart';
 import 'package:common/utils/navigation/router/app_routes.dart';
 import 'injections/injections.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Injections().initialize();
   runApp(const MyApp());
@@ -44,7 +45,14 @@ class MyApp extends StatelessWidget {
             case AppRoutes.splash:
               return MaterialPageRoute(builder: (_) => SplashScreen());
             case AppRoutes.onboarding:
-              return MaterialPageRoute(builder: (_) => OnBoardingScreen());
+              return MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (_) => OnBoardingCubit(
+                    cacheOnBoardingUseCase: sl(),
+                  ),
+                  child: OnBoardingScreen(),
+                ),
+              );
             case AppRoutes.signIn:
               return MaterialPageRoute(builder: (_) => SignInScreen());
             case AppRoutes.signUp:

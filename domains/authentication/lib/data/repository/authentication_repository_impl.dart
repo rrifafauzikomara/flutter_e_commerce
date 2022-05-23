@@ -13,8 +13,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<Either<FailureResponse, bool>> cacheOnBoarding() async {
     try {
-      final response = await authenticationLocalDataSources.cacheOnBoarding();
-      return Right(response);
+      await authenticationLocalDataSources.cacheOnBoarding();
+      return const Right(true);
     } on Exception catch (error) {
       return Left(FailureResponse(errorMessage: error.toString()));
     }
