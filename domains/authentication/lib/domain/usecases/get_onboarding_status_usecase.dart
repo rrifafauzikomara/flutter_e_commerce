@@ -12,5 +12,5 @@ class GetOnBoardingStatusUseCase extends UseCase<bool, NoParams> {
 
   @override
   Future<Either<FailureResponse, bool>> call(NoParams params) async =>
-      authenticationRepository.getOnBoardingStatus();
+      await authenticationRepository.getOnBoardingStatus();
 }

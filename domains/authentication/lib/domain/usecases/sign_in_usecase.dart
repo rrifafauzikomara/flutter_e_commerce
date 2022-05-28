@@ -15,5 +15,5 @@ class SignInUseCase extends UseCase<AuthResponseEntity, AuthRequestEntity> {
   @override
   Future<Either<FailureResponse, AuthResponseEntity>> call(
           AuthRequestEntity params) async =>
-      authenticationRepository.signUp(authRequestEntity: params);
+      authenticationRepository.signIn(authRequestEntity: params);
 }

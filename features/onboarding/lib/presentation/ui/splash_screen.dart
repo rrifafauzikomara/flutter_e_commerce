@@ -1,3 +1,4 @@
+import 'package:common/utils/constants/app_constants.dart';
 import 'package:common/utils/navigation/router/auth_router.dart';
 import 'package:common/utils/navigation/router/onboarding_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
@@ -22,12 +23,16 @@ class SplashScreen extends StatelessWidget {
         listener: (context, state) {
           final status = state.splashState.status;
           if (status.isHasData) {
-            if (state.splashState.data!) {
-              // authRouter.navigateToHome();
-              authRouter.navigateToSignUp();
-            } else {
-              onboardingRouter.navigateToOnboarding();
+            if (state.splashState.data! ==
+                AppConstants.cachedKey.onBoardingKey) {
+              authRouter.navigateToSignIn();
             }
+            if (state.splashState.data! == AppConstants.cachedKey.tokenKey) {
+              authRouter.navigateToHome();
+            }
+          }
+          if (status.isNoData) {
+            onboardingRouter.navigateToOnboarding();
           }
         },
         child: Container(

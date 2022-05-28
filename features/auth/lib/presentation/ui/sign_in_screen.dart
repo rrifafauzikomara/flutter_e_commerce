@@ -1,5 +1,6 @@
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_state.dart';
+import 'package:authentication/domain/entities/body/auth_request_entity.dart';
 import 'package:common/utils/constants/app_constants.dart';
 import 'package:common/utils/navigation/router/auth_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
@@ -96,7 +97,14 @@ class SignInScreen extends StatelessWidget {
                 ),
                 CustomButton(
                   buttonText: "Masuk",
-                  onTap: () => _authRouter.navigateToHome(),
+                  onTap: () => context.read<SignInBloc>().add(
+                    SignIn(
+                      authRequestEntity: AuthRequestEntity(
+                        username: usernameController.text,
+                        password: passwordController.text,
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 34.h,

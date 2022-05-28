@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (_) => SplashCubit(
               getOnBoardingStatusUseCase: sl(),
+              getTokenUseCase: sl(),
             )..initSplash(),
           )
         ], child: SplashScreen()),
