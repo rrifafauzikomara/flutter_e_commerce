@@ -1,3 +1,4 @@
+import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
 import 'package:auth/presentation/ui/sign_up_screen.dart';
@@ -55,7 +56,15 @@ class MyApp extends StatelessWidget {
                 ),
               );
             case AppRoutes.signIn:
-              return MaterialPageRoute(builder: (_) => SignInScreen());
+              return MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (_) => SignInBloc(
+                    cacheTokenUseCase: sl(),
+                    signInUseCase: sl(),
+                  ),
+                  child: SignInScreen(),
+                ),
+              );
             case AppRoutes.signUp:
               return MaterialPageRoute(
                 builder: (_) => BlocProvider(
