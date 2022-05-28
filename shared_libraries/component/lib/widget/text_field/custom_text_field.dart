@@ -5,9 +5,11 @@ import 'package:resources/colors.gen.dart';
 class CustomTextField extends StatelessWidget {
   final String labelText;
   final String hintText;
+  final String? errorText;
   final TextInputType? textInputType;
   final bool obscureText;
   final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     Key? key,
@@ -16,9 +18,11 @@ class CustomTextField extends StatelessWidget {
     this.textInputType,
     this.obscureText = false,
     this.controller,
+    this.onChanged,
+    this.errorText,
   }) : super(
-          key: key,
-        );
+    key: key,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           keyboardType: textInputType,
           obscureText: obscureText,
+          onChanged: onChanged,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(1.5),
@@ -52,6 +57,7 @@ class CustomTextField extends StatelessWidget {
               horizontal: 13.0,
               vertical: 10.0,
             ),
+            errorText: errorText,
             hintText: hintText,
             hintStyle: TextStyle(
               color: ColorName.textFieldHintGrey,

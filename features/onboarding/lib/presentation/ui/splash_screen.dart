@@ -23,7 +23,8 @@ class SplashScreen extends StatelessWidget {
           final status = state.splashState.status;
           if (status.isHasData) {
             if (state.splashState.data!) {
-              authRouter.navigateToHome();
+              // authRouter.navigateToHome();
+              authRouter.navigateToSignUp();
             } else {
               onboardingRouter.navigateToOnboarding();
             }

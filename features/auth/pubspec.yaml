@@ -19,6 +19,10 @@ dependencies:
   resources:
     path: ../../resources/resources
 
+  #Domain
+  authentication:
+    path: ../../domains/authentication
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

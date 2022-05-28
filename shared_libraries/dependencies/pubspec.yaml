@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_screenutil: ^5.5.2
   flutter_svg: ^1.0.3
+  fluttertoast: ^8.0.9
   dartz: ^0.10.1
   dio: ^4.0.4
   equatable: ^2.0.3
