@@ -38,8 +38,8 @@ dependencies:
   # Domains
   authentication:
     path: domains/authentication
-  home:
-    path: domains/home
+  product:
+    path: domains/product
   profile:
     path: domains/profile
 
