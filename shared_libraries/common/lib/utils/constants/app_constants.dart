@@ -27,6 +27,12 @@ class AppApi {
   String get user => 'user';
 
   String get updateUserImage => 'user/image';
+
+  String get banner => 'customer/product/banner';
+
+  String get product => 'customer/product?per_page=20';
+
+  String get category => 'category';
 }
 
 class ErrorKey {
