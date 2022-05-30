@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      builder: (_) => MaterialApp(
+      builder: (_, __) => MaterialApp(
         title: 'Flutter E Commerce',
         theme: ThemeData(
           primarySwatch: Colors.blue,
