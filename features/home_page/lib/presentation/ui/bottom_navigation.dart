@@ -1,8 +1,8 @@
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:home_page/presentation/bloc/home_cubit.dart';
-import 'package:home_page/presentation/bloc/home_state.dart';
+import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
+import 'package:home_page/presentation/bloc/home_bloc/home_state.dart';
 import 'package:home_page/presentation/ui/account_screen.dart';
 import 'package:home_page/presentation/ui/home_screen.dart';
 import 'package:resources/assets.gen.dart';
