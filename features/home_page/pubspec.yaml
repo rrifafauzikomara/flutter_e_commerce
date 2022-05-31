@@ -19,6 +19,11 @@ dependencies:
   resources:
     path: ../../resources/resources
 
+  #Domain
+  product:
+    path: ../../domains/product
+
+  #Features
   account:
     path: ../account
 

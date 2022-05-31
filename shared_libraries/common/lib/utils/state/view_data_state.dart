@@ -44,8 +44,8 @@ class ViewData<T> {
     );
   }
 
-  factory ViewData.loading({required String message}) {
-    return ViewData._(status: ViewState.loading, message: message);
+  factory ViewData.loading({String? message}) {
+    return ViewData._(status: ViewState.loading, message: message ?? "");
   }
 
   factory ViewData.initial() {

@@ -96,7 +96,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUp>((event, emit) async {
       emit(
         SignUpState(
-          signUpState: ViewData.loading(message: "loading..."),
+          signUpState: ViewData.loading(),
         ),
       );
       if (event.authRequestEntity.password.isNotEmpty &&

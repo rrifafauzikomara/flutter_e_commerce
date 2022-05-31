@@ -3,6 +3,7 @@ import 'package:product/data/datasource/remote/product_remote_datasource.dart';
 import 'package:product/data/mapper/product_mapper.dart';
 import 'package:product/data/repository/product_repository_impl.dart';
 import 'package:product/domain/repository/product_repository.dart';
+import 'package:product/domain/usecases/get_banner_usecase.dart';
 import 'package:product/domain/usecases/get_product_category_usecase.dart';
 import 'package:product/domain/usecases/get_product_usecase.dart';
 
@@ -34,13 +35,18 @@ class ProductDependency {
       );
 
   void _registerUseCases() {
-    sl.registerLazySingleton<GetProductCase>(
-      () => GetProductCase(
+    sl.registerLazySingleton<GetProductUseCase>(
+      () => GetProductUseCase(
         productRepository: sl(),
       ),
     );
-    sl.registerLazySingleton<GetProductCategoryCase>(
-      () => GetProductCategoryCase(
+    sl.registerLazySingleton<GetProductCategoryUseCase>(
+      () => GetProductCategoryUseCase(
+        productRepository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<GetBannerUseCase>(
+      () => GetBannerUseCase(
         productRepository: sl(),
       ),
     );

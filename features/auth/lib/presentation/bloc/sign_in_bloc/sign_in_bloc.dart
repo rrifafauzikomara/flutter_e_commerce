@@ -64,7 +64,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     on<SignIn>((event, emit) async {
       emit(
         SignInState(
-          signInState: ViewData.loading(message: "loading..."),
+          signInState: ViewData.loading(),
         ),
       );
       if (event.authRequestEntity.password.isNotEmpty &&

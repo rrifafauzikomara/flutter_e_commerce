@@ -1,5 +1,7 @@
+import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
 import 'package:product/data/model/response/product_response_dto.dart';
+import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/entity/response/product_category_entity.dart';
 import 'package:product/domain/entity/response/product_entity.dart';
 
@@ -73,5 +75,31 @@ class ProductMapper {
         city: sellerDTO.city ?? "",
         id: sellerDTO.id ?? "",
         name: sellerDTO.name ?? "",
+      );
+
+  List<BannerDataEntity> mapBannerDataDTOToEntity(List<BannerDataDTO> data) {
+    List<BannerDataEntity> entity = <BannerDataEntity>[];
+
+    for (BannerDataDTO element in data) {
+      entity.add(
+        mapBannerDataDTOToBannerDataEntity(
+          element,
+        ),
+      );
+    }
+
+    return entity;
+  }
+
+  BannerDataEntity mapBannerDataDTOToBannerDataEntity(
+          BannerDataDTO bannerDataDTO) =>
+      BannerDataEntity(
+        headline: bannerDataDTO.headline ?? "",
+        caption: bannerDataDTO.caption ?? "",
+        sellerId: bannerDataDTO.sellerId ?? "",
+        name: bannerDataDTO.name ?? "",
+        id: bannerDataDTO.id ?? "",
+        productId: bannerDataDTO.productId ?? "",
+        imageUrl: bannerDataDTO.imageUrl ?? "",
       );
 }

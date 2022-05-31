@@ -7,7 +7,10 @@ import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
 import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
+import 'package:home_page/presentation/bloc/product_bloc/product_cubit.dart';
+import 'package:home_page/presentation/bloc/product_category_bloc/product_category_cubit.dart';
 import 'package:home_page/presentation/ui/bottom_navigation.dart';
 import 'package:onboarding/presentation/bloc/onboarding_bloc/onboarding_cubit.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
@@ -78,8 +81,27 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.home:
               return MaterialPageRoute(
-                builder: (_) => BlocProvider<HomeCubit>(
-                  create: (_) => HomeCubit(),
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<HomeCubit>(
+                      create: (_) => HomeCubit(),
+                    ),
+                    BlocProvider<BannerCubit>(
+                      create: (_) => BannerCubit(
+                        getBannerUseCase: sl(),
+                      )..getBanner(),
+                    ),
+                    BlocProvider<ProductCubit>(
+                      create: (_) => ProductCubit(
+                        getProductUseCase: sl(),
+                      )..getProduct(),
+                    ),
+                    BlocProvider<ProductCategoryCubit>(
+                      create: (_) => ProductCategoryCubit(
+                        getProductCategoryCase: sl(),
+                      )..getProductCategory(),
+                    ),
+                  ],
                   child: const BottomNavigation(),
                 ),
               );
