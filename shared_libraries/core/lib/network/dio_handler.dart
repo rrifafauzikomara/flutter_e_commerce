@@ -1,10 +1,16 @@
+import 'package:common/utils/constants/app_constants.dart';
 import 'package:core/network/api_interceptors.dart';
 import 'package:dependencies/dio/dio.dart';
+import 'package:dependencies/shared_preferences/shared_preferences.dart';
 
 class DioHandler {
   final String apiBaseUrl;
+  late SharedPreferences sharedPreferences;
 
-  DioHandler({required this.apiBaseUrl});
+  DioHandler({
+    required this.apiBaseUrl,
+    required this.sharedPreferences,
+  });
 
   Dio get dio => _getDio();
 
@@ -22,8 +28,12 @@ class DioHandler {
   }
 
   Map<String, dynamic> _defaultHeader() {
+    String? authorizationToken = sharedPreferences.getString(
+      AppConstants.cachedKey.tokenKey,
+    );
     Map<String, String> headers = {};
     headers['Content-Type'] = 'application/json';
+    headers['Authorization'] = authorizationToken ?? "";
     return headers;
   }
 }

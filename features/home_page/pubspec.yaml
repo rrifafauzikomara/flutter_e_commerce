@@ -22,6 +22,8 @@ dependencies:
   #Domain
   product:
     path: ../../domains/product
+  profile:
+    path: ../../domains/profile
 
   #Features
   account:

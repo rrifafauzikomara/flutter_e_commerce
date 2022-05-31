@@ -1,9 +1,13 @@
-import 'package:component/widget/button/custom_button.dart';
-import 'package:component/widget/text_field/custom_text_field.dart';
+import 'package:common/utils/state/view_data_state.dart';
+import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
+import 'package:dependencies/bloc/bloc.dart';
+import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:resources/assets.gen.dart';
+import 'package:home_page/presentation/bloc/user_bloc/user_cubit.dart';
+import 'package:home_page/presentation/bloc/user_bloc/user_state.dart';
 import 'package:resources/colors.gen.dart';
+import 'package:component/widget/button/chevron_button.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -11,13 +15,13 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorName.white,
+      backgroundColor: ColorName.textFieldBackgroundGrey,
       appBar: AppBar(
         backgroundColor: ColorName.white,
         elevation: 0.0,
         centerTitle: false,
         title: Text(
-          "Data Diri",
+          "Akun Saya",
           style: TextStyle(
             color: ColorName.orange,
             fontSize: 20.sp,
@@ -25,76 +29,74 @@ class AccountScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        shrinkWrap: true,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: 72.w,
-                height: 72.w,
-                decoration: const BoxDecoration(
-                  color: ColorName.iconGrey,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      50,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 0.38.sw,
-                bottom: 0,
-                child: InkWell(
-                  onTap: (){},
-                  child: Container(
-                    width: 15.w,
-                    height: 15.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: ColorName.white,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          50,
+      body: Container(
+        color: ColorName.white,
+        child: ListView(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+            left: 16.0,
+            right: 16.0,
+          ),
+          shrinkWrap: true,
+          children: [
+            BlocBuilder<UserCubit, UserState>(
+              builder: (context, state) {
+                final status = state.userState.status;
+                if (status.isLoading) {
+                  return const Center(child: CustomCircularProgressIndicator());
+                } else if (status.isHasData) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(50.0),
+                        ),
+                        child: CachedNetworkImage(
+                          width: 45.w,
+                          height: 45.w,
+                          imageUrl: state.userState.data!.imageUrl,
+                          placeholder: (context, url) => const Center(
+                              child: CustomCircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          // fit: BoxFit.cover,
                         ),
                       ),
-                      border: Border.all(
-                        color: ColorName.iconWhite,
+                      SizedBox(
+                        width: 9.w,
                       ),
-                    ),
-                    child: Assets.images.icon.edit.svg(
-                      width: 8.w,
-                      height: 8.w,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          const CustomTextField(
-            labelText: "Nama",
-            textInputType: TextInputType.name,
-          ),
-          SizedBox(
-            height: 19.h,
-          ),
-          const CustomTextField(
-            labelText: "Alamat",
-            textInputType: TextInputType.name,
-          ),
-          SizedBox(
-            height: 46.h,
-          ),
-          CustomButton(
-            buttonText: "Simpan",
-            onTap: () {},
-          ),
-        ],
+                      Text(
+                        state.userState.data!.fullName.isEmpty
+                            ? state.userState.data!.username
+                            : state.userState.data!.fullName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            color: ColorName.textBlack),
+                      ),
+                    ],
+                  );
+                } else if (status.isError) {
+                  return Center(child: Text(state.userState.message));
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            ChevronButton(
+              buttonText: 'Data Diri',
+              onTap: () {},
+            ),
+            ChevronButton(
+              buttonText: 'Logout',
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
   }

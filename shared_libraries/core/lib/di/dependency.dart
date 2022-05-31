@@ -10,6 +10,7 @@ class RegisterCoreModule {
   void _registerCore() {
     sl.registerLazySingleton<Dio>(() => sl<DioHandler>().dio);
     sl.registerLazySingleton<DioHandler>(() => DioHandler(
+          sharedPreferences: sl(),
           apiBaseUrl: '',
         ));
   }
