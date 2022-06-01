@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "660780760288",
+    "project_id": "e-commerce-bootcamp",
+    "storage_bucket": "e-commerce-bootcamp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660780760288:android:028fd0ea42c6ada19de485",
+        "android_client_info": {
+          "package_name": "com.example.flutter_e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660780760288-0f79c9p1dn83gjo10e039u2n66ge7p8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE03LfHmJ1_H_RtFhGfsbX6PxXO1Me1XY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660780760288-0f79c9p1dn83gjo10e039u2n66ge7p8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
