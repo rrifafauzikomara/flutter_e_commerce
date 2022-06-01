@@ -111,14 +111,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
               ),
             ),
           ),
-          (result) {
-            cacheTokenUseCase.call(result.token);
-            emit(
-              SignUpState(
-                signUpState: ViewData.loaded(),
-              ),
-            );
-          },
+          (result) async => await cacheTokenUseCase.call(result.token),
+        );
+        emit(
+          SignUpState(
+            signUpState: ViewData.loaded(),
+          ),
         );
       } else {
         emit(

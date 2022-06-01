@@ -15,10 +15,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     required this.signInUseCase,
     required this.cacheTokenUseCase,
   }) : super(
-    SignInState(
-      signInState: ViewData.initial(),
-    ),
-  ) {
+          SignInState(
+            signInState: ViewData.initial(),
+          ),
+        ) {
     on<UserNameChange>((event, emit) {
       if (event.username.isEmpty) {
         emit(
@@ -71,22 +71,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           event.authRequestEntity.username.isNotEmpty) {
         final result = await signInUseCase.call(event.authRequestEntity);
         result.fold(
-              (failure) => emit(
-                SignInState(
-                  signInState: ViewData.error(
+          (failure) async => emit(
+            SignInState(
+              signInState: ViewData.error(
                 message: failure.errorMessage,
                 failure: failure,
               ),
             ),
           ),
-              (result) {
-            cacheTokenUseCase.call(result.token);
-            emit(
-              SignInState(
-                signInState: ViewData.loaded(),
-              ),
-            );
-          },
+          (result) async => await cacheTokenUseCase.call(result.token),
+        );
+        emit(
+          SignInState(
+            signInState: ViewData.loaded(),
+          ),
         );
       } else {
         emit(
