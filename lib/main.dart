@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
 import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
+import 'package:home_page/presentation/bloc/logout_bloc/logout_cubit.dart';
 import 'package:home_page/presentation/bloc/product_bloc/product_cubit.dart';
 import 'package:home_page/presentation/bloc/product_category_bloc/product_category_cubit.dart';
 import 'package:home_page/presentation/bloc/user_bloc/user_cubit.dart';
@@ -107,6 +108,11 @@ class MyApp extends StatelessWidget {
                       create: (_) => UserCubit(
                         getUserUseCase: sl(),
                       )..getUser(),
+                    ),
+                    BlocProvider<LogoutCubit>(
+                      create: (_) => LogoutCubit(
+                        logoutUseCase: sl(),
+                      ),
                     ),
                   ],
                   child: const BottomNavigation(),

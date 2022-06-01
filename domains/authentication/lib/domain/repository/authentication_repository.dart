@@ -19,4 +19,6 @@ abstract class AuthenticationRepository {
 
   Future<Either<FailureResponse, AuthResponseEntity>> signIn(
       {required AuthRequestEntity authRequestEntity});
+
+  Future<Either<FailureResponse, bool>> removeUserData();
 }

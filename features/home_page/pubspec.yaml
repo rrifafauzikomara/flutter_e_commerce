@@ -20,6 +20,8 @@ dependencies:
     path: ../../resources/resources
 
   #Domain
+  authentication:
+    path: ../../domains/authentication
   product:
     path: ../../domains/product
   profile:
