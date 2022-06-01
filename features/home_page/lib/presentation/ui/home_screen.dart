@@ -1,7 +1,9 @@
 import 'package:common/utils/state/view_data_state.dart';
+import 'package:component/widget/card/banner_card.dart';
+import 'package:component/widget/card/product_card.dart';
+import 'package:component/widget/card/product_category_card.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
-import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
@@ -12,7 +14,6 @@ import 'package:home_page/presentation/bloc/product_category_bloc/product_catego
 import 'package:home_page/presentation/bloc/product_category_bloc/product_category_state.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
-import 'package:common/utils/extensions/money_extension.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -88,62 +89,8 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: banners.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.only(left: 9.0),
-                        width: 325.w,
-                        height: 145.h,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12.0),
-                                ),
-                                child: CachedNetworkImage(
-                                  width: 150.w,
-                                  height: 145.h,
-                                  imageUrl: banners[index].imageUrl!,
-                                  placeholder: (context, url) => const Center(
-                                      child: CustomCircularProgressIndicator()),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        banners[index].headline!,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.sp,
-                                          color: ColorName.textBlack,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 8.h,
-                                      ),
-                                      Text(
-                                        banners[index].caption!,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.sp,
-                                          color: ColorName.textGrey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                      return BannerCard(
+                        bannerDataEntity: banners[index],
                       );
                     },
                   );
@@ -197,79 +144,8 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: product.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: SizedBox(
-                            width: 127.w,
-                            height: 195.h,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(12.0),
-                                    topRight: Radius.circular(12.0),
-                                  ),
-                                  child: CachedNetworkImage(
-                                    height: 120.h,
-                                    width: 127.w,
-                                    imageUrl: product[index].imageUrl,
-                                    placeholder: (context, url) => const Center(
-                                        child:
-                                            CustomCircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Text(
-                                    product[index].name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12.sp,
-                                      color: ColorName.textGrey,
-                                    ),
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Text(
-                                    product[index].price.toIDR(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
-                                      color: ColorName.textGrey,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Text(
-                                    "Terjual ${product[index].soldCount} | ${product[index].seller.city}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10.sp,
-                                      color: ColorName.textGrey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      return ProductCard(
+                        productEntity: product[index],
                       );
                     },
                   );
@@ -322,35 +198,8 @@ class HomeScreen extends StatelessWidget {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemCount: productCategory.length,
-                  itemBuilder: (_, index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(1.5),
-                        ),
-                        child: CachedNetworkImage(
-                          width: 104.w,
-                          height: 85.h,
-                          imageUrl: productCategory[index].imageCover,
-                          placeholder: (context, url) => const Center(
-                              child: CustomCircularProgressIndicator()),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 7.0),
-                        child: Text(
-                          productCategory[index].name,
-                          style: TextStyle(
-                              fontSize: 9.sp,
-                              fontWeight: FontWeight.w700,
-                              color: ColorName.textBlack),
-                        ),
-                      ),
-                    ],
+                  itemBuilder: (_, index) => ProductCategoryCard(
+                    productCategoryEntity: productCategory[index],
                   ),
                 );
               } else if (status.isError) {

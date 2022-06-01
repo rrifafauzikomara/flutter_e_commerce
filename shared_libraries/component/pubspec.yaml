@@ -15,6 +15,9 @@ dependencies:
   dependencies:
     path: ../dependencies
 
+  product:
+    path: ../../domains/product
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
