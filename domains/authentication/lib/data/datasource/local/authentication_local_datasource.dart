@@ -14,6 +14,10 @@ abstract class AuthenticationLocalDataSources {
   Future<String> getToken();
 
   Future<bool> removeUserData();
+
+  Future<bool> cacheFcmToken({required String token});
+
+  Future<String> getFcmToken();
 }
 
 class AuthenticationLocalDataSourcesImpl
@@ -63,5 +67,21 @@ class AuthenticationLocalDataSourcesImpl
     );
 
     return tokenResult;
+  }
+
+  @override
+  Future<bool> cacheFcmToken({required String token}) async =>
+      await sharedPreferences.setString(
+        AppConstants.cachedKey.fcmToken,
+        token,
+      );
+
+  @override
+  Future<String> getFcmToken() async {
+    try {
+      return sharedPreferences.getString(AppConstants.cachedKey.fcmToken) ?? "";
+    } catch (_) {
+      throw DatabaseException(AppConstants.errorMessage.failedGetToken);
+    }
   }
 }

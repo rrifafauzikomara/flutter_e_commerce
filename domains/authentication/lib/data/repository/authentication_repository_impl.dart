@@ -119,4 +119,25 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return Left(FailureResponse(errorMessage: error.toString()));
     }
   }
+
+  @override
+  Future<Either<FailureResponse, bool>> cacheFcmToken(
+      {required String token}) async {
+    try {
+      await authenticationLocalDataSources.cacheFcmToken(token: token);
+      return const Right(true);
+    } on Exception catch (error) {
+      return Left(FailureResponse(errorMessage: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureResponse, String>> getFcmToken() async {
+    try {
+      final response = await authenticationLocalDataSources.getFcmToken();
+      return Right(response);
+    } on Exception catch (error) {
+      return Left(FailureResponse(errorMessage: error.toString()));
+    }
+  }
 }

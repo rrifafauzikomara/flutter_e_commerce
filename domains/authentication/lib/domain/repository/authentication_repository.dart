@@ -21,4 +21,8 @@ abstract class AuthenticationRepository {
       {required AuthRequestEntity authRequestEntity});
 
   Future<Either<FailureResponse, bool>> removeUserData();
+
+  Future<Either<FailureResponse, bool>> cacheFcmToken({required String token});
+
+  Future<Either<FailureResponse, String>> getFcmToken();
 }

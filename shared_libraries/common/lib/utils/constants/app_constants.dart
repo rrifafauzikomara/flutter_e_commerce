@@ -13,6 +13,8 @@ class CachedKey {
   String get onBoardingKey => 'onBoardingKey';
 
   String get tokenKey => 'tokenKey';
+
+  String get fcmToken => 'fcmToken';
 }
 
 class AppApi {
@@ -64,4 +66,11 @@ class ErrorMessage {
   String get failedGetOnBoarding => 'failed get onboarding status';
 
   String get failedGetToken => 'failed get onboarding status';
+}
+
+class FCMServerKey {
+  const FCMServerKey();
+
+  String get fcmServerKey =>
+      "AAAAmdmaPOA:APA91bGG4DE4o2sZbf53aYKP11quEQ5z_Nj-_X3L1AYi5M-ng6kgK5p6QxumBpWb8lpyGxyUBbDtNTT8ngb2qmVnvOW68C2XkB06JdplxRYNJ3Ki5s6mXilI-IX_cTSQl2Ug9rgCoPHI";
 }

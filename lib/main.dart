@@ -5,6 +5,7 @@ import 'package:auth/presentation/ui/sign_in_screen.dart';
 import 'package:auth/presentation/ui/sign_up_screen.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
+import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ import 'injections/injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await Injections().initialize();
   runApp(const MyApp());
 }
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
             create: (_) => SplashCubit(
               getOnBoardingStatusUseCase: sl(),
               getTokenUseCase: sl(),
+              cacheFCMTokenUseCase: sl(),
+              firebaseMessaging: sl(),
             )..initSplash(),
           )
         ], child: SplashScreen()),
