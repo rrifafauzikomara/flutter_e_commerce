@@ -1,4 +1,5 @@
 import 'package:common/utils/navigation/router/auth_router.dart';
+import 'package:common/utils/navigation/router/home_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:component/widget/stack/loading_stack.dart';
@@ -17,6 +18,7 @@ import 'package:component/widget/button/chevron_button.dart';
 class AccountScreen extends StatelessWidget {
   AccountScreen({Key? key}) : super(key: key);
   final AuthRouter authRouter = sl();
+  final HomeRouter homeRouter = sl();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +109,7 @@ class AccountScreen extends StatelessWidget {
                   ),
                   ChevronButton(
                     buttonText: 'Data Diri',
-                    onTap: () {},
+                    onTap: () => homeRouter.navigateToEditProfile(),
                   ),
                   ChevronButton(
                     buttonText: 'Logout',

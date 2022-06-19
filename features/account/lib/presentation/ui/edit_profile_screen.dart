@@ -16,6 +16,9 @@ class EditProfileScreen extends StatelessWidget {
         backgroundColor: ColorName.white,
         elevation: 0.0,
         centerTitle: false,
+        iconTheme: const IconThemeData(
+          color: ColorName.orange,
+        ),
         title: Text(
           "Data Diri",
           style: TextStyle(

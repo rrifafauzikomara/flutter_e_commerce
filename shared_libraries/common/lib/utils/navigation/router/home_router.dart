@@ -14,5 +14,5 @@ class HomeRouterImpl implements HomeRouter {
 
   @override
   void navigateToEditProfile() =>
-      navigationHelper.pushReplacementNamed(AppRoutes.editProfile);
+      navigationHelper.pushNamed(AppRoutes.editProfile);
 }
