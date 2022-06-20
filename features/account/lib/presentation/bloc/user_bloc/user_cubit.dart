@@ -1,7 +1,7 @@
+import 'package:account/presentation/bloc/user_bloc/user_state.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:common/utils/use_case/use_case.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home_page/presentation/bloc/user_bloc/user_state.dart';
+import 'package:dependencies/bloc/bloc.dart';
 import 'package:profile/domain/usecases/get_user_usecase.dart';
 
 class UserCubit extends Cubit<UserState> {

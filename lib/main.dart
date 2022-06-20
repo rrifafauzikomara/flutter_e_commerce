@@ -1,3 +1,5 @@
+import 'package:account/presentation/bloc/logout_bloc/logout_cubit.dart';
+import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/ui/edit_profile_screen.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
@@ -11,10 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
 import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
-import 'package:home_page/presentation/bloc/logout_bloc/logout_cubit.dart';
 import 'package:home_page/presentation/bloc/product_bloc/product_cubit.dart';
 import 'package:home_page/presentation/bloc/product_category_bloc/product_category_cubit.dart';
-import 'package:home_page/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:home_page/presentation/ui/bottom_navigation.dart';
 import 'package:onboarding/presentation/bloc/onboarding_bloc/onboarding_cubit.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
@@ -124,7 +124,16 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.editProfile:
               return MaterialPageRoute(
-                builder: (_) => const EditProfileScreen(),
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<UserCubit>(
+                      create: (_) => UserCubit(
+                        getUserUseCase: sl(),
+                      )..getUser(),
+                    ),
+                  ],
+                  child: const EditProfileScreen(),
+                ),
               );
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());

@@ -1,3 +1,7 @@
+import 'package:account/presentation/bloc/logout_bloc/logout_cubit.dart';
+import 'package:account/presentation/bloc/logout_bloc/logout_state.dart';
+import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
+import 'package:account/presentation/bloc/user_bloc/user_state.dart';
 import 'package:common/utils/navigation/router/auth_router.dart';
 import 'package:common/utils/navigation/router/home_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
@@ -8,10 +12,6 @@ import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:home_page/presentation/bloc/logout_bloc/logout_cubit.dart';
-import 'package:home_page/presentation/bloc/logout_bloc/logout_state.dart';
-import 'package:home_page/presentation/bloc/user_bloc/user_cubit.dart';
-import 'package:home_page/presentation/bloc/user_bloc/user_state.dart';
 import 'package:resources/colors.gen.dart';
 import 'package:component/widget/button/chevron_button.dart';
 

@@ -54,6 +54,8 @@ class BannerCard extends StatelessWidget {
                     ),
                     Text(
                       bannerDataEntity.caption!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12.sp,

@@ -1,8 +1,8 @@
+import 'package:account/presentation/bloc/logout_bloc/logout_state.dart';
+import 'package:authentication/domain/usecases/logout_usecase.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:common/utils/use_case/use_case.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home_page/presentation/bloc/logout_bloc/logout_state.dart';
-import 'package:authentication/domain/usecases/logout_usecase.dart';
+import 'package:dependencies/bloc/bloc.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {
   final LogoutUseCase logoutUseCase;
