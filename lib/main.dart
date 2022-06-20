@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
                       )..getUser(),
                     ),
                   ],
-                  child: const EditProfileScreen(),
+                  child: EditProfileScreen(),
                 ),
               );
             default:

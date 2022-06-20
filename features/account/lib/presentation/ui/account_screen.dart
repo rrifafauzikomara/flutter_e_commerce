@@ -80,7 +80,6 @@ class AccountScreen extends StatelessWidget {
                                     child: CustomCircularProgressIndicator()),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
-                                // fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
