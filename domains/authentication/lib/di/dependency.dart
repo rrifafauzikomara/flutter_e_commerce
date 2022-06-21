@@ -3,10 +3,8 @@ import 'package:authentication/data/datasource/remote/authentication_remote_data
 import 'package:authentication/data/mapper/authentication_mapper.dart';
 import 'package:authentication/data/repository/authentication_repository_impl.dart';
 import 'package:authentication/domain/repository/authentication_repository.dart';
-import 'package:authentication/domain/usecases/cache_fcm_token_usecase.dart';
 import 'package:authentication/domain/usecases/cache_onboarding_usecase.dart';
 import 'package:authentication/domain/usecases/cache_token_usecase.dart';
-import 'package:authentication/domain/usecases/get_fcm_token_usecase.dart';
 import 'package:authentication/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:authentication/domain/usecases/get_token_usecase.dart';
 import 'package:authentication/domain/usecases/logout_usecase.dart';
@@ -82,16 +80,6 @@ class AuthenticationDependency {
     );
     sl.registerLazySingleton<LogoutUseCase>(
       () => LogoutUseCase(
-        authenticationRepository: sl(),
-      ),
-    );
-    sl.registerLazySingleton<CacheFCMTokenUseCase>(
-      () => CacheFCMTokenUseCase(
-        authenticationRepository: sl(),
-      ),
-    );
-    sl.registerLazySingleton<GetFCMTokenUseCase>(
-      () => GetFCMTokenUseCase(
         authenticationRepository: sl(),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:account/presentation/bloc/logout_bloc/logout_cubit.dart';
 import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/ui/edit_profile_screen.dart';
@@ -47,8 +48,6 @@ class MyApp extends StatelessWidget {
             create: (_) => SplashCubit(
               getOnBoardingStatusUseCase: sl(),
               getTokenUseCase: sl(),
-              cacheFCMTokenUseCase: sl(),
-              firebaseMessaging: sl(),
             )..initSplash(),
           )
         ], child: SplashScreen()),
@@ -130,6 +129,12 @@ class MyApp extends StatelessWidget {
                       create: (_) => UserCubit(
                         getUserUseCase: sl(),
                       )..getUser(),
+                    ),
+                    BlocProvider<EditProfileBloc>(
+                      create: (_) => EditProfileBloc(
+                        firebaseMessaging: sl(),
+                        updateUserUseCase: sl(),
+                      ),
                     ),
                   ],
                   child: EditProfileScreen(),

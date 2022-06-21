@@ -5,6 +5,7 @@ class AppConstants {
   static AppApi appApi = const AppApi();
   static ErrorKey errorKey = const ErrorKey();
   static ErrorMessage errorMessage = const ErrorMessage();
+  static FCMServerKey fcmServerKey = const FCMServerKey();
 }
 
 class CachedKey {
@@ -47,6 +48,12 @@ class ErrorKey {
   String get confirmPassword => "confirmPassword";
 
   String get message => "message";
+
+  String get fullName => "fullName";
+
+  String get address => "address";
+
+  String get userProfileNotEmpty => "userProfileNotEmpty";
 }
 
 class ErrorMessage {
@@ -66,6 +73,12 @@ class ErrorMessage {
   String get failedGetOnBoarding => 'failed get onboarding status';
 
   String get failedGetToken => 'failed get onboarding status';
+
+  String get fullNameEmpty => "full name must not empty";
+
+  String get addressEmpty => "address must not empty";
+
+  String get userProfileNotEmpty => "full name and address must not empty";
 }
 
 class FCMServerKey {
