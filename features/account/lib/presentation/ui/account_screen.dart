@@ -108,7 +108,13 @@ class AccountScreen extends StatelessWidget {
                   ),
                   ChevronButton(
                     buttonText: 'Data Diri',
-                    onTap: () => homeRouter.navigateToEditProfile(),
+                    onTap: () async {
+                      await homeRouter.navigateToEditProfile()?.then((value) {
+                        if (value == 'update') {
+                          context.read<UserCubit>().getUser();
+                        }
+                      });
+                    },
                   ),
                   ChevronButton(
                     buttonText: 'Logout',

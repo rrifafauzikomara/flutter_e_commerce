@@ -4,6 +4,7 @@ import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_state.d
 import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/bloc/user_bloc/user_state.dart';
 import 'package:common/utils/constants/app_constants.dart';
+import 'package:common/utils/navigation/router/auth_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/button/custom_button.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
@@ -12,6 +13,7 @@ import 'package:component/widget/text_field/custom_text_field.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
@@ -20,6 +22,7 @@ class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final AuthRouter authRouter = sl();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class EditProfileScreen extends StatelessWidget {
           listener: (context, state) {
             final status = state.editProfileState.status;
             if (status.isHasData) {
-
+              authRouter.goBack(arguments: "update");
             }
           },
           builder: (context, editProfileState) {

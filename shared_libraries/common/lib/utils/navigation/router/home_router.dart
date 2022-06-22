@@ -2,7 +2,7 @@ import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:common/utils/navigation/router/app_routes.dart';
 
 abstract class HomeRouter {
-  void navigateToEditProfile();
+  Future<dynamic>? navigateToEditProfile();
 }
 
 class HomeRouterImpl implements HomeRouter {
@@ -13,6 +13,6 @@ class HomeRouterImpl implements HomeRouter {
   });
 
   @override
-  void navigateToEditProfile() =>
+  Future<dynamic>? navigateToEditProfile() =>
       navigationHelper.pushNamed(AppRoutes.editProfile);
 }

@@ -6,7 +6,7 @@ abstract class AuthRouter {
 
   void navigateToSignUp();
 
-  void goBack();
+  void goBack({String? arguments});
 
   void navigateToHome();
 }
@@ -26,7 +26,7 @@ class AuthRouterImpl implements AuthRouter {
   void navigateToSignUp() => navigationHelper.pushNamed(AppRoutes.signUp);
 
   @override
-  void goBack() => navigationHelper.pop();
+  void goBack({String? arguments}) => navigationHelper.pop(arguments);
 
   @override
   void navigateToHome() =>
