@@ -5,6 +5,7 @@ import 'package:profile/data/repository/profile_repository_impl.dart';
 import 'package:profile/domain/repository/profile_repository.dart';
 import 'package:profile/domain/usecases/get_user_usecase.dart';
 import 'package:profile/domain/usecases/update_user_usecase.dart';
+import 'package:profile/domain/usecases/upload_photo_usecase.dart';
 
 class ProfileDependency {
   ProfileDependency() {
@@ -41,6 +42,11 @@ class ProfileDependency {
     );
     sl.registerLazySingleton<UpdateUserUseCase>(
           () => UpdateUserUseCase(
+        profileRepository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<UploadPhotoUseCase>(
+          () => UploadPhotoUseCase(
         profileRepository: sl(),
       ),
     );

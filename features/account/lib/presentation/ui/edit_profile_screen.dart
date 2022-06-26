@@ -1,6 +1,9 @@
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_event.dart';
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_state.dart';
+import 'package:account/presentation/bloc/update_photo_bloc/update_photo_bloc.dart';
+import 'package:account/presentation/bloc/update_photo_bloc/update_photo_event.dart';
+import 'package:account/presentation/bloc/update_photo_bloc/update_photo_state.dart';
 import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/bloc/user_bloc/user_state.dart';
 import 'package:common/utils/constants/app_constants.dart';
@@ -14,6 +17,7 @@ import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:dependencies/get_it/get_it.dart';
+import 'package:dependencies/image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
@@ -23,6 +27,7 @@ class EditProfileScreen extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final AuthRouter authRouter = sl();
+  final ImagePicker imagePicker = sl();
 
   @override
   Widget build(BuildContext context) {
@@ -67,65 +72,78 @@ class EditProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 shrinkWrap: true,
                 children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      userState.userState.data?.imageUrl != null
-                          ? ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(50.0),
-                              ),
-                              child: CachedNetworkImage(
+                  BlocBuilder<UpdatePhotoBloc, UpdatePhotoState>(
+                      builder: (context, state) {
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        userState.userState.data?.imageUrl != null
+                            ? ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(50.0),
+                                ),
+                                child: state.updatePhotoState.data != null
+                                    ? Image.file(
+                                        state.updatePhotoState.data!,
+                                        width: 72.w,
+                                        height: 72.w,
+                                      )
+                                    : CachedNetworkImage(
+                                        width: 72.w,
+                                        height: 72.w,
+                                        imageUrl:
+                                            userState.userState.data!.imageUrl,
+                                        placeholder: (context, url) => const Center(
+                                            child:
+                                                CustomCircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                              )
+                            : Container(
                                 width: 72.w,
                                 height: 72.w,
-                                imageUrl: userState.userState.data!.imageUrl,
-                                placeholder: (context, url) => const Center(
-                                    child: CustomCircularProgressIndicator()),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                                decoration: const BoxDecoration(
+                                  color: ColorName.iconGrey,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      50,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            )
-                          : Container(
-                              width: 72.w,
-                              height: 72.w,
-                              decoration: const BoxDecoration(
-                                color: ColorName.iconGrey,
-                                borderRadius: BorderRadius.all(
+                        Positioned(
+                          right: 0.38.sw,
+                          bottom: 0,
+                          child: InkWell(
+                            onTap: () => context
+                                .read<UpdatePhotoBloc>()
+                                .add(const UploadImage()),
+                            child: Container(
+                              width: 15.w,
+                              height: 15.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: ColorName.white,
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                     50,
                                   ),
                                 ),
-                              ),
-                            ),
-                      Positioned(
-                        right: 0.38.sw,
-                        bottom: 0,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: 15.w,
-                            height: 15.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: ColorName.white,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                  50,
+                                border: Border.all(
+                                  color: ColorName.iconWhite,
                                 ),
                               ),
-                              border: Border.all(
-                                color: ColorName.iconWhite,
+                              child: Assets.images.icon.edit.svg(
+                                width: 8.w,
+                                height: 8.w,
                               ),
                             ),
-                            child: Assets.images.icon.edit.svg(
-                              width: 8.w,
-                              height: 8.w,
-                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                        )
+                      ],
+                    );
+                  }),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -133,12 +151,13 @@ class EditProfileScreen extends StatelessWidget {
                     labelText: "Nama",
                     controller: fullNameController,
                     errorText: editProfileState.editProfileState.message ==
-                        AppConstants.errorKey.fullName
-                        ? editProfileState.editProfileState.failure!.errorMessage
+                            AppConstants.errorKey.fullName
+                        ? editProfileState
+                            .editProfileState.failure!.errorMessage
                         : "",
                     onChanged: (value) => context.read<EditProfileBloc>().add(
-                      FullNameChange(fullName: value),
-                    ),
+                          FullNameChange(fullName: value),
+                        ),
                     textInputType: TextInputType.name,
                   ),
                   SizedBox(
@@ -149,12 +168,13 @@ class EditProfileScreen extends StatelessWidget {
                     textInputType: TextInputType.streetAddress,
                     controller: addressController,
                     errorText: editProfileState.editProfileState.message ==
-                        AppConstants.errorKey.address
-                        ? editProfileState.editProfileState.failure!.errorMessage
+                            AppConstants.errorKey.address
+                        ? editProfileState
+                            .editProfileState.failure!.errorMessage
                         : "",
                     onChanged: (value) => context.read<EditProfileBloc>().add(
-                      AddressChange(address: value),
-                    ),
+                          AddressChange(address: value),
+                        ),
                   ),
                   SizedBox(
                     height: 46.h,
@@ -162,11 +182,11 @@ class EditProfileScreen extends StatelessWidget {
                   CustomButton(
                     buttonText: "Simpan",
                     onTap: () => context.read<EditProfileBloc>().add(
-                      EditProfile(
-                        fullName: fullNameController.text,
-                        address: addressController.text,
-                      ),
-                    ),
+                          EditProfile(
+                            fullName: fullNameController.text,
+                            address: addressController.text,
+                          ),
+                        ),
                   ),
                 ],
               ),

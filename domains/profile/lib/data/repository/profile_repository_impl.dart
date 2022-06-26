@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:common/utils/constants/app_constants.dart';
 import 'package:common/utils/error/failure_response.dart';
 import 'package:dartz/dartz.dart';
@@ -45,6 +47,29 @@ class ProfileRepositoryImpl implements ProfileRepository {
         userRequestDto: mapper.mapUserRequestEntityToDTO(
           userRequestEntity,
         ),
+      );
+      return Right(
+        mapper.mapUserDataDTOToUserEntity(
+          response.data!,
+        ),
+      );
+    } on DioError catch (error) {
+      return Left(
+        FailureResponse(
+          errorMessage:
+              error.response?.data[AppConstants.errorKey.message]?.toString() ??
+                  error.response.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<FailureResponse, UserEntity>> uploadPhoto(
+      {required File image}) async {
+    try {
+      final response = await profileRemoteDataSource.uploadPhoto(
+        image: image,
       );
       return Right(
         mapper.mapUserDataDTOToUserEntity(

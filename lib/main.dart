@@ -1,5 +1,6 @@
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:account/presentation/bloc/logout_bloc/logout_cubit.dart';
+import 'package:account/presentation/bloc/update_photo_bloc/update_photo_bloc.dart';
 import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/ui/edit_profile_screen.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
@@ -134,6 +135,12 @@ class MyApp extends StatelessWidget {
                       create: (_) => EditProfileBloc(
                         firebaseMessaging: sl(),
                         updateUserUseCase: sl(),
+                      ),
+                    ),
+                    BlocProvider<UpdatePhotoBloc>(
+                      create: (_) => UpdatePhotoBloc(
+                        imagePicker: sl(),
+                        uploadPhotoUsecase: sl(),
                       ),
                     ),
                   ],

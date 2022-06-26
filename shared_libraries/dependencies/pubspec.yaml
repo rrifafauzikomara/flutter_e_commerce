@@ -22,6 +22,7 @@ dependencies:
   dio: ^4.0.6
   equatable: ^2.0.3
   get_it: ^7.2.0
+  image_picker: ^0.8.5+3
   introduction_screen: ^3.0.2
   intl: ^0.17.0
   shared_preferences: ^2.0.15

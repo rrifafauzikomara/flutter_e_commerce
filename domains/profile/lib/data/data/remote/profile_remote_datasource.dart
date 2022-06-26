@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:common/utils/constants/app_constants.dart';
 import 'package:dependencies/dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:profile/data/model/request/user_request_dto.dart';
 import 'package:profile/data/model/response/user_response_dto.dart';
 
@@ -10,6 +13,8 @@ abstract class ProfileRemoteDataSource {
 
   Future<UserResponseDto> updateUserData(
       {required UserRequestDto userRequestDto});
+
+  Future<UserResponseDto> uploadPhoto({required File image});
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -37,6 +42,27 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         "${AppConstants.appApi.baseUrl}${AppConstants.appApi.user}",
         data: userRequestDto.toJson(),
       );
+      return UserResponseDto.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UserResponseDto> uploadPhoto({required File image}) async {
+    try {
+      String fileName = image.path.split('/').last;
+      var formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(
+          image.path,
+          filename: fileName,
+        )
+      });
+      final response = await dio.put(
+        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.updateUserImage}",
+        data: formData,
+      );
+      debugPrint(response.toString());
       return UserResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;
