@@ -140,7 +140,11 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        if (state.updatePhotoState.status.isLoading)
+                          const Center(
+                            child: CustomCircularProgressIndicator(),
+                          ),
                       ],
                     );
                   }),

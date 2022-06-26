@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:common/utils/constants/app_constants.dart';
 import 'package:dependencies/dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:profile/data/model/request/user_request_dto.dart';
 import 'package:profile/data/model/response/user_response_dto.dart';
 
@@ -56,13 +55,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         "image": await MultipartFile.fromFile(
           image.path,
           filename: fileName,
-        )
+          contentType: MediaType('image', 'png'),
+        ),
       });
       final response = await dio.put(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.updateUserImage}",
-        data: formData,
-      );
-      debugPrint(response.toString());
+          "${AppConstants.appApi.baseUrl}${AppConstants.appApi.updateUserImage}",
+          data: formData,
+          options: Options(headers: {
+            "Content-Type": "multipart/form-data",
+          }));
       return UserResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;
