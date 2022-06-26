@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_event.dart';
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_state.dart';
@@ -17,7 +19,6 @@ import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:dependencies/get_it/get_it.dart';
-import 'package:dependencies/image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
@@ -27,7 +28,6 @@ class EditProfileScreen extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final AuthRouter authRouter = sl();
-  final ImagePicker imagePicker = sl();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,14 @@ class EditProfileScreen extends StatelessWidget {
         backgroundColor: ColorName.white,
         elevation: 0.0,
         centerTitle: false,
+        leading: IconButton(
+          onPressed: () {
+            authRouter.goBack(arguments: "update");
+          },
+          icon: Icon(
+            Platform.isIOS ? Icons.arrow_back_ios_new : Icons.arrow_back,
+          ),
+        ),
         iconTheme: const IconThemeData(
           color: ColorName.orange,
         ),
