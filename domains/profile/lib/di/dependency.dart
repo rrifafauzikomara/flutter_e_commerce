@@ -1,5 +1,5 @@
 import 'package:dependencies/get_it/get_it.dart';
-import 'package:profile/data/data/remote/profile_remote_datasource.dart';
+import 'package:profile/data/datasource/remote/profile_remote_datasource.dart';
 import 'package:profile/data/mapper/profile_mapper.dart';
 import 'package:profile/data/repository/profile_repository_impl.dart';
 import 'package:profile/domain/repository/profile_repository.dart';

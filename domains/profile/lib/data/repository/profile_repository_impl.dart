@@ -4,7 +4,7 @@ import 'package:common/utils/constants/app_constants.dart';
 import 'package:common/utils/error/failure_response.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dependencies/dio/dio.dart';
-import 'package:profile/data/data/remote/profile_remote_datasource.dart';
+import 'package:profile/data/datasource/remote/profile_remote_datasource.dart';
 import 'package:profile/data/mapper/profile_mapper.dart';
 import 'package:profile/domain/entity/request/user_request_entity.dart';
 import 'package:profile/domain/entity/response/user_entity.dart';
