@@ -1,4 +1,3 @@
-import 'package:authentication/di/dependency.dart';
 import 'package:common/utils/di/common_dependencies.dart';
 import 'package:core/di/dependency.dart';
 import 'package:dependencies/di/dependency.dart';
@@ -9,9 +8,7 @@ class Injections {
     _registerDomains();
   }
 
-  void _registerDomains() {
-    AuthenticationDependency();
-  }
+  void _registerDomains() {}
 
   Future<void> _registerSharedDependencies() async {
     await const SharedLibDependencies().registerCore();
