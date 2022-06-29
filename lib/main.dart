@@ -1,4 +1,3 @@
-import 'package:account/presentation/ui/edit_profile_screen.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
@@ -9,11 +8,7 @@ import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
-import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
-import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
-import 'package:home_page/presentation/bloc/product_bloc/product_cubit.dart';
-import 'package:home_page/presentation/bloc/product_category_bloc/product_category_cubit.dart';
-import 'package:home_page/presentation/ui/bottom_navigation.dart';
+import 'package:home_page/presentation/ui/home_screen.dart';
 import 'package:onboarding/presentation/bloc/onboarding_bloc/onboarding_cubit.dart';
 import 'package:onboarding/presentation/bloc/splash_bloc/splash_cubit.dart';
 import 'package:onboarding/presentation/ui/on_boarding_screen.dart';
@@ -84,33 +79,7 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.home:
               return MaterialPageRoute(
-                builder: (_) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider<HomeCubit>(
-                      create: (_) => HomeCubit(),
-                    ),
-                    BlocProvider<BannerCubit>(
-                      create: (_) => BannerCubit(
-                        getBannerUseCase: sl(),
-                      )..getBanner(),
-                    ),
-                    BlocProvider<ProductCubit>(
-                      create: (_) => ProductCubit(
-                        getProductUseCase: sl(),
-                      )..getProduct(),
-                    ),
-                    BlocProvider<ProductCategoryCubit>(
-                      create: (_) => ProductCategoryCubit(
-                        getProductCategoryCase: sl(),
-                      )..getProductCategory(),
-                    ),
-                  ],
-                  child: const BottomNavigation(),
-                ),
-              );
-            case AppRoutes.editProfile:
-              return MaterialPageRoute(
-                builder: (_) => const EditProfileScreen(),
+                builder: (_) => const HomeScreen(),
               );
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());
