@@ -31,12 +31,3 @@ class SignIn extends SignInEvent {
   @override
   List<Object?> get props => [authRequestEntity];
 }
-
-class CacheToken extends SignInEvent {
-  final String token;
-
-  const CacheToken({required this.token});
-
-  @override
-  List<Object?> get props => [token];
-}
