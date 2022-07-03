@@ -22,7 +22,7 @@ class AuthenticationRemoteDataSourceImpl
       {required AuthRequestDto authRequestDto}) async {
     try {
       final response = await dio.post(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.signUp}",
+        AppConstants.appApi.signUp,
         data: authRequestDto.toJson(),
       );
       return AuthResponseDTO.fromJson(response.data);
@@ -36,7 +36,7 @@ class AuthenticationRemoteDataSourceImpl
       {required AuthRequestDto authRequestDto}) async {
     try {
       final response = await dio.post(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.signIn}",
+        AppConstants.appApi.signIn,
         data: authRequestDto.toJson(),
       );
       return AuthResponseDTO.fromJson(response.data);
