@@ -1,4 +1,3 @@
-import 'package:account/presentation/ui/edit_profile_screen.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
@@ -107,10 +106,6 @@ class MyApp extends StatelessWidget {
                   ],
                   child: const BottomNavigation(),
                 ),
-              );
-            case AppRoutes.editProfile:
-              return MaterialPageRoute(
-                builder: (_) => const EditProfileScreen(),
               );
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());
