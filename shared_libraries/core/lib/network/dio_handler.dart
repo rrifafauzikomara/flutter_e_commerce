@@ -1,4 +1,3 @@
-import 'package:common/utils/constants/app_constants.dart';
 import 'package:core/network/api_interceptors.dart';
 import 'package:dependencies/dio/dio.dart';
 import 'package:dependencies/shared_preferences/shared_preferences.dart';
@@ -20,20 +19,11 @@ class DioHandler {
       connectTimeout: 50000,
       receiveTimeout: 30000,
     );
-    options.headers = _defaultHeader();
     final dio = Dio(options);
-    dio.interceptors.add(ApiInterceptors());
+    dio.interceptors.add(ApiInterceptors(sharedPreferences: sharedPreferences));
 
     return dio;
   }
 
-  Map<String, dynamic> _defaultHeader() {
-    String? authorizationToken = sharedPreferences.getString(
-      AppConstants.cachedKey.tokenKey,
-    );
-    Map<String, String> headers = {};
-    headers['Content-Type'] = 'application/json';
-    headers['Authorization'] = authorizationToken ?? "";
-    return headers;
-  }
+
 }
