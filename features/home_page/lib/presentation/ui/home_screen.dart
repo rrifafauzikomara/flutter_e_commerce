@@ -1,3 +1,5 @@
+import 'package:common/utils/navigation/argument/arguments.dart';
+import 'package:common/utils/navigation/router/home_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/card/banner_card.dart';
 import 'package:component/widget/card/product_card.dart';
@@ -5,6 +7,7 @@ import 'package:component/widget/card/product_category_card.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_state.dart';
@@ -16,7 +19,9 @@ import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  final _homeRouter = sl<HomeRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,13 +144,17 @@ class HomeScreen extends StatelessWidget {
                 if (status.isLoading) {
                   return const Center(child: CustomCircularProgressIndicator());
                 } else if (status.isHasData) {
-                  final product = state.productState.data?.data ?? [];
+                  final products = state.productState.data?.data ?? [];
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: product.length,
+                    itemCount: products.length,
                     itemBuilder: (context, index) {
+                      final product = products[index];
+                      final productId = product.id;
                       return ProductCard(
-                        productEntity: product[index],
+                        productEntity: product,
+                        onPressed: () => _homeRouter.navigateToDetailProduct(
+                            DetailProductArgument(productId: productId)),
                       );
                     },
                   );

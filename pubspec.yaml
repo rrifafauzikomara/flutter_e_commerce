@@ -52,6 +52,8 @@ dependencies:
     path: features/home_page
   onboarding:
     path: features/onboarding
+  detail_product:
+    path: features/detail_product
 
   # Resources
   resources:

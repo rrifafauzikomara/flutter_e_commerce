@@ -7,10 +7,12 @@ import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
 import 'package:auth/presentation/ui/sign_up_screen.dart';
+import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
+import 'package:detail_product/presentation/ui/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
@@ -145,6 +147,12 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   child: EditProfileScreen(),
+                ),
+              );
+            case AppRoutes.detailProduct:
+              return MaterialPageRoute(
+                builder: (_) => DetailProductScreen(
+                  argument: settings.arguments as DetailProductArgument,
                 ),
               );
             default:
