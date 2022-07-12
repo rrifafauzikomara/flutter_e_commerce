@@ -90,20 +90,20 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         ),
         iconTheme: const IconThemeData(color: ColorName.orange),
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: BlocBuilder<ProductDetailCubit, ProductDetailState>(
-              builder: (context, state) {
-                final productState = state.productState.status;
-                if (productState.isLoading) {
-                  return const CustomCircularProgressIndicator();
-                } else if (productState.isError) {
-                  return Text(state.productState.failure!.errorMessage);
-                } else if (productState.isHasData) {
-                  final productData = state.productState.data ??
-                      const ProductDetailDataEntity();
-                  return ListView(
+      body: Center(
+        child: BlocBuilder<ProductDetailCubit, ProductDetailState>(
+          builder: (context, state) {
+            final productState = state.productState.status;
+            if (productState.isLoading) {
+              return const CustomCircularProgressIndicator();
+            } else if (productState.isError) {
+              return Text(state.productState.failure!.errorMessage);
+            } else if (productState.isHasData) {
+              final productData =
+                  state.productState.data ?? const ProductDetailDataEntity();
+              return Stack(
+                children: [
+                  ListView(
                     children: [
                       CachedNetworkImage(
                         imageUrl: productData.imageUrl,
@@ -217,49 +217,49 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         ),
                       ),
                     ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  color: ColorName.textFieldBackgroundGrey,
-                  width: double.infinity,
-                  height: 1.h,
-                ),
-                Container(
-                  color: ColorName.white,
-                  padding: EdgeInsets.only(
-                      top: 10.h, bottom: 8.h, left: 15.h, right: 15.h),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: "Beli Langsung",
-                          onTap: () {},
-                        ),
-                      ),
-                      SizedBox(width: 15.w),
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: "Keranjang",
-                          onTap: () {},
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          color: ColorName.textFieldBackgroundGrey,
+                          width: double.infinity,
+                          height: 1.h,
+                        ),
+                        Container(
+                          color: ColorName.white,
+                          padding: EdgeInsets.only(
+                              top: 10.h, bottom: 8.h, left: 15.h, right: 15.h),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CustomButton(
+                                  buttonText: "Beli Langsung",
+                                  onTap: () {},
+                                ),
+                              ),
+                              SizedBox(width: 15.w),
+                              Expanded(
+                                child: CustomButton(
+                                  buttonText: "Keranjang",
+                                  onTap: () {},
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }
