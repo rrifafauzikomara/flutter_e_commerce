@@ -99,7 +99,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 if (productState.isLoading) {
                   return const CustomCircularProgressIndicator();
                 } else if (productState.isError) {
-                  return Text(state.productState.message);
+                  return Text(state.productState.failure!.errorMessage);
                 } else if (productState.isHasData) {
                   final productData = state.productState.data ??
                       const ProductDetailDataEntity();
@@ -107,11 +107,15 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     children: [
                       CachedNetworkImage(
                         imageUrl: productData.imageUrl,
-                        height: 288.h,
-                        width: double.infinity,
+                        fit: BoxFit.contain,
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        margin: EdgeInsets.only(
+                          left: 16.w,
+                          right: 16.w,
+                          top: 10.h,
+                          bottom: 40.h,
+                        ),
                         alignment: Alignment.centerLeft,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,7 +277,7 @@ class _Seller extends StatelessWidget {
           if (sellerState.isLoading) {
             return const CustomCircularProgressIndicator();
           } else if (sellerState.isError) {
-            return Text(state.sellerState.message);
+            return Text(state.sellerState.failure!.errorMessage);
           } else if (sellerState.isHasData) {
             final sellerDetail =
                 state.sellerState.data ?? const SellerDataEntity();
