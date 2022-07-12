@@ -1,3 +1,5 @@
+import 'package:component/widget/button/custom_button.dart';
+import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
@@ -18,7 +20,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   @override
   void initState() {
     super.initState();
-    print("${widget.argument.productId}");
   }
 
   @override
@@ -75,6 +76,203 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           ],
         ),
         iconTheme: const IconThemeData(color: ColorName.orange),
+      ),
+      body: Stack(
+        children: [
+          ListView(
+            children: [
+              CachedNetworkImage(
+                imageUrl:
+                    "https://aurel-store.herokuapp.com/image/tono_fd611b5e-6b50-47ce-a2a7-499d138bd4a9.jpg",
+                height: 288.h,
+                width: double.infinity,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "price",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.sp,
+                              color: ColorName.textDarkGrey,
+                            ),
+                          ),
+                        ),
+                        const Icon(
+                          Icons.star_border,
+                          color: ColorName.orange,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      "name",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.sp,
+                        color: ColorName.textDarkGrey,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      "sold_count",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10.sp,
+                        color: ColorName.textDarkGrey,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    Container(
+                      color: ColorName.textFieldBackgroundGrey,
+                      width: double.infinity,
+                      height: 1.h,
+                    ),
+                    SizedBox(height: 13.h),
+                    Row(
+                      children: [
+                        ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://aurel-store.herokuapp.com/image/1fc7b460-492e-47a0-8a81-5af0c042c440_46d1e8c4-a380-4a85-951d-7fa80d52134a.jpg",
+                            height: 40.w,
+                            width: 40.w,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "seller.name",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.sp,
+                                color: ColorName.textDarkGrey,
+                              ),
+                            ),
+                            SizedBox(height: 7.h),
+                            Text(
+                              "seller,city",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 10.sp,
+                                color: ColorName.textDarkGrey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 13.h),
+                    Container(
+                      color: ColorName.textFieldBackgroundGrey,
+                      width: double.infinity,
+                      height: 1.h,
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      "Informasi Product",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.sp,
+                        color: ColorName.textDarkGrey,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        Text(
+                          "Kategori",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10.sp,
+                            color: ColorName.textDarkGrey,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "category.name",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10.sp,
+                            color: ColorName.orange,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 23.h),
+                    Container(
+                      color: ColorName.textFieldBackgroundGrey,
+                      width: double.infinity,
+                      height: 1.h,
+                    ),
+                    SizedBox(height: 19.h),
+                    Text(
+                      "Deskripsi Product",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.sp,
+                        color: ColorName.textDarkGrey,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      "description",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10.sp,
+                        color: ColorName.textDarkGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  color: ColorName.textFieldBackgroundGrey,
+                  width: double.infinity,
+                  height: 1.h,
+                ),
+                Container(
+                  color: ColorName.white,
+                  padding: EdgeInsets.only(
+                      top: 10.h, bottom: 8.h, left: 15.h, right: 15.h),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          buttonText: "Beli Langsung",
+                          onTap: () {},
+                        ),
+                      ),
+                      SizedBox(width: 15.w),
+                      Expanded(
+                        child: CustomButton(
+                          buttonText: "Keranjang",
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -11,4 +11,5 @@
     <color name="text_light_grey">#AAAAAA</color>
     <color name="text_black">#303030</color>
     <color name="text_dark_blue">#325D79</color>
+    <color name="text_dark_grey">#414141</color>
 </xml>

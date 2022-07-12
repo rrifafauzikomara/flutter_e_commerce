@@ -31,6 +31,9 @@ class ColorName {
   /// Color: #325D79
   static const Color textDarkBlue = Color(0xFF325D79);
 
+  /// Color: #414141
+  static const Color textDarkGrey = Color(0xFF414141);
+
   /// Color: #F4F4F4
   static const Color textFieldBackgroundGrey = Color(0xFFF4F4F4);
 
