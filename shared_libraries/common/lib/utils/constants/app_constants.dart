@@ -35,6 +35,8 @@ class AppApi {
 
   String get product => 'customer/product?per_page=20';
 
+  String get detailProduct => 'customer/product';
+
   String get category => 'category';
 }
 

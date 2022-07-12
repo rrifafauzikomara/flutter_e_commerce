@@ -1,6 +1,8 @@
 import 'package:component/widget/button/custom_button.dart';
+import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:resources/assets.gen.dart';
@@ -20,6 +22,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<ProductDetailCubit>().getProduct(widget.argument.productId);
   }
 
   @override

@@ -12,6 +12,7 @@ import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
+import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:detail_product/presentation/ui/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -150,9 +151,15 @@ class MyApp extends StatelessWidget {
                 ),
               );
             case AppRoutes.detailProduct:
+              final argument = settings.arguments as DetailProductArgument;
               return MaterialPageRoute(
-                builder: (_) => DetailProductScreen(
-                  argument: settings.arguments as DetailProductArgument,
+                builder: (_) => BlocProvider<ProductDetailCubit>(
+                  create: (_) => ProductDetailCubit(
+                    getProductUseCase: sl(),
+                  ),
+                  child: DetailProductScreen(
+                    argument: argument,
+                  ),
                 ),
               );
             default:

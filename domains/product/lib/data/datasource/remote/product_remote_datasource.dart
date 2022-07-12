@@ -1,6 +1,7 @@
 import 'package:dependencies/dio/dio.dart';
 import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
+import 'package:product/data/model/response/product_detail_response_dto.dart';
 import 'package:product/data/model/response/product_response_dto.dart';
 import 'package:common/utils/constants/app_constants.dart';
 
@@ -12,6 +13,8 @@ abstract class ProductRemoteDataSource {
   Future<ProductResponseDto> getProduct();
 
   Future<BannerResponseDTO> getBanner();
+
+  Future<ProductDetailResponseDto> getProductDetail(String productId);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -50,6 +53,19 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
         "${AppConstants.appApi.baseUrl}${AppConstants.appApi.banner}",
       );
       return BannerResponseDTO.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ProductDetailResponseDto> getProductDetail(String productId) async {
+    try {
+      final response = await dio.get(
+        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.detailProduct}",
+        queryParameters: {"product_id": productId},
+      );
+      return ProductDetailResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
