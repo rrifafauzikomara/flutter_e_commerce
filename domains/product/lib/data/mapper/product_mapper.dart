@@ -2,10 +2,12 @@ import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
 import 'package:product/data/model/response/product_detail_response_dto.dart';
 import 'package:product/data/model/response/product_response_dto.dart';
+import 'package:product/data/model/response/seller_response_dto.dart';
 import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/entity/response/product_category_entity.dart';
 import 'package:product/domain/entity/response/product_detail_entity.dart';
 import 'package:product/domain/entity/response/product_entity.dart';
+import 'package:product/domain/entity/response/seller_data_entity.dart';
 
 class ProductMapper {
   List<ProductCategoryEntity> mapProductCategoryDTOtoEntity(
@@ -136,6 +138,18 @@ class ProductMapper {
       id: dto.id ?? "",
       name: dto.name ?? "",
       city: dto.city ?? "",
+    );
+  }
+
+  SellerDataEntity mapSellerDataResponseDtoToEntity(SellerDataDto dto) {
+    return SellerDataEntity(
+      id: dto.id ?? "",
+      username: dto.username ?? "",
+      role: dto.role ?? "",
+      imageUrl: dto.imageUrl ?? "",
+      fullName: dto.fullName ?? "",
+      city: dto.city ?? "",
+      simpleAddress: dto.simpleAddress ?? "",
     );
   }
 }

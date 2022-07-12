@@ -1,15 +1,17 @@
-class ProductDetailDataEntity {
-  ProductDetailDataEntity({
-    required this.id,
-    required this.name,
-    required this.seller,
-    required this.stock,
-    required this.category,
-    required this.price,
-    required this.imageUrl,
-    required this.description,
-    required this.soldCount,
-    required this.popularity,
+import 'package:dependencies/equatable/equatable.dart';
+
+class ProductDetailDataEntity extends Equatable {
+  const ProductDetailDataEntity({
+    this.id = "",
+    this.name = "",
+    this.seller = const SellerDetailEntity(),
+    this.stock = 0,
+    this.category = const CategoryProductDetailEntity(),
+    this.price = 0,
+    this.imageUrl = "",
+    this.description = "",
+    this.soldCount = 0,
+    this.popularity = 0,
   });
 
   final String id;
@@ -22,30 +24,50 @@ class ProductDetailDataEntity {
   final String description;
   final int soldCount;
   final double popularity;
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        seller,
+        stock,
+        category,
+        price,
+        imageUrl,
+        description,
+        soldCount,
+        popularity,
+      ];
 }
 
-class CategoryProductDetailEntity {
-  CategoryProductDetailEntity({
-    required this.id,
-    required this.name,
-    required this.imageCover,
-    required this.imageIcon,
+class CategoryProductDetailEntity extends Equatable {
+  const CategoryProductDetailEntity({
+    this.id = "",
+    this.name = "",
+    this.imageCover = "",
+    this.imageIcon = "",
   });
 
   final String id;
   final String name;
   final String imageCover;
   final String imageIcon;
+
+  @override
+  List<Object?> get props => [id, name, imageCover, imageIcon];
 }
 
-class SellerDetailEntity {
-  SellerDetailEntity({
-    required this.id,
-    required this.name,
-    required this.city,
+class SellerDetailEntity extends Equatable {
+  const SellerDetailEntity({
+    this.id = "",
+    this.name = "",
+    this.city = "",
   });
 
   final String id;
   final String name;
   final String city;
+
+  @override
+  List<Object?> get props => [id, name, city];
 }

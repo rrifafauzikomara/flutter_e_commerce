@@ -7,6 +7,7 @@ import 'package:product/domain/usecases/get_banner_usecase.dart';
 import 'package:product/domain/usecases/get_product_category_usecase.dart';
 import 'package:product/domain/usecases/get_product_detail_usecase.dart';
 import 'package:product/domain/usecases/get_product_usecase.dart';
+import 'package:product/domain/usecases/get_seller_usecase.dart';
 
 class ProductDependency {
   ProductDependency() {
@@ -53,6 +54,11 @@ class ProductDependency {
     );
     sl.registerLazySingleton<GetProductDetailUseCase>(
       () => GetProductDetailUseCase(
+        productRepository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<GetSellerUseCase>(
+      () => GetSellerUseCase(
         productRepository: sl(),
       ),
     );

@@ -26,6 +26,7 @@ dependencies:
   introduction_screen: ^3.0.2
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  flutter_widget_from_html_core: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

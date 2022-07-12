@@ -1,33 +1,71 @@
+import 'package:common/utils/error/failure_response.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
+import 'package:product/domain/entity/response/product_detail_entity.dart';
+import 'package:product/domain/entity/response/seller_data_entity.dart';
 import 'package:product/domain/usecases/get_product_detail_usecase.dart';
+import 'package:product/domain/usecases/get_seller_usecase.dart';
 
 class ProductDetailCubit extends Cubit<ProductDetailState> {
   final GetProductDetailUseCase getProductUseCase;
+  final GetSellerUseCase getSellerUseCase;
 
-  ProductDetailCubit({required this.getProductUseCase})
-      : super(ProductDetailState(productState: ViewData.initial()));
+  ProductDetailCubit({
+    required this.getProductUseCase,
+    required this.getSellerUseCase,
+  }) : super(ProductDetailState(
+          productState: ViewData.initial(),
+          sellerState: ViewData.initial(),
+        ));
 
   void getProduct(String productId) async {
-    emit(
-      ProductDetailState(
-        productState: ViewData.loading(),
-      ),
-    );
+    emit(state.copyWith(productState: ViewData.loading(message: 'Loading')));
+
     final result = await getProductUseCase.call(productId);
-    result.fold(
-      (failure) => emit(
-        ProductDetailState(
-          productState:
-              ViewData.error(message: failure.errorMessage, failure: failure),
-        ),
-      ),
-      (result) => emit(
-        ProductDetailState(
-          productState: ViewData.loaded(data: result),
-        ),
-      ),
+    return result.fold(
+      (failure) => _onFailureProduct(failure),
+      (data) => _onSuccessProduct(data),
     );
+  }
+
+  Future<void> _onFailureProduct(
+    FailureResponse failure,
+  ) async {
+    emit(state.copyWith(
+        productState:
+            ViewData.error(message: failure.errorMessage, failure: failure)));
+  }
+
+  Future<void> _onSuccessProduct(
+    ProductDetailDataEntity data,
+  ) async {
+    emit(state.copyWith(productState: ViewData.loaded(data: data)));
+    await _getSeller(data.seller.id);
+  }
+
+  Future<void> _getSeller(String sellerId) async {
+    emit(state.copyWith(sellerState: ViewData.loading(message: 'Loading')));
+
+
+    final result = await getSellerUseCase.call(sellerId);
+    return result.fold(
+      (failure) => _onFailureSeller(failure),
+      (result) => _onSuccessSeller(result),
+    );
+  }
+
+  Future<void> _onFailureSeller(
+    FailureResponse failure,
+  ) async {
+    emit(state.copyWith(
+        sellerState:
+            ViewData.error(message: failure.errorMessage, failure: failure)));
+  }
+
+  Future<void> _onSuccessSeller(
+    SellerDataEntity data,
+  ) async {
+    emit(state.copyWith(sellerState: ViewData.loaded(data: data)));
   }
 }

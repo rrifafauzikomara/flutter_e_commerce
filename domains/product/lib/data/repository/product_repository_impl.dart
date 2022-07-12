@@ -8,6 +8,7 @@ import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/entity/response/product_category_entity.dart';
 import 'package:product/domain/entity/response/product_detail_entity.dart';
 import 'package:product/domain/entity/response/product_entity.dart';
+import 'package:product/domain/entity/response/seller_data_entity.dart';
 import 'package:product/domain/repository/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -88,6 +89,25 @@ class ProductRepositoryImpl implements ProductRepository {
           await productRemoteDataSource.getProductDetail(productId);
       return Right(
         mapper.mapProductDetailDataDtoToEntity(response.data),
+      );
+    } on DioError catch (error) {
+      return Left(
+        FailureResponse(
+          errorMessage:
+              error.response?.data[AppConstants.errorKey.message]?.toString() ??
+                  error.response.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<FailureResponse, SellerDataEntity>> getSeller(
+      String sellerId) async {
+    try {
+      final response = await productRemoteDataSource.getSeller(sellerId);
+      return Right(
+        mapper.mapSellerDataResponseDtoToEntity(response.data),
       );
     } on DioError catch (error) {
       return Left(

@@ -156,6 +156,7 @@ class MyApp extends StatelessWidget {
                 builder: (_) => BlocProvider<ProductDetailCubit>(
                   create: (_) => ProductDetailCubit(
                     getProductUseCase: sl(),
+                    getSellerUseCase: sl(),
                   ),
                   child: DetailProductScreen(
                     argument: argument,
