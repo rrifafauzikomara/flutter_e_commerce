@@ -26,7 +26,7 @@ class BottomNavigation extends StatelessWidget {
                 Container(
                   color: Colors.blue,
                 ),
-                const AccountScreen(),
+                AccountScreen(),
               ],
             ),
           ),
