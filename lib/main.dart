@@ -1,3 +1,8 @@
+import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.dart';
+import 'package:account/presentation/bloc/logout_bloc/logout_cubit.dart';
+import 'package:account/presentation/bloc/update_photo_bloc/update_photo_bloc.dart';
+import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
+import 'package:account/presentation/ui/edit_profile_screen.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
@@ -106,8 +111,43 @@ class MyApp extends StatelessWidget {
                         getProductCategoryCase: sl(),
                       )..getProductCategory(),
                     ),
+                    BlocProvider<UserCubit>(
+                      create: (_) => UserCubit(
+                        getUserUseCase: sl(),
+                      )..getUser(),
+                    ),
+                    BlocProvider<LogoutCubit>(
+                      create: (_) => LogoutCubit(
+                        logoutUseCase: sl(),
+                      ),
+                    ),
                   ],
                   child: const BottomNavigation(),
+                ),
+              );
+            case AppRoutes.editProfile:
+              return MaterialPageRoute(
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<UserCubit>(
+                      create: (_) => UserCubit(
+                        getUserUseCase: sl(),
+                      )..getUser(),
+                    ),
+                    BlocProvider<EditProfileBloc>(
+                      create: (_) => EditProfileBloc(
+                        firebaseMessaging: sl(),
+                        updateUserUseCase: sl(),
+                      ),
+                    ),
+                    BlocProvider<UpdatePhotoBloc>(
+                      create: (_) => UpdatePhotoBloc(
+                        imagePicker: sl(),
+                        uploadPhotoUsecase: sl(),
+                      ),
+                    ),
+                  ],
+                  child: EditProfileScreen(),
                 ),
               );
             case AppRoutes.detailProduct:
