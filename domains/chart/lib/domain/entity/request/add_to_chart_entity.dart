@@ -10,9 +10,9 @@ class AddToChartEntity extends Equatable {
   const AddToChartEntity({
     required this.productId,
     required this.amount,
-    required this.productName,
-    required this.description,
-    required this.imageUrl,
+    this.productName = "",
+    this.description = "",
+    this.imageUrl = "",
   });
 
   @override

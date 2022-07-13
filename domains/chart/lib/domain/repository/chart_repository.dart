@@ -8,4 +8,9 @@ abstract class ChartRepository {
 
   Future<Either<FailureResponse, ChartDataEntity>> addToChart(
       AddToChartEntity body);
+
+  Future<Either<FailureResponse, ChartDataEntity>> getCharts();
+
+  Future<Either<FailureResponse, ChartDataEntity>> deleteChart(
+      AddToChartEntity body);
 }

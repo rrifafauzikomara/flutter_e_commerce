@@ -3,6 +3,8 @@ import 'package:chart/data/mapper/chart_mapper.dart';
 import 'package:chart/data/repository/chart_repository_impl.dart';
 import 'package:chart/domain/repository/chart_repository.dart';
 import 'package:chart/domain/usecases/add_to_chart_usecase.dart';
+import 'package:chart/domain/usecases/delete_chart_usecase.dart';
+import 'package:chart/domain/usecases/get_chart_usecase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 
 class ChartDependency {
@@ -35,6 +37,18 @@ class ChartDependency {
   void _registerUseCases() {
     sl.registerLazySingleton<AddToChartUseCase>(
           () => AddToChartUseCase(
+        chartRepository: sl(),
+      ),
+    );
+
+    sl.registerLazySingleton<GetChartUseCase>(
+          () => GetChartUseCase(
+        chartRepository: sl(),
+      ),
+    );
+
+    sl.registerLazySingleton<DeleteChartUseCase>(
+          () => DeleteChartUseCase(
         chartRepository: sl(),
       ),
     );
