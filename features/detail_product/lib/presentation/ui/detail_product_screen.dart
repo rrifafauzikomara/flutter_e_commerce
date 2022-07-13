@@ -28,6 +28,8 @@ class DetailProductScreen extends StatefulWidget {
 }
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
+  void _closeBottomSheet(BuildContext context) => Navigator.pop(context);
+
   @override
   void initState() {
     super.initState();
@@ -106,9 +108,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 errorMessage: state.addToChartState.failure!.errorMessage,
               );
             } else if (chartState.isHasData) {
-              CustomToast.showSuccessToast(
-                errorMessage: "Success Add To Chart",
-              );
+              _showSuccessAddToChart(state.addToChartState.data!);
             }
           },
           builder: (context, state) {
@@ -297,6 +297,95 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           },
         ),
       ),
+    );
+  }
+
+  void _showSuccessAddToChart(AddToChartEntity data) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return Padding(
+          padding:
+              const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () => _closeBottomSheet(context),
+                  child: const Icon(Icons.close, color: ColorName.orange),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(9),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12.0),
+                            ),
+                            child: CachedNetworkImage(
+                              height: 54.h,
+                              width: 69.w,
+                              imageUrl: data.imageUrl,
+                              placeholder: (context, url) => const Center(
+                                  child: CustomCircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  const Center(child: Icon(Icons.error)),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SizedBox(width: 9.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.productName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 10.sp,
+                                    color: ColorName.textDarkGrey,
+                                  ),
+                                ),
+                                SizedBox(height: 5.h),
+                                HtmlWidget(
+                                  data.description,
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 8.sp,
+                                    color: ColorName.textDarkGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6.h),
+                      CustomButton(
+                        buttonText: "Lihat Keranjang",
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
