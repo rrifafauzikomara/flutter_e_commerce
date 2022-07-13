@@ -24,6 +24,8 @@ dependencies:
   # Domain
   product:
     path: ../../domains/product
+  chart:
+    path: ../../domains/chart
 
 dev_dependencies:
   flutter_test:

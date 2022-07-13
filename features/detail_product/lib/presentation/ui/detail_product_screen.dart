@@ -1,3 +1,4 @@
+import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
 import 'package:common/utils/extensions/money_extension.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/button/custom_button.dart';
@@ -12,7 +13,9 @@ import 'package:product/domain/entity/response/product_detail_entity.dart';
 import 'package:product/domain/entity/response/seller_data_entity.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
+import 'package:component/widget/toast/custom_toast.dart';
 import 'package:dependencies/html/html.dart';
+import 'package:component/widget/stack/loading_stack.dart';
 
 class DetailProductScreen extends StatefulWidget {
   final DetailProductArgument argument;
@@ -33,6 +36,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
   void _getProductDetail() {
     context.read<ProductDetailCubit>().getProduct(widget.argument.productId);
+  }
+
+  void _addProductToChart(AddToChartEntity body) {
+    context.read<ProductDetailCubit>().addToChart(body);
   }
 
   @override
@@ -91,9 +98,22 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         iconTheme: const IconThemeData(color: ColorName.orange),
       ),
       body: Center(
-        child: BlocBuilder<ProductDetailCubit, ProductDetailState>(
+        child: BlocConsumer<ProductDetailCubit, ProductDetailState>(
+          listener: (context, state) {
+            final chartState = state.addToChartState.status;
+            if (chartState.isError) {
+              CustomToast.showErrorToast(
+                errorMessage: state.addToChartState.failure!.errorMessage,
+              );
+            } else if (chartState.isHasData) {
+              CustomToast.showSuccessToast(
+                errorMessage: "Success Add To Chart",
+              );
+            }
+          },
           builder: (context, state) {
             final productState = state.productState.status;
+            final chartState = state.addToChartState.status;
             if (productState.isLoading) {
               return const CustomCircularProgressIndicator();
             } else if (productState.isError) {
@@ -101,150 +121,118 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             } else if (productState.isHasData) {
               final productData =
                   state.productState.data ?? const ProductDetailDataEntity();
-              return Stack(
-                children: [
-                  ListView(
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: productData.imageUrl,
-                        fit: BoxFit.contain,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          left: 16.w,
-                          right: 16.w,
-                          top: 10.h,
-                          bottom: 40.h,
+              return LoadingStack(
+                isLoading: chartState.isLoading,
+                widget: Stack(
+                  children: [
+                    ListView(
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: productData.imageUrl,
+                          fit: BoxFit.contain,
                         ),
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    productData.price.toIDR(),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 16.w,
+                            right: 16.w,
+                            top: 10.h,
+                            bottom: 40.h,
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      productData.price.toIDR(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20.sp,
+                                        color: ColorName.textDarkGrey,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.star_border,
+                                    color: ColorName.orange,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                productData.name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12.sp,
+                                  color: ColorName.textDarkGrey,
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                "${productData.soldCount}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10.sp,
+                                  color: ColorName.textDarkGrey,
+                                ),
+                              ),
+                              SizedBox(height: 20.h),
+                              const _Seller(),
+                              SizedBox(height: 20.h),
+                              Text(
+                                "Informasi Produk",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12.sp,
+                                  color: ColorName.textDarkGrey,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Kategori",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10.sp,
                                       color: ColorName.textDarkGrey,
                                     ),
                                   ),
-                                ),
-                                const Icon(
-                                  Icons.star_border,
-                                  color: ColorName.orange,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10.h),
-                            Text(
-                              productData.name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
-                                color: ColorName.textDarkGrey,
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
-                            Text(
-                              "${productData.soldCount}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.sp,
-                                color: ColorName.textDarkGrey,
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                            const _Seller(),
-                            SizedBox(height: 20.h),
-                            Text(
-                              "Informasi Produk",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.sp,
-                                color: ColorName.textDarkGrey,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            Row(
-                              children: [
-                                Text(
-                                  "Kategori",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10.sp,
-                                    color: ColorName.textDarkGrey,
+                                  const Spacer(),
+                                  Text(
+                                    productData.category.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10.sp,
+                                      color: ColorName.orange,
+                                    ),
                                   ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  productData.category.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10.sp,
-                                    color: ColorName.orange,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 23.h),
-                            Container(
-                              color: ColorName.textFieldBackgroundGrey,
-                              width: double.infinity,
-                              height: 1.h,
-                            ),
-                            SizedBox(height: 19.h),
-                            Text(
-                              "Deskripsi Produk",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.sp,
-                                color: ColorName.textDarkGrey,
+                                ],
                               ),
-                            ),
-                            SizedBox(height: 8.h),
-                            HtmlWidget(
-                              productData.description,
-                              textStyle: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.sp,
-                                color: ColorName.textDarkGrey,
+                              SizedBox(height: 23.h),
+                              Container(
+                                color: ColorName.textFieldBackgroundGrey,
+                                width: double.infinity,
+                                height: 1.h,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          color: ColorName.textFieldBackgroundGrey,
-                          width: double.infinity,
-                          height: 1.h,
-                        ),
-                        Container(
-                          color: ColorName.white,
-                          padding: EdgeInsets.only(
-                              top: 10.h, bottom: 8.h, left: 15.h, right: 15.h),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: CustomButton(
-                                  buttonText: "Beli Langsung",
-                                  onTap: () {},
+                              SizedBox(height: 19.h),
+                              Text(
+                                "Deskripsi Produk",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12.sp,
+                                  color: ColorName.textDarkGrey,
                                 ),
                               ),
-                              SizedBox(width: 15.w),
-                              Expanded(
-                                child: CustomButton(
-                                  buttonText: "Keranjang",
-                                  onTap: () {},
+                              SizedBox(height: 8.h),
+                              HtmlWidget(
+                                productData.description,
+                                textStyle: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10.sp,
+                                  color: ColorName.textDarkGrey,
                                 ),
                               ),
                             ],
@@ -252,8 +240,56 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            color: ColorName.textFieldBackgroundGrey,
+                            width: double.infinity,
+                            height: 1.h,
+                          ),
+                          Container(
+                            color: ColorName.white,
+                            padding: EdgeInsets.only(
+                                top: 10.h,
+                                bottom: 8.h,
+                                left: 15.h,
+                                right: 15.h),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: CustomButton(
+                                    buttonText: "Beli Langsung",
+                                    onTap: chartState.isLoading ? null : () {},
+                                  ),
+                                ),
+                                SizedBox(width: 15.w),
+                                Expanded(
+                                  child: CustomButton(
+                                    buttonText: "Keranjang",
+                                    onTap: chartState.isLoading
+                                        ? null
+                                        : () =>
+                                            _addProductToChart(AddToChartEntity(
+                                              productId: productData.id,
+                                              amount: 1,
+                                              productName: productData.name,
+                                              description:
+                                                  productData.description,
+                                              imageUrl: productData.imageUrl,
+                                            )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else {
               return const SizedBox();

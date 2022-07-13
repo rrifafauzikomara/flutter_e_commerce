@@ -157,6 +157,7 @@ class MyApp extends StatelessWidget {
                   create: (_) => ProductDetailCubit(
                     getProductUseCase: sl(),
                     getSellerUseCase: sl(),
+                    addToChartUseCase: sl(),
                   ),
                   child: DetailProductScreen(
                     argument: argument,

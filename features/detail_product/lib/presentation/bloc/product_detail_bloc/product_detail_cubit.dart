@@ -1,3 +1,5 @@
+import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
+import 'package:chart/domain/usecases/add_to_chart_usecase.dart';
 import 'package:common/utils/error/failure_response.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:dependencies/bloc/bloc.dart';
@@ -10,14 +12,41 @@ import 'package:product/domain/usecases/get_seller_usecase.dart';
 class ProductDetailCubit extends Cubit<ProductDetailState> {
   final GetProductDetailUseCase getProductUseCase;
   final GetSellerUseCase getSellerUseCase;
+  final AddToChartUseCase addToChartUseCase;
 
   ProductDetailCubit({
     required this.getProductUseCase,
     required this.getSellerUseCase,
+    required this.addToChartUseCase,
   }) : super(ProductDetailState(
           productState: ViewData.initial(),
           sellerState: ViewData.initial(),
+          addToChartState: ViewData.initial(),
         ));
+
+  void addToChart(AddToChartEntity body) async {
+    emit(state.copyWith(addToChartState: ViewData.loading(message: 'Loading')));
+
+    final result = await addToChartUseCase.call(body);
+    return result.fold(
+      (failure) => _onFailureAddToChart(failure),
+      (data) => _onSuccessAddToChart(body),
+    );
+  }
+
+  Future<void> _onFailureAddToChart(
+    FailureResponse failure,
+  ) async {
+    emit(state.copyWith(
+        addToChartState:
+            ViewData.error(message: failure.errorMessage, failure: failure)));
+  }
+
+  Future<void> _onSuccessAddToChart(
+    AddToChartEntity data,
+  ) async {
+    emit(state.copyWith(addToChartState: ViewData.loaded(data: data)));
+  }
 
   void getProduct(String productId) async {
     emit(state.copyWith(productState: ViewData.loading(message: 'Loading')));
@@ -46,7 +75,6 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
 
   Future<void> _getSeller(String sellerId) async {
     emit(state.copyWith(sellerState: ViewData.loading(message: 'Loading')));
-
 
     final result = await getSellerUseCase.call(sellerId);
     return result.fold(

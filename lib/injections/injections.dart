@@ -3,6 +3,7 @@ import 'package:common/utils/di/common_dependencies.dart';
 import 'package:core/di/dependency.dart';
 import 'package:dependencies/di/dependency.dart';
 import 'package:product/di/dependency.dart';
+import 'package:chart/di/dependency.dart';
 import 'package:profile/di/dependency.dart';
 
 class Injections {
@@ -15,6 +16,7 @@ class Injections {
     AuthenticationDependency();
     ProductDependency();
     ProfileDependency();
+    ChartDependency();
   }
 
   Future<void> _registerSharedDependencies() async {

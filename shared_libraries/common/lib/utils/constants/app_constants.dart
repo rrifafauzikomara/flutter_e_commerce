@@ -40,6 +40,8 @@ class AppApi {
   String get seller => 'customer/seller/';
 
   String get category => 'category';
+
+  String get chart => 'customer/cart';
 }
 
 class ErrorKey {
