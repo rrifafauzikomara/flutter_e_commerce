@@ -137,8 +137,8 @@ class MyApp extends StatelessWidget {
                         updateUserUseCase: sl(),
                       ),
                     ),
-                    BlocProvider<UpdatePhotoBloc>(
-                      create: (_) => UpdatePhotoBloc(
+                    BlocProvider<UpdatePhotoCubit>(
+                      create: (_) => UpdatePhotoCubit(
                         imagePicker: sl(),
                         uploadPhotoUsecase: sl(),
                       ),
