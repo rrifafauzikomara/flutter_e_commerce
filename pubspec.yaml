@@ -42,6 +42,8 @@ dependencies:
     path: domains/product
   profile:
     path: domains/profile
+  chart:
+    path: domains/chart
 
   # Features
   account:
