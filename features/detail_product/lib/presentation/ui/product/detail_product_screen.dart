@@ -1,4 +1,4 @@
-import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
+import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
 import 'package:common/utils/extensions/money_extension.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/button/custom_button.dart';

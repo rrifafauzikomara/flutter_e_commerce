@@ -1,5 +1,5 @@
-import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
-import 'package:chart/domain/usecases/add_to_chart_usecase.dart';
+import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
+import 'package:cart/domain/usecases/add_to_chart_usecase.dart';
 import 'package:common/utils/error/failure_response.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:dependencies/bloc/bloc.dart';

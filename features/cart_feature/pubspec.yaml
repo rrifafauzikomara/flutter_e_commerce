@@ -22,8 +22,8 @@ dependencies:
     path: ../../resources/resources
 
   # Domain
-  chart:
-    path: ../../domains/chart
+  cart:
+    path: ../../domains/cart
 
 dev_dependencies:
   flutter_test:

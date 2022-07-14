@@ -1,5 +1,5 @@
-import 'package:chart/data/model/request/add_to_chart_dto.dart';
-import 'package:chart/data/model/response/chart_response_dto.dart';
+import 'package:cart/data/model/request/add_to_chart_dto.dart';
+import 'package:cart/data/model/response/chart_response_dto.dart';
 import 'package:common/utils/constants/app_constants.dart';
 import 'package:dependencies/dio/dio.dart';
 

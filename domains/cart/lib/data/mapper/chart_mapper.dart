@@ -1,7 +1,7 @@
-import 'package:chart/data/model/request/add_to_chart_dto.dart';
-import 'package:chart/data/model/response/chart_response_dto.dart';
-import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
-import 'package:chart/domain/entity/response/chart_entity.dart';
+import 'package:cart/data/model/request/add_to_chart_dto.dart';
+import 'package:cart/data/model/response/chart_response_dto.dart';
+import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
+import 'package:cart/domain/entity/response/chart_entity.dart';
 
 class ChartMapper {
   UserInfoChartEntity mapUserInfoChartDtoToEntity(UserInfoChartDto dto) {

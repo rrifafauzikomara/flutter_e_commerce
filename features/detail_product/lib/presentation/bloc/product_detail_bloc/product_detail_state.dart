@@ -1,4 +1,4 @@
-import 'package:chart/domain/entity/request/add_to_chart_entity.dart';
+import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:product/domain/entity/response/product_detail_entity.dart';
 import 'package:product/domain/entity/response/seller_data_entity.dart';
