@@ -33,7 +33,7 @@ class AppApi {
 
   String get banner => 'customer/product/banner';
 
-  String get product => 'customer/product?per_page=20';
+  String get product => 'customer/product?per_page=5';
 
   String get category => 'category';
 }
