@@ -1,6 +1,5 @@
-
-
 import 'package:common/utils/error/failure_response.dart';
+import 'package:dependencies/equatable/equatable.dart';
 
 enum ViewState { initial, loading, error, hasData, noData }
 
@@ -16,13 +15,13 @@ extension ViewStateExtension on ViewState {
   bool get isNoData => this == ViewState.noData;
 }
 
-class ViewData<T> {
-  ViewState status;
-  T? data;
-  String message = "";
-  FailureResponse? failure;
+class ViewData<T> extends Equatable {
+  final ViewState status;
+  final T? data;
+  final String message;
+  final FailureResponse? failure;
 
-  ViewData._({
+  const ViewData._({
     required this.status,
     this.data,
     this.message = "",
@@ -49,10 +48,18 @@ class ViewData<T> {
   }
 
   factory ViewData.initial() {
-    return ViewData._(status: ViewState.initial);
+    return const ViewData._(status: ViewState.initial);
   }
 
   factory ViewData.noData({required String message}) {
     return ViewData._(status: ViewState.noData, message: message);
   }
+
+  @override
+  List<Object?> get props => [
+        status,
+        data,
+        message,
+        failure,
+      ];
 }
