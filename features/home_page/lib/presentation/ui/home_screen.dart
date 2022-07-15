@@ -192,12 +192,14 @@ class HomeScreen extends StatelessWidget {
                 return const Center(child: CustomCircularProgressIndicator());
               } else if (status.isHasData) {
                 final productCategory = state.productCategoryState.data ?? [];
+                final productCategoryLength =
+                productCategory.length > 3 ? 3 : productCategory.length;
                 return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
-                  itemCount: productCategory.length,
+                  itemCount: productCategoryLength,
                   itemBuilder: (_, index) => ProductCategoryCard(
                     productCategoryEntity: productCategory[index],
                   ),
