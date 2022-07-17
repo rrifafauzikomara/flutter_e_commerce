@@ -20,7 +20,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^1.0.0
   mocktail: ^0.3.0
-  http_mock_adapter: ^0.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
