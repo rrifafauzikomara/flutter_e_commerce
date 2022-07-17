@@ -159,7 +159,7 @@ class CartCard extends StatelessWidget {
                       ? const SizedBox()
                       : IconButton(
                           onPressed: deleteProductChanged,
-                          icon: const Icon(Icons.add),
+                          icon: const Icon(Icons.remove),
                         ),
                   Text(cart.quantity.toString()),
                   loadingAddProduct

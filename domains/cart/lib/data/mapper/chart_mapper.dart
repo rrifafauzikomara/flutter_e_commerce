@@ -52,7 +52,10 @@ class ChartMapper {
       List<ProductsChartDto> dto) {
     final products = <ProductsChartEntity>[];
     for (ProductsChartDto i in dto) {
-      products.add(mapProductsChartDtoToEntity(i));
+      final qty = i.quantity ?? 0;
+      if (qty > 0) {
+        products.add(mapProductsChartDtoToEntity(i));
+      }
     }
     return products;
   }

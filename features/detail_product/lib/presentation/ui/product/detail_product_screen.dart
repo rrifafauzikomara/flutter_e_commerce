@@ -380,7 +380,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       SizedBox(height: 6.h),
                       CustomButton(
                         buttonText: "Lihat Keranjang",
-                        onTap: () {},
+                        onTap: () => _productRouter.navigateToCartList(),
                       ),
                     ],
                   ),
