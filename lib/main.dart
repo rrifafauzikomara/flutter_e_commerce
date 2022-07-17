@@ -7,6 +7,7 @@ import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:auth/presentation/ui/sign_in_screen.dart';
 import 'package:auth/presentation/ui/sign_up_screen.dart';
+import 'package:cart_feature/presentation/bloc/bloc.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
@@ -166,7 +167,14 @@ class MyApp extends StatelessWidget {
                 ),
               );
             case AppRoutes.cartList:
-              return MaterialPageRoute(builder: (_) => const CartListScreen());
+              return MaterialPageRoute(
+                builder: (_) => BlocProvider<CartCubit>(
+                  create: (_) => CartCubit(
+                    getChartUseCase: sl(),
+                  ),
+                  child: const CartListScreen(),
+                ),
+              );
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());
           }

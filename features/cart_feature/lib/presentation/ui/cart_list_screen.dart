@@ -1,3 +1,5 @@
+import 'package:cart_feature/presentation/bloc/cart_cubit.dart';
+import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/assets.gen.dart';
@@ -11,6 +13,16 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _getCart(context);
+  }
+
+  void _getCart(BuildContext context) {
+    context.read<CartCubit>().getCart();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
