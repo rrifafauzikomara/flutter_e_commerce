@@ -23,13 +23,14 @@ class CartCubit extends Cubit<CartState> {
     final data = state.cartListState.data;
 
     if (selected) {
-      final products = state.cartListState.data?.product ?? [];
+      final products = data?.product ?? [];
 
       for (var i in products) {
         amount += i.product.price;
       }
 
       for (var i in selectProducts) {
+        debugPrint("Set to True: $i");
         newSelectProducts.add(true);
       }
 
@@ -43,6 +44,7 @@ class CartCubit extends Cubit<CartState> {
       amount = 0;
 
       for (var i in selectProducts) {
+        debugPrint("Set to False: $i");
         newSelectProducts.add(false);
       }
 
@@ -53,6 +55,43 @@ class CartCubit extends Cubit<CartState> {
         cartListState: ViewData.loaded(data: data),
       ));
     }
+  }
+
+  void selectProduct(bool selected, int index) {
+    final selectProducts = state.selectProducts;
+    final newSelectProducts = <bool>[];
+    final data = state.cartListState.data;
+    var totalAmount = state.totalAmount;
+    var selectAll = false;
+
+    final products = data?.product ?? [];
+    final selectedAmount = products[index].product.price;
+    newSelectProducts.addAll(selectProducts);
+    if (selected) {
+      final total = totalAmount + selectedAmount;
+      totalAmount = total;
+      newSelectProducts[index] = true;
+    } else {
+      final total = totalAmount - selectedAmount;
+      totalAmount = total;
+      newSelectProducts[index] = false;
+    }
+
+    for (var i in newSelectProducts) {
+      if (i) {
+        selectAll = true;
+      } else {
+        selectAll = false;
+        break;
+      }
+    }
+
+    emit(state.copyWith(
+      selectAll: selectAll,
+      totalAmount: totalAmount,
+      selectProducts: newSelectProducts,
+      cartListState: ViewData.loaded(data: data),
+    ));
   }
 
   void getCart() async {

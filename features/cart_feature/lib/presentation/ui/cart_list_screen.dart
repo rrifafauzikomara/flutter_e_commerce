@@ -33,6 +33,14 @@ class _CartListScreenState extends State<CartListScreen> {
     context.read<CartCubit>().selectAll(selected);
   }
 
+  void _selectProduct(
+    BuildContext context, {
+    required bool selected,
+    required int index,
+  }) {
+    context.read<CartCubit>().selectProduct(selected, index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +90,6 @@ class _CartListScreenState extends State<CartListScreen> {
             } else if (state.cartListState.status.isHasData) {
               final products = state.cartListState.data?.product ?? [];
               final selectProducts = state.selectProducts;
-              print('Rifa UI 1: $selectProducts');
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -113,11 +120,14 @@ class _CartListScreenState extends State<CartListScreen> {
                       itemBuilder: (context, index) {
                         final cart = products[index];
                         final selectProduct = selectProducts[index];
-                        print('Rifa UI 2: $selectProduct');
                         return CartCard(
                           cart: cart,
                           value: selectProduct,
-                          onChanged: (bool? value) {},
+                          onChanged: (bool? value) => _selectProduct(
+                            context,
+                            selected: value ?? false,
+                            index: index,
+                          ),
                         );
                       },
                     ),

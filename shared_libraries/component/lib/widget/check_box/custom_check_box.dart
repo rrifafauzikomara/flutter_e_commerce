@@ -20,13 +20,8 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
   bool _selected = false;
 
   @override
-  void initState() {
-    super.initState();
-    _selected = widget.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _selected = widget.value;
     return Material(
       color: ColorName.white,
       child: InkWell(
