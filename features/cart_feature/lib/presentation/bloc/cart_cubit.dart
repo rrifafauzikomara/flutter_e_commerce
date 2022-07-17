@@ -1,4 +1,7 @@
+import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
 import 'package:cart/domain/entity/response/chart_entity.dart';
+import 'package:cart/domain/usecases/add_to_chart_usecase.dart';
+import 'package:cart/domain/usecases/delete_chart_usecase.dart';
 import 'package:cart/domain/usecases/get_chart_usecase.dart';
 import 'package:cart_feature/presentation/bloc/bloc.dart';
 import 'package:common/utils/error/failure_response.dart';
@@ -9,12 +12,100 @@ import 'package:flutter/material.dart';
 
 class CartCubit extends Cubit<CartState> {
   final GetChartUseCase getChartUseCase;
+  final AddToChartUseCase addToChartUseCase;
+  final DeleteChartUseCase deleteChartUseCase;
 
   CartCubit({
     required this.getChartUseCase,
+    required this.addToChartUseCase,
+    required this.deleteChartUseCase,
   }) : super(CartState(
           cartListState: ViewData.initial(),
+          addCartState: ViewData.initial(),
+          deleteCartState: ViewData.initial(),
         ));
+
+  void deleteProduct({
+    required String productId,
+    required int amount,
+  }) async {
+    emit(state.copyWith(deleteCartState: ViewData.loading(message: 'Loading')));
+
+    final result = await deleteChartUseCase.call(AddToChartEntity(
+      productId: productId,
+      amount: amount,
+    ));
+
+    return result.fold(
+      (failure) => _onFailureDeleteCart(failure),
+      (data) => _onSuccessDeleteCart(data),
+    );
+  }
+
+  Future<void> _onFailureDeleteCart(
+    FailureResponse failure,
+  ) async {
+    emit(state.copyWith(
+        deleteCartState:
+            ViewData.error(message: failure.errorMessage, failure: failure)));
+  }
+
+  Future<void> _onSuccessDeleteCart(
+    ChartDataEntity data,
+  ) async {
+    if (data.product.isEmpty) {
+      emit(state.copyWith(
+        deleteCartState: ViewData.noData(message: "No Data"),
+        cartListState: ViewData.noData(message: "No Data"),
+      ));
+    } else {
+      emit(state.copyWith(
+        deleteCartState: ViewData.loaded(data: data),
+        cartListState: ViewData.loaded(data: data),
+      ));
+    }
+  }
+
+  void addProduct({
+    required String productId,
+    required int amount,
+  }) async {
+    emit(state.copyWith(addCartState: ViewData.loading(message: 'Loading')));
+
+    final result = await addToChartUseCase.call(AddToChartEntity(
+      productId: productId,
+      amount: amount,
+    ));
+
+    return result.fold(
+      (failure) => _onFailureAddCart(failure),
+      (data) => _onSuccessAddCart(data),
+    );
+  }
+
+  Future<void> _onFailureAddCart(
+    FailureResponse failure,
+  ) async {
+    emit(state.copyWith(
+        addCartState:
+            ViewData.error(message: failure.errorMessage, failure: failure)));
+  }
+
+  Future<void> _onSuccessAddCart(
+    ChartDataEntity data,
+  ) async {
+    if (data.product.isEmpty) {
+      emit(state.copyWith(
+        addCartState: ViewData.noData(message: "No Data"),
+        cartListState: ViewData.noData(message: "No Data"),
+      ));
+    } else {
+      emit(state.copyWith(
+        addCartState: ViewData.loaded(data: data),
+        cartListState: ViewData.loaded(data: data),
+      ));
+    }
+  }
 
   void selectAll(bool selected) {
     int amount = 0;

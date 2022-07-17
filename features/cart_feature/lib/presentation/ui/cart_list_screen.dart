@@ -2,6 +2,7 @@ import 'package:cart_feature/presentation/bloc/bloc.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/card/cart_card.dart';
 import 'package:component/widget/check_box/custom_check_box.dart';
+import 'package:component/widget/toast/custom_toast.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,24 @@ class _CartListScreenState extends State<CartListScreen> {
     required int index,
   }) {
     context.read<CartCubit>().selectProduct(selected, index);
+  }
+
+  void _addProduct(
+    BuildContext context, {
+    required String productId,
+    required int amount,
+  }) {
+    context.read<CartCubit>().addProduct(productId: productId, amount: amount);
+  }
+
+  void _deleteProduct(
+    BuildContext context, {
+    required String productId,
+    required int amount,
+  }) {
+    context
+        .read<CartCubit>()
+        .deleteProduct(productId: productId, amount: amount);
   }
 
   @override
@@ -79,8 +98,24 @@ class _CartListScreenState extends State<CartListScreen> {
       ),
       body: Center(
         child: BlocConsumer<CartCubit, CartState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            final addCartState = state.addCartState;
+            if (addCartState.status.isError) {
+              CustomToast.showErrorToast(
+                errorMessage: state.addCartState.failure!.errorMessage,
+              );
+            }
+
+            final deleteCartState = state.deleteCartState;
+            if (deleteCartState.status.isError) {
+              CustomToast.showErrorToast(
+                errorMessage: state.deleteCartState.failure!.errorMessage,
+              );
+            }
+          },
           builder: (context, state) {
+            final addCartLoading = state.addCartState.status.isLoading;
+            final deleteCartLoading = state.deleteCartState.status.isLoading;
             if (state.cartListState.status.isLoading) {
               return const CustomCircularProgressIndicator();
             } else if (state.cartListState.status.isError) {
@@ -123,11 +158,17 @@ class _CartListScreenState extends State<CartListScreen> {
                         return CartCard(
                           cart: cart,
                           value: selectProduct,
-                          onChanged: (bool? value) => _selectProduct(
+                          selectProductChanged: (bool? value) => _selectProduct(
                             context,
                             selected: value ?? false,
                             index: index,
                           ),
+                          addProductChanged: () => _addProduct(context,
+                              productId: cart.product.id, amount: 1),
+                          deleteProductChanged: () => _deleteProduct(context,
+                              productId: cart.product.id, amount: 1),
+                          loadingAddProduct: addCartLoading,
+                          loadingDeleteProduct: deleteCartLoading,
                         );
                       },
                     ),

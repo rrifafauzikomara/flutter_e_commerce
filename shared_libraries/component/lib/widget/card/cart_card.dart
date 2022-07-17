@@ -4,20 +4,27 @@ import 'package:component/widget/progress_indicator/custom_circular_progress_ind
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
 import 'package:common/utils/extensions/money_extension.dart';
 
 class CartCard extends StatelessWidget {
   final ProductsChartEntity cart;
   final bool value;
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool?>? selectProductChanged;
+  final VoidCallback addProductChanged;
+  final VoidCallback deleteProductChanged;
+  final bool loadingAddProduct;
+  final bool loadingDeleteProduct;
 
   const CartCard({
     Key? key,
     required this.cart,
     required this.value,
-    required this.onChanged,
+    required this.selectProductChanged,
+    required this.addProductChanged,
+    required this.deleteProductChanged,
+    required this.loadingAddProduct,
+    required this.loadingDeleteProduct,
   }) : super(key: key);
 
   @override
@@ -57,7 +64,7 @@ class CartCard extends StatelessWidget {
                 children: [
                   CustomCheckBox(
                     value: value,
-                    onChanged: onChanged,
+                    onChanged: selectProductChanged,
                   ),
                   SizedBox(width: 6.w),
                   Expanded(
@@ -148,19 +155,22 @@ class CartCard extends StatelessWidget {
               Row(
                 children: [
                   const Spacer(),
-                  Assets.images.icon.cart.svg(width: 12.w, height: 12.h),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add),
-                  ),
+                  loadingDeleteProduct
+                      ? const SizedBox()
+                      : IconButton(
+                          onPressed: deleteProductChanged,
+                          icon: const Icon(Icons.add),
+                        ),
                   Text(cart.quantity.toString()),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.add,
-                      color: ColorName.orange,
-                    ),
-                  ),
+                  loadingAddProduct
+                      ? const SizedBox()
+                      : IconButton(
+                          onPressed: addProductChanged,
+                          icon: const Icon(
+                            Icons.add,
+                            color: ColorName.orange,
+                          ),
+                        ),
                 ],
               ),
             ],

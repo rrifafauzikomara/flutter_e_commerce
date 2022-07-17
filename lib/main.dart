@@ -171,6 +171,8 @@ class MyApp extends StatelessWidget {
                 builder: (_) => BlocProvider<CartCubit>(
                   create: (_) => CartCubit(
                     getChartUseCase: sl(),
+                    addToChartUseCase: sl(),
+                    deleteChartUseCase: sl(),
                   ),
                   child: const CartListScreen(),
                 ),
