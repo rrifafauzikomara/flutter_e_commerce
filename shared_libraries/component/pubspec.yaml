@@ -17,6 +17,8 @@ dependencies:
 
   product:
     path: ../../domains/product
+  cart:
+    path: ../../domains/cart
 
 dev_dependencies:
   flutter_test:
