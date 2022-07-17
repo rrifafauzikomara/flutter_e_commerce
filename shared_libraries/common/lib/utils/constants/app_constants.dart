@@ -42,6 +42,8 @@ class AppApi {
   String get category => 'category';
 
   String get chart => 'customer/cart';
+
+  String get paymentMethod => 'customer/payment/method';
 }
 
 class ErrorKey {

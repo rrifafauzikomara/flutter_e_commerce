@@ -2,6 +2,7 @@ name: payment_feature
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -10,6 +11,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  common:
+    path: ../../shared_libraries/common
+  component:
+    path: ../../shared_libraries/component
+  dependencies:
+    path: ../../shared_libraries/dependencies
+  resources:
+    path: ../../resources/resources
+
+  # Domain
+  payment:
+    path: ../../domains/payment
 
 dev_dependencies:
   flutter_test:
