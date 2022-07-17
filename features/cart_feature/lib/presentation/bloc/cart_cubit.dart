@@ -108,7 +108,7 @@ class CartCubit extends Cubit<CartState> {
   }
 
   void selectAll(bool selected) {
-    int amount = 0;
+    int totalAmount = 0;
     final selectProducts = state.selectProducts;
     final newSelectProducts = <bool>[];
     final data = state.cartListState.data;
@@ -117,7 +117,11 @@ class CartCubit extends Cubit<CartState> {
       final products = data?.product ?? [];
 
       for (var i in products) {
-        amount += i.product.price;
+        if (i.quantity < 0) {
+          totalAmount += 0;
+        } else {
+          totalAmount += (i.product.price * i.quantity);
+        }
       }
 
       for (var i in selectProducts) {
@@ -127,12 +131,12 @@ class CartCubit extends Cubit<CartState> {
 
       emit(state.copyWith(
         selectAll: selected,
-        totalAmount: amount,
+        totalAmount: totalAmount,
         selectProducts: newSelectProducts,
         cartListState: ViewData.loaded(data: data),
       ));
     } else {
-      amount = 0;
+      totalAmount = 0;
 
       for (var i in selectProducts) {
         debugPrint("Set to False: $i");
@@ -141,7 +145,7 @@ class CartCubit extends Cubit<CartState> {
 
       emit(state.copyWith(
         selectAll: selected,
-        totalAmount: amount,
+        totalAmount: totalAmount,
         selectProducts: newSelectProducts,
         cartListState: ViewData.loaded(data: data),
       ));
