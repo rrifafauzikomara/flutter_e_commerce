@@ -3,8 +3,11 @@ import 'package:common/utils/use_case/use_case.dart';
 import 'package:dependencies/dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/repository/product_repository.dart';
 import 'package:product/domain/usecases/get_banner_usecase.dart';
+
+import '../../helper/entity/banner_entity_dummy.dart';
 
 void main() => testGetBannerUseCase();
 
@@ -28,7 +31,7 @@ void testGetBannerUseCase() {
     ''', () async {
       /// GIVEN
       when(() => _mockProductRepository.getBanner()).thenAnswer(
-        (_) async => const Right([]),
+        (_) async => Right(bannerEntityDummy),
       );
 
       /// WHEN
@@ -38,6 +41,8 @@ void testGetBannerUseCase() {
 
       /// THEN
       expect(result, isA<Right>());
+      expect(result.getOrElse(() => []).first, isA<BannerDataEntity>());
+      expect(result.getOrElse(() => []).first.name, bannerEntityDummy[0].name);
     });
 
     test('''Failed \t

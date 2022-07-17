@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:product/data/datasource/remote/product_remote_datasource.dart';
 import 'package:product/data/mapper/product_mapper.dart';
-import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/repository/product_repository_impl.dart';
 import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/repository/product_repository.dart';
+import '../../helper/model/banner_response_dto_dummy.dart';
 
 void main() => testProductRepositoryTest();
 
@@ -37,22 +37,7 @@ void testProductRepositoryTest() {
       /// GIVEN
       when(() => _mockProductRemoteDataSource.getBanner()).thenAnswer(
         (_) async => Future.value(
-          BannerResponseDTO(
-            status: true,
-            code: 200,
-            message: "success",
-            data: [
-              BannerDataDTO(
-                id: 'id',
-                name: 'name',
-                headline: 'headline',
-                caption: 'caption',
-                imageUrl: 'imageUrl',
-                sellerId: '1',
-                productId: '0',
-              )
-            ],
-          ),
+          bannerResponseDTODummy,
         ),
       );
 
@@ -62,7 +47,8 @@ void testProductRepositoryTest() {
       /// THEN
       expect(result, isA<Right>());
       expect(result.getOrElse(() => []).first, isA<BannerDataEntity>());
-      expect(result.getOrElse(() => []).first.name, "name");
+      expect(result.getOrElse(() => []).first.name,
+          bannerResponseDTODummy?.data?[0].name ?? "");
     });
 
     test('''Fail \t
