@@ -9,6 +9,8 @@ import 'package:home_page/presentation/bloc/banner_bloc/banner_state.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:product/domain/usecases/get_banner_usecase.dart';
 
+import '../../../helper/entity/banner_entity_dummy.dart';
+
 class MockGetBannerUseCase extends Mock implements GetBannerUseCase {}
 
 void main() => testBannerCubit();
@@ -34,13 +36,13 @@ void testBannerCubit() {
           () => _mockGetBannerUseCase.call(
             const NoParams(),
           ),
-        ).thenAnswer((_) async => const Right([]));
+        ).thenAnswer((_) async => Right(bannerEntityDummy));
         return BannerCubit(getBannerUseCase: _mockGetBannerUseCase);
       },
       act: (BannerCubit bloc) => bloc.getBanner(),
       expect: () => [
         BannerState(bannerState: ViewData.loading()),
-        BannerState(bannerState: ViewData.loaded(data: const [])),
+        BannerState(bannerState: ViewData.loaded(data: bannerEntityDummy)),
       ],
     );
 
