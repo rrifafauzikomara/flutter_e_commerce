@@ -44,6 +44,8 @@ dependencies:
     path: domains/profile
   cart:
     path: domains/cart
+  payment:
+    path: domains/payment
 
   # Features
   account:
@@ -58,6 +60,8 @@ dependencies:
     path: features/detail_product
   cart_feature:
     path: features/cart_feature
+  payment_feature:
+    path: features/payment_feature
 
   # Resources
   resources:
