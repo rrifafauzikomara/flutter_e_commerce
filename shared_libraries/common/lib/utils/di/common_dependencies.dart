@@ -1,5 +1,6 @@
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:common/utils/navigation/router/auth_router.dart';
+import 'package:common/utils/navigation/router/cart_router.dart';
 import 'package:common/utils/navigation/router/home_router.dart';
 import 'package:common/utils/navigation/router/onboarding_router.dart';
 import 'package:common/utils/navigation/router/product_router.dart';
@@ -33,6 +34,11 @@ class CommonDependencies {
     );
     sl.registerLazySingleton<ProductRouter>(
       () => ProductRouterImpl(
+        navigationHelper: sl(),
+      ),
+    );
+    sl.registerLazySingleton<CartRouter>(
+          () => CartRouterImpl(
         navigationHelper: sl(),
       ),
     );
