@@ -20,6 +20,27 @@ class CartCard extends StatelessWidget {
     required this.onChanged,
   }) : super(key: key);
 
+  Widget _buildCheckBox() {
+    if (value) {
+      return CustomCheckBox(
+        value: value,
+        onChanged: onChanged,
+      );
+    }
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: ColorName.white,
+          border: Border.all(
+            color: ColorName.textDarkGrey,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(5))),
+      height: 24.w,
+      width: 24.w,
+      child: const SizedBox(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,10 +76,7 @@ class CartCard extends StatelessWidget {
               SizedBox(height: 14.h),
               Row(
                 children: [
-                  CustomCheckBox(
-                    value: value,
-                    onChanged: onChanged,
-                  ),
+                  _buildCheckBox(),
                   SizedBox(width: 6.w),
                   Expanded(
                     child: Column(

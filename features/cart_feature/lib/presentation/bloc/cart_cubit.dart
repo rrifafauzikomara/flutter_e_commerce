@@ -5,6 +5,7 @@ import 'package:common/utils/error/failure_response.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:common/utils/use_case/use_case.dart';
 import 'package:dependencies/bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 class CartCubit extends Cubit<CartState> {
   final GetChartUseCase getChartUseCase;
@@ -14,6 +15,45 @@ class CartCubit extends Cubit<CartState> {
   }) : super(CartState(
           cartListState: ViewData.initial(),
         ));
+
+  void selectAll(bool selected) {
+    int amount = 0;
+    final selectProducts = state.selectProducts;
+    final newSelectProducts = <bool>[];
+    final data = state.cartListState.data;
+
+    if (selected) {
+      final products = state.cartListState.data?.product ?? [];
+
+      for (var i in products) {
+        amount += i.product.price;
+      }
+
+      for (var i in selectProducts) {
+        newSelectProducts.add(true);
+      }
+
+      emit(state.copyWith(
+        selectAll: selected,
+        totalAmount: amount,
+        selectProducts: newSelectProducts,
+        cartListState: ViewData.loaded(data: data),
+      ));
+    } else {
+      amount = 0;
+
+      for (var i in selectProducts) {
+        newSelectProducts.add(false);
+      }
+
+      emit(state.copyWith(
+        selectAll: selected,
+        totalAmount: amount,
+        selectProducts: newSelectProducts,
+        cartListState: ViewData.loaded(data: data),
+      ));
+    }
+  }
 
   void getCart() async {
     emit(state.copyWith(cartListState: ViewData.loading(message: 'Loading')));
@@ -39,7 +79,17 @@ class CartCubit extends Cubit<CartState> {
     if (data.product.isEmpty) {
       emit(state.copyWith(cartListState: ViewData.noData(message: "No Data")));
     } else {
-      emit(state.copyWith(cartListState: ViewData.loaded(data: data)));
+      final selectProducts = <bool>[];
+      for (var i in data.product) {
+        debugPrint("Product Name: ${i.product.name}");
+        selectProducts.add(false);
+      }
+      emit(state.copyWith(
+        cartListState: ViewData.loaded(data: data),
+        selectAll: false,
+        selectProducts: selectProducts,
+        totalAmount: 0,
+      ));
     }
   }
 }

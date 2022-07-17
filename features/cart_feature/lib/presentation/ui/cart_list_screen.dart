@@ -29,6 +29,10 @@ class _CartListScreenState extends State<CartListScreen> {
     context.read<CartCubit>().getCart();
   }
 
+  void _selectAll(BuildContext context, {required bool selected}) {
+    context.read<CartCubit>().selectAll(selected);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +80,9 @@ class _CartListScreenState extends State<CartListScreen> {
             } else if (state.cartListState.status.isNoData) {
               return Text(state.cartListState.message);
             } else if (state.cartListState.status.isHasData) {
-              final total = state.cartListState.data?.amount ?? 0;
               final products = state.cartListState.data?.product ?? [];
+              final selectProducts = state.selectProducts;
+              print('Rifa UI 1: $selectProducts');
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,8 +95,11 @@ class _CartListScreenState extends State<CartListScreen> {
                     child: Row(
                       children: [
                         CustomCheckBox(
-                          value: false,
-                          onChanged: (bool? value) {},
+                          value: state.selectAll,
+                          onChanged: (bool? value) => _selectAll(
+                            context,
+                            selected: value ?? false,
+                          ),
                         ),
                         SizedBox(width: 6.w),
                         const Text("Pilih Semua"),
@@ -104,15 +112,17 @@ class _CartListScreenState extends State<CartListScreen> {
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         final cart = products[index];
+                        final selectProduct = selectProducts[index];
+                        print('Rifa UI 2: $selectProduct');
                         return CartCard(
                           cart: cart,
-                          value: true,
+                          value: selectProduct,
                           onChanged: (bool? value) {},
                         );
                       },
                     ),
                   ),
-                  _Payment(total: total),
+                  _Payment(total: state.totalAmount),
                 ],
               );
             } else {
