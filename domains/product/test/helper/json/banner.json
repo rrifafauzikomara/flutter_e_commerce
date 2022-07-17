@@ -1,0 +1,19 @@
+{
+  "status": true,
+  "code": 200,
+  "message": "Get banner success",
+  "data": [
+    {
+      "id": "9d2bd219-e5a8-457c-a36f-66a510e05476",
+      "name": "lipstik_kapas",
+      "headline":
+      "Bibirmu luka? Pengen pake lipstik? Lipstik Kapas adalah solusinya!",
+      "caption":
+      "Lipstik yang terbuat dari kapas, merawat bibir anda yang terluka sekaligus mempercantik anda",
+      "image_url":
+      "https://aurel-store.herokuapp.com/image/tono_fd6ad1fe-e0c0-4ddf-afd8-fff9ffb34a3b.jpg",
+      "seller_id": "2226cd14-d835-4847-af18-41ae80666c86",
+      "product_id": "0ab534da-ccc0-4fc6-900a-83e6e7cab16c"
+    }
+  ]
+}

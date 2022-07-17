@@ -6,3 +6,17 @@ packages:
   - resources/**
   - shared_libraries/**
   - '*'
+
+scripts:
+  analyze:
+    run: melos exec -- flutter analyze .
+    description: Run `flutter analyze` in all packages.
+  test:flutter:
+    run: melos exec --dir-exists="test" --fail-fast -- flutter test --no-pub
+    description: Run Flutter tests for a specific package in this project.
+    select-package:
+      flutter: true
+      dir-exists: test
+  test:all:
+    run: melos run test:flutter --no-select
+    description: Run all Dart & Flutter tests in this project.

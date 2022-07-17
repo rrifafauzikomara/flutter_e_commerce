@@ -4,7 +4,6 @@ import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_bloc.da
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_event.dart';
 import 'package:account/presentation/bloc/edit_profile_bloc/edit_profile_state.dart';
 import 'package:account/presentation/bloc/update_photo_bloc/update_photo_bloc.dart';
-import 'package:account/presentation/bloc/update_photo_bloc/update_photo_event.dart';
 import 'package:account/presentation/bloc/update_photo_bloc/update_photo_state.dart';
 import 'package:account/presentation/bloc/user_bloc/user_cubit.dart';
 import 'package:account/presentation/bloc/user_bloc/user_state.dart';
@@ -80,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 shrinkWrap: true,
                 children: [
-                  BlocBuilder<UpdatePhotoBloc, UpdatePhotoState>(
+                  BlocBuilder<UpdatePhotoCubit, UpdatePhotoState>(
                       builder: (context, state) {
                     return Stack(
                       alignment: Alignment.center,
@@ -125,8 +124,7 @@ class EditProfileScreen extends StatelessWidget {
                           bottom: 0,
                           child: InkWell(
                             onTap: () => context
-                                .read<UpdatePhotoBloc>()
-                                .add(const UploadImage()),
+                                .read<UpdatePhotoCubit>().uploadImage(),
                             child: Container(
                               width: 15.w,
                               height: 15.w,
