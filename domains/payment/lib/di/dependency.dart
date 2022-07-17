@@ -3,6 +3,8 @@ import 'package:payment/data/datasource/remote/payment_remote_datasource.dart';
 import 'package:payment/data/mapper/payment_mapper.dart';
 import 'package:payment/data/repository/payment_repository_impl.dart';
 import 'package:payment/domain/repository/payment_repository.dart';
+import 'package:payment/domain/usecases/create_payment_usecase.dart';
+import 'package:payment/domain/usecases/create_transaction_usecase.dart';
 import 'package:payment/domain/usecases/get_all_payment_method_usecase.dart';
 
 class PaymentDependency {
@@ -35,6 +37,16 @@ class PaymentDependency {
   void _registerUseCases() {
     sl.registerLazySingleton<GetAllPaymentMethodUseCase>(
       () => GetAllPaymentMethodUseCase(
+        repository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<CreatePaymentUseCase>(
+      () => CreatePaymentUseCase(
+        repository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<CreateTransactionUseCase>(
+      () => CreateTransactionUseCase(
         repository: sl(),
       ),
     );
