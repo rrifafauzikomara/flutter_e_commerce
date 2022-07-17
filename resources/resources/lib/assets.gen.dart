@@ -39,6 +39,10 @@ class $AssetsImagesIconGen {
 
   /// File path: assets/images/icon/home.svg
   SvgGenImage get home => const SvgGenImage('assets/images/icon/home.svg');
+
+  /// File path: assets/images/icon/ic_favorite_not_selected.svg
+  SvgGenImage get icFavoriteNotSelected =>
+      const SvgGenImage('assets/images/icon/ic_favorite_not_selected.svg');
 }
 
 class $AssetsImagesLogoGen {

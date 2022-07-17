@@ -6,6 +6,8 @@ abstract class HomeRouter {
   Future<dynamic>? navigateToEditProfile();
 
   void navigateToDetailProduct(DetailProductArgument argument);
+
+  void navigateToCartList();
 }
 
 class HomeRouterImpl implements HomeRouter {
@@ -22,4 +24,7 @@ class HomeRouterImpl implements HomeRouter {
   @override
   void navigateToDetailProduct(DetailProductArgument argument) =>
       navigationHelper.pushNamed(AppRoutes.detailProduct, arguments: argument);
+
+  @override
+  void navigateToCartList() => navigationHelper.pushNamed(AppRoutes.cartList);
 }

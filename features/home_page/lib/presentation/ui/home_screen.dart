@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
               width: 19.w,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => _homeRouter.navigateToCartList(),
               child: Assets.images.icon.cart.svg(width: 24.w, height: 24.h),
             ),
           ],
@@ -202,7 +202,7 @@ class HomeScreen extends StatelessWidget {
               } else if (status.isHasData) {
                 final productCategory = state.productCategoryState.data ?? [];
                 final productCategoryLength =
-                productCategory.length > 3 ? 3 : productCategory.length;
+                    productCategory.length > 3 ? 3 : productCategory.length;
                 return GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,

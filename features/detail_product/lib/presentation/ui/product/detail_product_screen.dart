@@ -1,11 +1,13 @@
 import 'package:cart/domain/entity/request/add_to_chart_entity.dart';
 import 'package:common/utils/extensions/money_extension.dart';
+import 'package:common/utils/navigation/router/product_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/button/custom_button.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
@@ -29,6 +31,8 @@ class DetailProductScreen extends StatefulWidget {
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
   void _closeBottomSheet(BuildContext context) => Navigator.pop(context);
+
+  final _productRouter = sl<ProductRouter>();
 
   @override
   void initState() {
@@ -92,7 +96,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
               width: 19.w,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => _productRouter.navigateToCartList(),
               child: Assets.images.icon.cart.svg(width: 24.w, height: 24.h),
             ),
           ],

@@ -14,6 +14,7 @@ import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:detail_product/presentation/ui/product/detail_product_screen.dart';
+import 'package:cart_feature/presentation/ui/cart_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:home_page/presentation/bloc/banner_bloc/banner_cubit.dart';
@@ -164,6 +165,8 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               );
+            case AppRoutes.cartList:
+              return MaterialPageRoute(builder: (_) => const CartListScreen());
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());
           }
