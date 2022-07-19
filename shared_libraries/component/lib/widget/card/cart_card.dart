@@ -1,5 +1,6 @@
 import 'package:cart/domain/entity/response/chart_entity.dart';
 import 'package:component/widget/check_box/custom_check_box.dart';
+import 'package:component/widget/divider/custom_divider.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/cached_network_image/cached_network_image.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class CartCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _Divider(),
+        const CustomDivider(),
         Container(
           margin: EdgeInsets.only(
             top: 21.h,
@@ -176,21 +177,8 @@ class CartCard extends StatelessWidget {
             ],
           ),
         ),
-        const _Divider(),
+        const CustomDivider(),
       ],
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  const _Divider({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: ColorName.textFieldBackgroundGrey,
-      width: double.infinity,
-      height: 1.h,
     );
   }
 }
