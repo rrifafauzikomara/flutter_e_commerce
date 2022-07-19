@@ -1,3 +1,4 @@
+import 'package:component/widget/card/payment_method_card.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:resources/colors.gen.dart';
@@ -30,6 +31,18 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           ),
         ),
         iconTheme: const IconThemeData(color: ColorName.orange),
+      ),
+      body: Center(
+        child: ListView.builder(
+          padding: EdgeInsets.only(left: 16.h, right: 10.h),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return PaymentMethodCard(
+              bankName: "Bank Name",
+              selectPaymentMethod: () {},
+            );
+          },
+        ),
       ),
     );
   }

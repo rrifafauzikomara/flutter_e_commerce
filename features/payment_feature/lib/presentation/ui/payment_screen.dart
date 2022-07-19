@@ -1,15 +1,23 @@
 import 'package:common/utils/extensions/money_extension.dart';
 import 'package:common/utils/navigation/argument/payment/payment_argument.dart';
+import 'package:common/utils/navigation/router/payment_router.dart';
 import 'package:component/widget/divider/custom_divider.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:resources/colors.gen.dart';
 import 'package:component/widget/button/payment_button.dart';
 
 class PaymentScreen extends StatelessWidget {
   final PaymentArgument argument;
 
-  const PaymentScreen({Key? key, required this.argument}) : super(key: key);
+  PaymentScreen({Key? key, required this.argument}) : super(key: key);
+
+  final _paymentRouter = sl<PaymentRouter>();
+
+  void _navigateToPaymentMethod(BuildContext context) async {
+    await _paymentRouter.navigateToPaymentMethod();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,9 @@ class PaymentScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomDivider(),
-            const _Title(),
+            _Title(
+              onPressed: () => _navigateToPaymentMethod(context),
+            ),
             Container(
               height: 13.h,
               width: double.infinity,
@@ -57,7 +67,9 @@ class PaymentScreen extends StatelessWidget {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+
+  const _Title({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +94,7 @@ class _Title extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
+                onTap: onPressed,
                 child: Text(
                   "Lihat Semua",
                   style: TextStyle(
