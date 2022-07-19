@@ -15,7 +15,8 @@ import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:detail_product/presentation/ui/product/detail_product_screen.dart';
-import 'package:payment_feature/presentation/bloc/bloc.dart';
+import 'package:payment_feature/presentation/bloc/history/bloc.dart';
+import 'package:payment_feature/presentation/bloc/payment/bloc.dart';
 import 'package:payment_feature/presentation/ui/payment/payment_screen.dart';
 import 'package:payment_feature/presentation/ui/payment/payment_method_screen.dart';
 import 'package:payment_feature/presentation/ui/payment/payment_va_screen.dart';
@@ -126,6 +127,11 @@ class MyApp extends StatelessWidget {
                     BlocProvider<LogoutCubit>(
                       create: (_) => LogoutCubit(
                         logoutUseCase: sl(),
+                      ),
+                    ),
+                    BlocProvider<HistoryCubit>(
+                      create: (_) => HistoryCubit(
+                        getHistoryUseCase: sl(),
                       ),
                     ),
                   ],

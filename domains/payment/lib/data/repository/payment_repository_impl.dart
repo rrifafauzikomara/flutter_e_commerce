@@ -6,6 +6,7 @@ import 'package:payment/data/datasource/remote/payment_remote_datasource.dart';
 import 'package:payment/data/mapper/payment_mapper.dart';
 import 'package:payment/domain/entity/response/create_payment_entity.dart';
 import 'package:payment/domain/entity/response/payment_entity.dart';
+import 'package:payment/domain/entity/response/product_history_entity.dart';
 import 'package:payment/domain/repository/payment_repository.dart';
 
 class PaymentRepositoryImpl implements PaymentRepository {
@@ -70,6 +71,24 @@ class PaymentRepositoryImpl implements PaymentRepository {
           ),
         );
       }
+    } on DioError catch (error) {
+      return Left(
+        FailureResponse(
+          errorMessage:
+              error.response?.data[AppConstants.errorKey.message]?.toString() ??
+                  error.response.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<FailureResponse, HistoryEntity>> getHistory() async {
+    try {
+      final response = await remoteDataSource.getHistory();
+      return Right(
+        mapper.mapHistoryEntity(response.data),
+      );
     } on DioError catch (error) {
       return Left(
         FailureResponse(

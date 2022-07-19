@@ -1,5 +1,8 @@
+import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter/material.dart';
+import 'package:payment_feature/presentation/bloc/history/bloc.dart';
 import 'package:resources/colors.gen.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -10,6 +13,16 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _loadHistory(context);
+  }
+
+  void _loadHistory(BuildContext context) {
+    context.read<HistoryCubit>().getHistory();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,4 +47,3 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 }
-

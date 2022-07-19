@@ -48,6 +48,8 @@ class AppApi {
   String get createTransaction => 'customer/transaction';
 
   String get createPayment => 'customer/payment';
+
+  String get history => 'customer/transaction';
 }
 
 class ErrorKey {

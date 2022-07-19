@@ -7,7 +7,7 @@ import 'package:payment/domain/entity/response/create_payment_entity.dart';
 import 'package:payment/domain/entity/response/payment_entity.dart';
 import 'package:payment/domain/usecases/create_transaction_usecase.dart';
 import 'package:payment/domain/usecases/get_all_payment_method_usecase.dart';
-import 'package:payment_feature/presentation/bloc/bloc.dart';
+import 'package:payment_feature/presentation/bloc/payment/bloc.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
   final GetAllPaymentMethodUseCase getAllPaymentMethodUseCase;

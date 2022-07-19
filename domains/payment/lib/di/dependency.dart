@@ -5,6 +5,7 @@ import 'package:payment/data/repository/payment_repository_impl.dart';
 import 'package:payment/domain/repository/payment_repository.dart';
 import 'package:payment/domain/usecases/create_transaction_usecase.dart';
 import 'package:payment/domain/usecases/get_all_payment_method_usecase.dart';
+import 'package:payment/domain/usecases/get_history_usecase.dart';
 
 class PaymentDependency {
   PaymentDependency() {
@@ -41,6 +42,11 @@ class PaymentDependency {
     );
     sl.registerLazySingleton<CreateTransactionUseCase>(
       () => CreateTransactionUseCase(
+        repository: sl(),
+      ),
+    );
+    sl.registerLazySingleton<GetHistoryUseCase>(
+      () => GetHistoryUseCase(
         repository: sl(),
       ),
     );
