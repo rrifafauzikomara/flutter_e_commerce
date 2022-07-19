@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:home_page/presentation/bloc/home_bloc/home_cubit.dart';
 import 'package:home_page/presentation/bloc/home_bloc/home_state.dart';
 import 'package:account/presentation/ui/account_screen.dart';
+import 'package:payment_feature/presentation/ui/history/history_screen.dart';
 import 'package:home_page/presentation/ui/home_screen.dart';
 import 'package:resources/assets.gen.dart';
 import 'package:resources/colors.gen.dart';
@@ -23,9 +24,7 @@ class BottomNavigation extends StatelessWidget {
               index: context.read<HomeCubit>().state.homeState.data,
               children: [
                 HomeScreen(),
-                Container(
-                  color: Colors.blue,
-                ),
+                const HistoryScreen(),
                 AccountScreen(),
               ],
             ),

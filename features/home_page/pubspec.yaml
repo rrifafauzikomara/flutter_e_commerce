@@ -30,6 +30,8 @@ dependencies:
     path: ../account
   detail_product:
     path: ../detail_product
+  payment_feature:
+    path: ../payment_feature
 
 dev_dependencies:
   flutter_test:
