@@ -87,7 +87,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       : () {
                           _navigateToPaymentVa(PaymentVAArgument(
                             bankName: data.bankName,
-                            virtualAccount: "10101010",
+                            virtualAccount: "809877434447719",
                             totalPrices: widget.argument.totalAmount,
                           ));
                         },

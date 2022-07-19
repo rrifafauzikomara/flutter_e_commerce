@@ -8,6 +8,8 @@ abstract class PaymentRouter {
   void selectPayment(PaymentMethodArgument argument);
 
   Future<dynamic>? navigateToPaymentVA(PaymentVAArgument argument);
+
+  void navigateToHome();
 }
 
 class PaymentRouterImpl implements PaymentRouter {
@@ -30,4 +32,8 @@ class PaymentRouterImpl implements PaymentRouter {
   @override
   Future? navigateToPaymentVA(PaymentVAArgument argument) => navigationHelper
       .pushNamedAndRemoveUntil(AppRoutes.paymentVa, arguments: argument);
+
+  @override
+  void navigateToHome() =>
+      navigationHelper.pushNamedAndRemoveUntil(AppRoutes.home);
 }
