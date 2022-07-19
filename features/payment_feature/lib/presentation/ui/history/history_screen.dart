@@ -3,28 +3,12 @@ import 'package:component/widget/divider/custom_divider.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:flutter/material.dart';
 import 'package:payment_feature/presentation/bloc/history/bloc.dart';
 import 'package:resources/colors.gen.dart';
 
-class HistoryScreen extends StatefulWidget {
+class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HistoryScreen> createState() => _HistoryScreenState();
-}
-
-class _HistoryScreenState extends State<HistoryScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _loadHistory(context);
-  }
-
-  void _loadHistory(BuildContext context) {
-    context.read<HistoryCubit>().getHistory();
-  }
 
   @override
   Widget build(BuildContext context) {

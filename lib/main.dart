@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
                     BlocProvider<HistoryCubit>(
                       create: (_) => HistoryCubit(
                         getHistoryUseCase: sl(),
-                      ),
+                      )..getHistory(),
                     ),
                   ],
                   child: const BottomNavigation(),
