@@ -1,5 +1,6 @@
 import 'package:common/utils/extensions/money_extension.dart';
 import 'package:common/utils/navigation/argument/payment/payment_argument.dart';
+import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
 import 'package:common/utils/navigation/router/payment_router.dart';
 import 'package:component/widget/divider/custom_divider.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,12 @@ class PaymentScreen extends StatelessWidget {
   final _paymentRouter = sl<PaymentRouter>();
 
   void _navigateToPaymentMethod(BuildContext context) async {
-    await _paymentRouter.navigateToPaymentMethod();
+    final result = await _paymentRouter.navigateToPaymentMethod();
+    if (result != null) {
+      if (result is PaymentMethodArgument) {
+        print("Selected Payment Method: ${result.bankName}");
+      }
+    }
   }
 
   @override

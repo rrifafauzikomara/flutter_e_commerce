@@ -16,6 +16,7 @@ import 'package:dependencies/firebase/firebase.dart';
 import 'package:dependencies/get_it/get_it.dart';
 import 'package:detail_product/presentation/bloc/product_detail_bloc/bloc.dart';
 import 'package:detail_product/presentation/ui/product/detail_product_screen.dart';
+import 'package:payment_feature/presentation/bloc/bloc.dart';
 import 'package:payment_feature/presentation/ui/payment_screen.dart';
 import 'package:payment_feature/presentation/ui/payment_method_screen.dart';
 import 'package:payment_feature/presentation/ui/payment_va_screen.dart';
@@ -189,7 +190,14 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.paymentMethod:
               return MaterialPageRoute(
-                builder: (_) => const PaymentMethodScreen(),
+                builder: (_) => BlocProvider<PaymentCubit>(
+                  create: (_) => PaymentCubit(
+                    getAllPaymentMethodUseCase: sl(),
+                    createTransactionUseCase: sl(),
+                    createPaymentUseCase: sl(),
+                  ),
+                  child: const PaymentMethodScreen(),
+                ),
               );
             case AppRoutes.paymentVa:
               return MaterialPageRoute(

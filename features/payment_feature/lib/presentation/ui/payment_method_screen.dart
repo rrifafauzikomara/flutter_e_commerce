@@ -1,6 +1,12 @@
+import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
+import 'package:common/utils/navigation/router/payment_router.dart';
+import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/card/payment_method_card.dart';
+import 'package:dependencies/bloc/bloc.dart';
+import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
+import 'package:payment_feature/presentation/bloc/bloc.dart';
 import 'package:resources/colors.gen.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
@@ -11,6 +17,22 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
+  final _paymentRouter = sl<PaymentRouter>();
+
+  void _selectPayment(PaymentMethodArgument argument) {
+    _paymentRouter.selectPayment(argument);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPaymentMethod(context);
+  }
+
+  void _loadPaymentMethod(BuildContext context) {
+    context.read<PaymentCubit>().getAllPaymentMethod();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +55,34 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         iconTheme: const IconThemeData(color: ColorName.orange),
       ),
       body: Center(
-        child: ListView.builder(
-          padding: EdgeInsets.only(left: 16.h, right: 10.h),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return PaymentMethodCard(
-              bankName: "Bank Name",
-              selectPaymentMethod: () {},
-            );
+        child: BlocBuilder<PaymentCubit, PaymentState>(
+          builder: (context, state) {
+            if (state.paymentMethodState.status.isLoading) {
+              return const CircularProgressIndicator();
+            } else if (state.paymentMethodState.status.isError) {
+              return Text(state.paymentMethodState.message);
+            } else if (state.paymentMethodState.status.isNoData) {
+              return Text(state.paymentMethodState.message);
+            } else if (state.paymentMethodState.status.isHasData) {
+              final payments = state.paymentMethodState.data ?? [];
+              return ListView.builder(
+                padding: EdgeInsets.only(left: 16.h, right: 10.h),
+                itemCount: payments.length,
+                itemBuilder: (context, index) {
+                  final payment = payments[index];
+                  return PaymentMethodCard(
+                    bankName: payment.name,
+                    selectPaymentMethod: () =>
+                        _selectPayment(PaymentMethodArgument(
+                      bankName: payment.name,
+                      paymentCode: payment.code,
+                    )),
+                  );
+                },
+              );
+            } else {
+              return const SizedBox();
+            }
           },
         ),
       ),
