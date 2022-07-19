@@ -1,4 +1,5 @@
 import 'package:common/utils/error/failure_response.dart';
+import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:common/utils/use_case/use_case.dart';
 import 'package:dependencies/bloc/bloc.dart';
@@ -24,6 +25,10 @@ class PaymentCubit extends Cubit<PaymentState> {
           createTransactionState: ViewData.initial(),
           createPaymentState: ViewData.initial(),
         ));
+
+  void selectPaymentMethod(PaymentMethodArgument argument) {
+    emit(state.copyWith(selectedPaymentMethod: argument));
+  }
 
   void getAllPaymentMethod() async {
     emit(state.copyWith(

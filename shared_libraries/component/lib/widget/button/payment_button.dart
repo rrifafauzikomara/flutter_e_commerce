@@ -7,7 +7,7 @@ import 'package:common/utils/extensions/money_extension.dart';
 class PaymentButton extends StatelessWidget {
   final int total;
   final String textButton;
-  final VoidCallback paymentTap;
+  final VoidCallback? paymentTap;
 
   const PaymentButton({
     Key? key,
@@ -59,11 +59,12 @@ class PaymentButton extends StatelessWidget {
                 SizedBox(
                   width: 123.w,
                   child: CustomButton(
-                    buttonColor: (total == 0)
+                    buttonColor: (total == 0 || paymentTap == null)
                         ? ColorName.textFieldHintGrey
                         : ColorName.orange,
                     buttonText: textButton,
-                    onTap: (total == 0) ? null : paymentTap,
+                    onTap:
+                        (total == 0 || paymentTap == null) ? null : paymentTap,
                   ),
                 )
               ],

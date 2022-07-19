@@ -3,26 +3,39 @@ import 'package:common/utils/navigation/argument/payment/payment_argument.dart';
 import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
 import 'package:common/utils/navigation/router/payment_router.dart';
 import 'package:component/widget/divider/custom_divider.dart';
+import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencies/get_it/get_it.dart';
+import 'package:payment_feature/presentation/bloc/bloc.dart';
 import 'package:resources/colors.gen.dart';
 import 'package:component/widget/button/payment_button.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentScreen extends StatefulWidget {
   final PaymentArgument argument;
 
-  PaymentScreen({Key? key, required this.argument}) : super(key: key);
+  const PaymentScreen({Key? key, required this.argument}) : super(key: key);
 
+  @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
   final _paymentRouter = sl<PaymentRouter>();
 
   void _navigateToPaymentMethod(BuildContext context) async {
     final result = await _paymentRouter.navigateToPaymentMethod();
     if (result != null) {
       if (result is PaymentMethodArgument) {
-        print("Selected Payment Method: ${result.bankName}");
+        _selectedPaymentMethod(argument: result);
       }
     }
+  }
+
+  void _selectedPaymentMethod({
+    required PaymentMethodArgument argument,
+  }) {
+    context.read<PaymentCubit>().selectPaymentMethod(argument);
   }
 
   @override
@@ -59,11 +72,16 @@ class PaymentScreen extends StatelessWidget {
               width: double.infinity,
               color: ColorName.textFieldBackgroundGrey,
             ),
-            Expanded(child: _Summary(totalPrices: argument.totalAmount)),
-            PaymentButton(
-              total: argument.totalAmount,
-              textButton: "Pilih Pembayaran",
-              paymentTap: () {},
+            Expanded(child: _Summary(totalPrices: widget.argument.totalAmount)),
+            BlocBuilder<PaymentCubit, PaymentState>(
+              builder: (context, state) {
+                final data = state.selectedPaymentMethod;
+                return PaymentButton(
+                  total: widget.argument.totalAmount,
+                  textButton: (data == null) ? "Pilih Pembayaran" : "Bayar",
+                  paymentTap: (data == null) ? null : () {},
+                );
+              },
             ),
           ],
         ),
@@ -123,14 +141,19 @@ class _Title extends StatelessWidget {
               ),
               SizedBox(width: 14.w),
               Expanded(
-                child: Text(
-                  "Bank Name",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.sp,
-                  ),
+                child: BlocBuilder<PaymentCubit, PaymentState>(
+                  builder: (context, state) {
+                    final data = state.selectedPaymentMethod;
+                    return Text(
+                      (data == null) ? "Pilih Pembayaran" : data.bankName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.sp,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

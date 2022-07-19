@@ -184,8 +184,15 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.payment:
               return MaterialPageRoute(
-                builder: (_) => PaymentScreen(
-                  argument: argument as PaymentArgument,
+                builder: (_) => BlocProvider<PaymentCubit>(
+                  create: (_) => PaymentCubit(
+                    getAllPaymentMethodUseCase: sl(),
+                    createTransactionUseCase: sl(),
+                    createPaymentUseCase: sl(),
+                  ),
+                  child: PaymentScreen(
+                    argument: argument as PaymentArgument,
+                  ),
                 ),
               );
             case AppRoutes.paymentMethod:
