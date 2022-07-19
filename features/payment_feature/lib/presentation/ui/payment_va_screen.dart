@@ -1,9 +1,12 @@
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/colors.gen.dart';
+import 'package:common/utils/navigation/argument/arguments.dart';
 
 class PaymentVAScreen extends StatelessWidget {
-  const PaymentVAScreen({Key? key}) : super(key: key);
+  final PaymentVAArgument argument;
+
+  const PaymentVAScreen({Key? key, required this.argument}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

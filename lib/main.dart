@@ -9,7 +9,6 @@ import 'package:auth/presentation/ui/sign_in_screen.dart';
 import 'package:auth/presentation/ui/sign_up_screen.dart';
 import 'package:cart_feature/presentation/bloc/bloc.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
-import 'package:common/utils/navigation/argument/payment/payment_argument.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/firebase/firebase.dart';
@@ -208,7 +207,9 @@ class MyApp extends StatelessWidget {
               );
             case AppRoutes.paymentVa:
               return MaterialPageRoute(
-                builder: (_) => const PaymentVAScreen(),
+                builder: (_) => PaymentVAScreen(
+                  argument: argument as PaymentVAArgument,
+                ),
               );
             default:
               return MaterialPageRoute(builder: (_) => SplashScreen());

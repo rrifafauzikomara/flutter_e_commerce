@@ -1,6 +1,5 @@
 import 'package:common/utils/extensions/money_extension.dart';
-import 'package:common/utils/navigation/argument/payment/payment_argument.dart';
-import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
+import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:common/utils/navigation/router/payment_router.dart';
 import 'package:component/widget/divider/custom_divider.dart';
 import 'package:dependencies/bloc/bloc.dart';
@@ -30,6 +29,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
         _selectedPaymentMethod(argument: result);
       }
     }
+  }
+
+  void _navigateToPaymentVa(PaymentVAArgument argument) {
+    _paymentRouter.navigateToPaymentVA(argument);
   }
 
   void _selectedPaymentMethod({
@@ -79,7 +82,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 return PaymentButton(
                   total: widget.argument.totalAmount,
                   textButton: (data == null) ? "Pilih Pembayaran" : "Bayar",
-                  paymentTap: (data == null) ? null : () {},
+                  paymentTap: (data == null)
+                      ? null
+                      : () {
+                          _navigateToPaymentVa(PaymentVAArgument(
+                            bankName: data.bankName,
+                            virtualAccount: "10101010",
+                            totalPrices: widget.argument.totalAmount,
+                          ));
+                        },
                 );
               },
             ),

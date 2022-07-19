@@ -1,4 +1,4 @@
-import 'package:common/utils/navigation/argument/payment/payment_method_argument.dart';
+import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:common/utils/navigation/navigation_helper.dart';
 import 'package:common/utils/navigation/router/app_routes.dart';
 
@@ -6,6 +6,8 @@ abstract class PaymentRouter {
   Future<dynamic>? navigateToPaymentMethod();
 
   void selectPayment(PaymentMethodArgument argument);
+
+  Future<dynamic>? navigateToPaymentVA(PaymentVAArgument argument);
 }
 
 class PaymentRouterImpl implements PaymentRouter {
@@ -24,4 +26,8 @@ class PaymentRouterImpl implements PaymentRouter {
   @override
   void selectPayment(PaymentMethodArgument argument) =>
       navigationHelper.pop(argument);
+
+  @override
+  Future? navigateToPaymentVA(PaymentVAArgument argument) => navigationHelper
+      .pushNamedAndRemoveUntil(AppRoutes.paymentVa, arguments: argument);
 }
