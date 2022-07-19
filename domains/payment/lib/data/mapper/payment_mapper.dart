@@ -129,7 +129,10 @@ class PaymentMapper {
       List<ProductDataHistoryDto> dto) {
     final data = <ProductDataHistoryEntity>[];
     for (var i in dto) {
-      data.add(_mapProductDataHistoryDtoToEntity(i));
+      final qty = i.quantity ?? 0;
+      if (qty > 0) {
+        data.add(_mapProductDataHistoryDtoToEntity(i));
+      }
     }
     return data;
   }

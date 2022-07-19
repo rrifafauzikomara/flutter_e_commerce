@@ -1,3 +1,6 @@
+import 'package:common/utils/state/view_data_state.dart';
+import 'package:component/widget/divider/custom_divider.dart';
+import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 
@@ -43,6 +46,40 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
         iconTheme: const IconThemeData(color: ColorName.orange),
+      ),
+      body: Center(
+        child: BlocBuilder<HistoryCubit, HistoryState>(
+          builder: (context, state) {
+            if (state.historyState.status.isLoading) {
+              return const CustomCircularProgressIndicator();
+            } else if (state.historyState.status.isError) {
+              return Text(state.historyState.message);
+            } else if (state.historyState.status.isNoData) {
+              return Text(state.historyState.message);
+            } else if (state.historyState.status.isHasData) {
+              final histories = state.historyState.data?.data ?? [];
+              return ListView.builder(
+                padding: EdgeInsets.only(left: 16.h, right: 10.h),
+                itemCount: histories.length,
+                itemBuilder: (context, index) {
+                  final history = histories[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CustomDivider(),
+                      SizedBox(height: 10.h),
+                      Text(history.statusTransaction),
+                      SizedBox(height: 10.h),
+                      const CustomDivider(),
+                    ],
+                  );
+                },
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }
