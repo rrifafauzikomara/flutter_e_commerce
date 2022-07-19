@@ -1,7 +1,9 @@
 import 'package:common/utils/extensions/money_extension.dart';
 import 'package:common/utils/navigation/argument/arguments.dart';
 import 'package:common/utils/navigation/router/payment_router.dart';
+import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/divider/custom_divider.dart';
+import 'package:component/widget/toast/custom_toast.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -41,60 +43,77 @@ class _PaymentScreenState extends State<PaymentScreen> {
     context.read<PaymentCubit>().selectPaymentMethod(argument);
   }
 
+  void _payment(BuildContext context, {required String paymentCode}) {
+    context.read<PaymentCubit>().createTransaction(paymentCode);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorName.white,
-      appBar: AppBar(
+    return BlocListener<PaymentCubit, PaymentState>(
+      listener: (context, state) {
+        if (state.createPaymentState.status.isError) {
+          CustomToast.showErrorToast(
+              errorMessage:
+                  state.createPaymentState.failure?.errorMessage ?? "");
+        } else if (state.createPaymentState.status.isHasData) {
+          final data = state.selectedPaymentMethod;
+          final va = state.createPaymentState.data?.externalData.data ?? "";
+          _navigateToPaymentVa(PaymentVAArgument(
+            bankName: data?.bankName ?? "",
+            virtualAccount: va,
+            totalPrices: widget.argument.totalAmount,
+          ));
+        }
+      },
+      child: Scaffold(
         backgroundColor: ColorName.white,
-        elevation: 0.0,
-        title: Container(
-          alignment: Alignment.centerLeft,
-          height: 35.h,
-          child: Text(
-            "Pembayaran",
-            style: TextStyle(
-              color: ColorName.orange,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          backgroundColor: ColorName.white,
+          elevation: 0.0,
+          title: Container(
+            alignment: Alignment.centerLeft,
+            height: 35.h,
+            child: Text(
+              "Pembayaran",
+              style: TextStyle(
+                color: ColorName.orange,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
+          iconTheme: const IconThemeData(color: ColorName.orange),
         ),
-        iconTheme: const IconThemeData(color: ColorName.orange),
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomDivider(),
-            _Title(
-              onPressed: () => _navigateToPaymentMethod(context),
-            ),
-            Container(
-              height: 13.h,
-              width: double.infinity,
-              color: ColorName.textFieldBackgroundGrey,
-            ),
-            Expanded(child: _Summary(totalPrices: widget.argument.totalAmount)),
-            BlocBuilder<PaymentCubit, PaymentState>(
-              builder: (context, state) {
-                final data = state.selectedPaymentMethod;
-                return PaymentButton(
-                  total: widget.argument.totalAmount,
-                  textButton: (data == null) ? "Pilih Pembayaran" : "Bayar",
-                  paymentTap: (data == null)
-                      ? null
-                      : () {
-                          _navigateToPaymentVa(PaymentVAArgument(
-                            bankName: data.bankName,
-                            virtualAccount: "809877434447719",
-                            totalPrices: widget.argument.totalAmount,
-                          ));
-                        },
-                );
-              },
-            ),
-          ],
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CustomDivider(),
+              _Title(
+                onPressed: () => _navigateToPaymentMethod(context),
+              ),
+              Container(
+                height: 13.h,
+                width: double.infinity,
+                color: ColorName.textFieldBackgroundGrey,
+              ),
+              Expanded(
+                  child: _Summary(totalPrices: widget.argument.totalAmount)),
+              BlocBuilder<PaymentCubit, PaymentState>(
+                builder: (context, state) {
+                  final data = state.selectedPaymentMethod;
+                  return PaymentButton(
+                    total: widget.argument.totalAmount,
+                    textButton: (data == null) ? "Pilih Pembayaran" : "Bayar",
+                    paymentTap: (data == null)
+                        ? null
+                        : () =>
+                            _payment(context, paymentCode: data.paymentCode),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

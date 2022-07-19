@@ -187,7 +187,6 @@ class MyApp extends StatelessWidget {
                   create: (_) => PaymentCubit(
                     getAllPaymentMethodUseCase: sl(),
                     createTransactionUseCase: sl(),
-                    createPaymentUseCase: sl(),
                   ),
                   child: PaymentScreen(
                     argument: argument as PaymentArgument,
@@ -200,7 +199,6 @@ class MyApp extends StatelessWidget {
                   create: (_) => PaymentCubit(
                     getAllPaymentMethodUseCase: sl(),
                     createTransactionUseCase: sl(),
-                    createPaymentUseCase: sl(),
                   ),
                   child: const PaymentMethodScreen(),
                 ),
