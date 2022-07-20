@@ -19,46 +19,22 @@ class ChartRemoteDataSourceImpl implements ChartRemoteDataSource {
   const ChartRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<ChartResponseDto> addToChart(AddToChartDto body) async {
-    try {
-      final formData = FormData.fromMap({
-        body.productId: body.amount,
-      });
-      final response = await dio.post(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.chart}",
-        data: formData,
-      );
-      return ChartResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<ChartResponseDto> addToChart(AddToChartDto body) {
+    // TODO: implement addToChart
+    throw UnimplementedError();
   }
 
   @override
-  Future<ChartResponseDto> getCharts() async {
-    try {
-      final response = await dio.get(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.chart}",
-      );
-      return ChartResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<ChartResponseDto> deleteChart(AddToChartDto body) {
+    // TODO: implement deleteChart
+    throw UnimplementedError();
   }
 
   @override
-  Future<ChartResponseDto> deleteChart(AddToChartDto body) async {
-    try {
-      final formData = FormData.fromMap({
-        body.productId: body.amount,
-      });
-      final response = await dio.delete(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.chart}",
-        data: formData,
-      );
-      return ChartResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<ChartResponseDto> getCharts() {
+    // TODO: implement getCharts
+    throw UnimplementedError();
   }
+
+
 }

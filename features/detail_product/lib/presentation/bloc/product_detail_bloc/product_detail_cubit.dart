@@ -25,27 +25,19 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
         ));
 
   void addToChart(AddToChartEntity body) async {
-    emit(state.copyWith(addToChartState: ViewData.loading(message: 'Loading')));
 
-    final result = await addToChartUseCase.call(body);
-    return result.fold(
-      (failure) => _onFailureAddToChart(failure),
-      (data) => _onSuccessAddToChart(body),
-    );
   }
 
   Future<void> _onFailureAddToChart(
     FailureResponse failure,
   ) async {
-    emit(state.copyWith(
-        addToChartState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+
   }
 
   Future<void> _onSuccessAddToChart(
     AddToChartEntity data,
   ) async {
-    emit(state.copyWith(addToChartState: ViewData.loaded(data: data)));
+
   }
 
   void getProduct(String productId) async {

@@ -45,7 +45,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   }
 
   void _addProductToChart(AddToChartEntity body) {
-    context.read<ProductDetailCubit>().addToChart(body);
+
   }
 
   @override

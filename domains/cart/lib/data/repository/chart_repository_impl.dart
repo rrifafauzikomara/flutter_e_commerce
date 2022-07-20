@@ -18,60 +18,22 @@ class ChartRepositoryImpl implements ChartRepository {
   });
 
   @override
-  Future<Either<FailureResponse, ChartDataEntity>> addToChart(
-      AddToChartEntity body) async {
-    try {
-      final response = await chartRemoteDataSource
-          .addToChart(mapper.mapAddToChartEntityToDto(body));
-      return Right(
-        mapper.mapChartDataDtoToEntity(response.data),
-      );
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, ChartDataEntity>> addToChart(AddToChartEntity body) {
+    // TODO: implement addToChart
+    throw UnimplementedError();
   }
 
   @override
-  Future<Either<FailureResponse, ChartDataEntity>> getCharts() async {
-    try {
-      final response = await chartRemoteDataSource.getCharts();
-      return Right(
-        mapper.mapChartDataDtoToEntity(response.data),
-      );
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, ChartDataEntity>> deleteChart(AddToChartEntity body) {
+    // TODO: implement deleteChart
+    throw UnimplementedError();
   }
 
   @override
-  Future<Either<FailureResponse, ChartDataEntity>> deleteChart(
-      AddToChartEntity body) async {
-    try {
-      final response = await chartRemoteDataSource
-          .deleteChart(mapper.mapAddToChartEntityToDto(body));
-      return Right(
-        mapper.mapChartDataDtoToEntity(response.data),
-      );
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, ChartDataEntity>> getCharts() {
+    // TODO: implement getCharts
+    throw UnimplementedError();
   }
+
+
 }
