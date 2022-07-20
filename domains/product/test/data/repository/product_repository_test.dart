@@ -2,6 +2,7 @@ import 'package:dependencies/dartz/dartz.dart';
 import 'package:dependencies/dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:product/data/datasource/local/product_local_datasource.dart';
 import 'package:product/data/datasource/remote/product_remote_datasource.dart';
 import 'package:product/data/mapper/product_mapper.dart';
 import 'package:product/data/repository/product_repository_impl.dart';
@@ -14,16 +15,21 @@ void main() => testProductRepositoryTest();
 class MockProductRemoteDataSource extends Mock
     implements ProductRemoteDataSource {}
 
+class MockProductLocalDataSource extends Mock implements ProductLocalDataSource {}
+
 void testProductRepositoryTest() {
   late final ProductRemoteDataSource _mockProductRemoteDataSource;
+  late final ProductLocalDataSource _mockProductLocalDataSource;
   late final ProductMapper _mockProductMapper;
   late final ProductRepository _productRepository;
 
   setUpAll(() {
     _mockProductRemoteDataSource = MockProductRemoteDataSource();
+    _mockProductLocalDataSource = MockProductLocalDataSource();
     _mockProductMapper = ProductMapper();
     _productRepository = ProductRepositoryImpl(
       productRemoteDataSource: _mockProductRemoteDataSource,
+      productLocalDataSource: _mockProductLocalDataSource,
       mapper: _mockProductMapper,
     );
   });

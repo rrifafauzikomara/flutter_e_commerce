@@ -170,6 +170,9 @@ class MyApp extends StatelessWidget {
                     getProductUseCase: sl(),
                     getSellerUseCase: sl(),
                     addToChartUseCase: sl(),
+                    saveProductUseCase: sl(),
+                    deleteProductUseCase: sl(),
+                    getFavoriteProductByUrlUseCase: sl(),
                   ),
                   child: DetailProductScreen(
                     argument: argument as DetailProductArgument,

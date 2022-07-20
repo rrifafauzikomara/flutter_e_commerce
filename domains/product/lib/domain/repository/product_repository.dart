@@ -19,6 +19,13 @@ abstract class ProductRepository {
   Future<Either<FailureResponse, ProductDetailDataEntity>> getProductDetail(
       String productId);
 
-  Future<Either<FailureResponse, SellerDataEntity>> getSeller(
-      String sellerId);
+  Future<Either<FailureResponse, SellerDataEntity>> getSeller(String sellerId);
+
+  Future<Either<FailureResponse, bool>> saveProduct(
+      ProductDetailDataEntity data);
+
+  Future<Either<FailureResponse, bool>> deleteProduct(String productUrl);
+
+  Future<Either<FailureResponse, ProductDetailDataEntity>>
+      getFavoriteProductByUrl(String productUrl);
 }

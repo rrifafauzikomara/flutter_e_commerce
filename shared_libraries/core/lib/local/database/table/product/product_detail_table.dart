@@ -1,7 +1,7 @@
 import 'package:dependencies/drift/drift.dart';
 
 class ProductDetailTable extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
 
   TextColumn get name => text()();
 
@@ -15,8 +15,5 @@ class ProductDetailTable extends Table {
 
   IntColumn get soldCount => integer()();
 
-  IntColumn get popularity => integer()();
-
-  @override
-  Set<Column> get primaryKey => {id};
+  RealColumn get popularity => real()();
 }

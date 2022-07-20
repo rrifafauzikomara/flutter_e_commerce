@@ -151,10 +151,14 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final product = products[index];
                       final productId = product.id;
+                      final imageUrl = product.imageUrl;
                       return ProductCard(
                         productEntity: product,
-                        onPressed: () => _homeRouter.navigateToDetailProduct(
-                            DetailProductArgument(productId: productId)),
+                        onPressed: () => _homeRouter
+                            .navigateToDetailProduct(DetailProductArgument(
+                          productId: productId,
+                          imageUrl: imageUrl,
+                        )),
                       );
                     },
                   );

@@ -7,22 +7,34 @@ class ProductDetailState {
   final ViewData<ProductDetailDataEntity> productState;
   final ViewData<SellerDataEntity> sellerState;
   final ViewData<AddToChartEntity> addToChartState;
+  final ViewData<bool> saveProductState;
+  final ViewData<bool> deleteProductState;
+  final bool isFavorite;
 
   const ProductDetailState({
     required this.productState,
     required this.sellerState,
     required this.addToChartState,
+    required this.saveProductState,
+    required this.deleteProductState,
+    this.isFavorite = false,
   });
 
   ProductDetailState copyWith({
     ViewData<ProductDetailDataEntity>? productState,
     ViewData<SellerDataEntity>? sellerState,
     ViewData<AddToChartEntity>? addToChartState,
+    ViewData<bool>? saveProductState,
+    ViewData<bool>? deleteProductState,
+    bool? isFavorite,
   }) {
     return ProductDetailState(
       productState: productState ?? this.productState,
       sellerState: sellerState ?? this.sellerState,
       addToChartState: addToChartState ?? this.addToChartState,
+      saveProductState: saveProductState ?? this.saveProductState,
+      deleteProductState: deleteProductState ?? this.deleteProductState,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 }

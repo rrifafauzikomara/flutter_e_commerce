@@ -1,3 +1,5 @@
+import 'package:core/local/database/database_module.dart';
+import 'package:dependencies/drift/drift.dart';
 import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
 import 'package:product/data/model/response/product_detail_response_dto.dart';
@@ -150,6 +152,32 @@ class ProductMapper {
       fullName: dto.fullName ?? "",
       city: dto.city ?? "",
       simpleAddress: dto.simpleAddress ?? "",
+    );
+  }
+
+  ProductDetailDataEntity mapProductDetailTableToEntity(
+      ProductDetailTableData table) {
+    return ProductDetailDataEntity(
+      name: table.name,
+      stock: table.stock,
+      price: table.price,
+      imageUrl: table.imageUrl,
+      description: table.description,
+      soldCount: table.soldCount,
+      popularity: table.popularity,
+    );
+  }
+
+  ProductDetailTableCompanion mapProductDetailDataEntityToTable(
+      ProductDetailDataEntity entity) {
+    return ProductDetailTableCompanion(
+      name: Value(entity.name),
+      stock: Value(entity.stock),
+      price: Value(entity.price),
+      imageUrl: Value(entity.imageUrl),
+      description: Value(entity.description),
+      soldCount: Value(entity.soldCount),
+      popularity: Value(entity.popularity),
     );
   }
 }

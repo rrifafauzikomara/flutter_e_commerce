@@ -16,7 +16,7 @@ class ProductDetailTableData extends DataClass
   final String imageUrl;
   final String description;
   final int soldCount;
-  final int popularity;
+  final double popularity;
   ProductDetailTableData(
       {required this.id,
       required this.name,
@@ -44,7 +44,7 @@ class ProductDetailTableData extends DataClass
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       soldCount: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}sold_count'])!,
-      popularity: const IntType()
+      popularity: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}popularity'])!,
     );
   }
@@ -58,7 +58,7 @@ class ProductDetailTableData extends DataClass
     map['image_url'] = Variable<String>(imageUrl);
     map['description'] = Variable<String>(description);
     map['sold_count'] = Variable<int>(soldCount);
-    map['popularity'] = Variable<int>(popularity);
+    map['popularity'] = Variable<double>(popularity);
     return map;
   }
 
@@ -86,7 +86,7 @@ class ProductDetailTableData extends DataClass
       imageUrl: serializer.fromJson<String>(json['imageUrl']),
       description: serializer.fromJson<String>(json['description']),
       soldCount: serializer.fromJson<int>(json['soldCount']),
-      popularity: serializer.fromJson<int>(json['popularity']),
+      popularity: serializer.fromJson<double>(json['popularity']),
     );
   }
   @override
@@ -100,7 +100,7 @@ class ProductDetailTableData extends DataClass
       'imageUrl': serializer.toJson<String>(imageUrl),
       'description': serializer.toJson<String>(description),
       'soldCount': serializer.toJson<int>(soldCount),
-      'popularity': serializer.toJson<int>(popularity),
+      'popularity': serializer.toJson<double>(popularity),
     };
   }
 
@@ -112,7 +112,7 @@ class ProductDetailTableData extends DataClass
           String? imageUrl,
           String? description,
           int? soldCount,
-          int? popularity}) =>
+          double? popularity}) =>
       ProductDetailTableData(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -164,7 +164,7 @@ class ProductDetailTableCompanion
   final Value<String> imageUrl;
   final Value<String> description;
   final Value<int> soldCount;
-  final Value<int> popularity;
+  final Value<double> popularity;
   const ProductDetailTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -183,7 +183,7 @@ class ProductDetailTableCompanion
     required String imageUrl,
     required String description,
     required int soldCount,
-    required int popularity,
+    required double popularity,
   })  : name = Value(name),
         stock = Value(stock),
         price = Value(price),
@@ -199,7 +199,7 @@ class ProductDetailTableCompanion
     Expression<String>? imageUrl,
     Expression<String>? description,
     Expression<int>? soldCount,
-    Expression<int>? popularity,
+    Expression<double>? popularity,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -221,7 +221,7 @@ class ProductDetailTableCompanion
       Value<String>? imageUrl,
       Value<String>? description,
       Value<int>? soldCount,
-      Value<int>? popularity}) {
+      Value<double>? popularity}) {
     return ProductDetailTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -259,7 +259,7 @@ class ProductDetailTableCompanion
       map['sold_count'] = Variable<int>(soldCount.value);
     }
     if (popularity.present) {
-      map['popularity'] = Variable<int>(popularity.value);
+      map['popularity'] = Variable<double>(popularity.value);
     }
     return map;
   }
@@ -290,7 +290,9 @@ class $ProductDetailTableTable extends ProductDetailTable
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: false);
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
@@ -324,9 +326,9 @@ class $ProductDetailTableTable extends ProductDetailTable
       type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _popularityMeta = const VerificationMeta('popularity');
   @override
-  late final GeneratedColumn<int?> popularity = GeneratedColumn<int?>(
+  late final GeneratedColumn<double?> popularity = GeneratedColumn<double?>(
       'popularity', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, name, stock, price, imageUrl, description, soldCount, popularity];
