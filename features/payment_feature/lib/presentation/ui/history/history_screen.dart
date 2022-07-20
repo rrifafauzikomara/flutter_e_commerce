@@ -1,5 +1,5 @@
 import 'package:common/utils/state/view_data_state.dart';
-import 'package:component/widget/divider/custom_divider.dart';
+import 'package:component/widget/card/history_card.dart';
 import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
@@ -43,19 +43,24 @@ class HistoryScreen extends StatelessWidget {
             } else if (state.historyState.status.isHasData) {
               final histories = state.historyState.data?.data ?? [];
               return ListView.builder(
-                padding: EdgeInsets.only(left: 16.h, right: 10.h),
                 itemCount: histories.length,
                 itemBuilder: (context, index) {
                   final history = histories[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CustomDivider(),
-                      SizedBox(height: 10.h),
-                      Text(history.statusTransaction),
-                      SizedBox(height: 10.h),
-                      const CustomDivider(),
-                    ],
+
+                  final productLength = history.productData.length;
+                  int totalProduct = 0;
+                  if (productLength > 1) {
+                    totalProduct = productLength - 1;
+                  } else {
+                    totalProduct = productLength;
+                  }
+                  return HistoryCard(
+                    statusPayment: history.paymentTransaction.statusPayment,
+                    createdAt: history.createdAt,
+                    productUrl: history.productData.first.product.imageUrl,
+                    productName: history.productData.first.product.name,
+                    totalProduct: totalProduct,
+                    productPrice: history.productData.first.product.price,
                   );
                 },
               );
