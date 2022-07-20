@@ -1,9 +1,13 @@
 import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
+import 'package:product/data/model/response/product_detail_response_dto.dart';
 import 'package:product/data/model/response/product_response_dto.dart';
+import 'package:product/data/model/response/seller_response_dto.dart';
 import 'package:product/domain/entity/response/banner_entity.dart';
 import 'package:product/domain/entity/response/product_category_entity.dart';
+import 'package:product/domain/entity/response/product_detail_entity.dart';
 import 'package:product/domain/entity/response/product_entity.dart';
+import 'package:product/domain/entity/response/seller_data_entity.dart';
 
 class ProductMapper {
   List<ProductCategoryEntity> mapProductCategoryDTOtoEntity(
@@ -102,4 +106,50 @@ class ProductMapper {
         productId: bannerDataDTO.productId ?? "",
         imageUrl: bannerDataDTO.imageUrl ?? "",
       );
+
+  ProductDetailDataEntity mapProductDetailDataDtoToEntity(
+      ProductDetailDataDto dto) {
+    return ProductDetailDataEntity(
+      id: dto.id ?? "",
+      name: dto.name ?? "",
+      seller: mapSellerDetailDtoToEntity(dto.seller),
+      stock: dto.stock ?? 0,
+      category: mapCategoryProductDetailDtoToEntity(dto.category),
+      price: dto.price ?? 0,
+      imageUrl: dto.imageUrl ?? "",
+      description: dto.description ?? "",
+      soldCount: dto.soldCount ?? 0,
+      popularity: dto.popularity ?? 0.0,
+    );
+  }
+
+  CategoryProductDetailEntity mapCategoryProductDetailDtoToEntity(
+      CategoryProductDetailDto dto) {
+    return CategoryProductDetailEntity(
+      id: dto.id ?? "",
+      name: dto.name ?? "",
+      imageCover: dto.imageCover ?? "",
+      imageIcon: dto.imageIcon ?? "",
+    );
+  }
+
+  SellerDetailEntity mapSellerDetailDtoToEntity(SellerDetailDto dto) {
+    return SellerDetailEntity(
+      id: dto.id ?? "",
+      name: dto.name ?? "",
+      city: dto.city ?? "",
+    );
+  }
+
+  SellerDataEntity mapSellerDataResponseDtoToEntity(SellerDataDto dto) {
+    return SellerDataEntity(
+      id: dto.id ?? "",
+      username: dto.username ?? "",
+      role: dto.role ?? "",
+      imageUrl: dto.imageUrl ?? "",
+      fullName: dto.fullName ?? "",
+      city: dto.city ?? "",
+      simpleAddress: dto.simpleAddress ?? "",
+    );
+  }
 }

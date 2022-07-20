@@ -1,8 +1,10 @@
 import 'package:dependencies/dio/dio.dart';
 import 'package:product/data/model/response/banner_response_dto.dart';
 import 'package:product/data/model/response/product_category_response_dto.dart';
+import 'package:product/data/model/response/product_detail_response_dto.dart';
 import 'package:product/data/model/response/product_response_dto.dart';
 import 'package:common/utils/constants/app_constants.dart';
+import 'package:product/data/model/response/seller_response_dto.dart';
 
 abstract class ProductRemoteDataSource {
   const ProductRemoteDataSource();
@@ -12,6 +14,10 @@ abstract class ProductRemoteDataSource {
   Future<ProductResponseDto> getProduct();
 
   Future<BannerResponseDTO> getBanner();
+
+  Future<ProductDetailResponseDto> getProductDetail(String productId);
+
+  Future<SellerResponseDto> getSeller(String sellerId);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -53,5 +59,17 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<ProductDetailResponseDto> getProductDetail(String productId) async {
+    // TODO: implement getProductDetail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SellerResponseDto> getSeller(String sellerId) async {
+    // TODO: implement getSeller
+    throw UnimplementedError();
   }
 }
