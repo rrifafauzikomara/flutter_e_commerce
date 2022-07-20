@@ -20,3 +20,16 @@ scripts:
   test:all:
     run: melos run test:flutter --no-select
     description: Run all Dart & Flutter tests in this project.
+
+  # Generate Resources
+  generate:resources:
+    run: melos exec -c 1 --depends-on="build_runner" --depends-on="flutter_gen_runner" -- "fluttergen -c pubspec.yaml"
+    select-package:
+      depends-on: flutter_gen_runner
+
+  generate:flutter:
+    run: melos exec -c 1 --depends-on="build_runner" --flutter -- "flutter pub run build_runner build --delete-conflicting-outputs && exit 0"
+    description: Build all generated files for a specific package in this project.
+    select-package:
+      flutter: true
+      depends-on: build_runner

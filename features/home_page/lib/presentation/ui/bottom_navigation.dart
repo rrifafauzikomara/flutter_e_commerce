@@ -24,7 +24,7 @@ class BottomNavigation extends StatelessWidget {
               index: context.read<HomeCubit>().state.homeState.data,
               children: [
                 HomeScreen(),
-                HistoryScreen(),
+                const HistoryScreen(),
                 AccountScreen(),
               ],
             ),
