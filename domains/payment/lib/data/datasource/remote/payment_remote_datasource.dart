@@ -20,45 +20,22 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
   const PaymentRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<AllPaymentResponseDto> getAllPaymentMethod() async {
-    try {
-      final response = await dio.get(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.paymentMethod}",
-      );
-      return AllPaymentResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<CreatePaymentResponseDto> createPayment(String transactionId) {
+    // TODO: implement createPayment
+    throw UnimplementedError();
   }
 
   @override
-  Future<CreatePaymentResponseDto> createPayment(String transactionId) async {
-    try {
-      final response = await dio.post(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.createPayment}",
-        queryParameters: {
-          "transaction_id": transactionId,
-        },
-      );
-      return CreatePaymentResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<CreateTransactionResponseDto> createTransaction(String paymentCode) {
+    // TODO: implement createTransaction
+    throw UnimplementedError();
   }
 
   @override
-  Future<CreateTransactionResponseDto> createTransaction(
-      String paymentCode) async {
-    try {
-      final response = await dio.post(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.createTransaction}",
-        queryParameters: {
-          "payment": paymentCode,
-        },
-      );
-      return CreateTransactionResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<AllPaymentResponseDto> getAllPaymentMethod() {
+    // TODO: implement getAllPaymentMethod
+    throw UnimplementedError();
   }
+
+
 }

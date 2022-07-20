@@ -18,66 +18,16 @@ class PaymentRepositoryImpl implements PaymentRepository {
   });
 
   @override
-  Future<Either<FailureResponse, List<PaymentDataEntity>>>
-      getAllPaymentMethod() async {
-    try {
-      final response = await remoteDataSource.getAllPaymentMethod();
-      return Right(
-        mapper.mapListPaymentDataDtoToEntity(response.data),
-      );
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, CreatePaymentDataEntity>> createTransaction(String paymentCode) {
+    // TODO: implement createTransaction
+    throw UnimplementedError();
   }
 
   @override
-  Future<Either<FailureResponse, CreatePaymentDataEntity>> createTransaction(
-      String paymentCode) async {
-    try {
-      final response = await remoteDataSource.createTransaction(paymentCode);
-
-      final data =
-          mapper.mapListCreateTransactionDataDtoToEntity(response.data);
-
-      bool success = false;
-      String errorMessage = "";
-      CreatePaymentDataEntity paymentData = const CreatePaymentDataEntity();
-      for (var i in data) {
-        final payment = await remoteDataSource.createPayment(i.transactionId);
-        final statusCode = payment.code ?? 0;
-        if (statusCode == 200) {
-          success = true;
-          paymentData = mapper.mapCreatePaymentDataDtoToEntity(payment.data);
-        } else {
-          success = false;
-          errorMessage = payment.message.toString();
-          break;
-        }
-      }
-
-      if (success) {
-        return Right(paymentData);
-      } else {
-        return Left(
-          FailureResponse(
-            errorMessage: errorMessage,
-          ),
-        );
-      }
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, List<PaymentDataEntity>>> getAllPaymentMethod() {
+    // TODO: implement getAllPaymentMethod
+    throw UnimplementedError();
   }
+
+
 }
