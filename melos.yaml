@@ -1,0 +1,35 @@
+name: flutter_e_commerce
+
+packages:
+  - domains/**
+  - features/**
+  - resources/**
+  - shared_libraries/**
+  - '*'
+
+scripts:
+  analyze:
+    run: melos exec -- flutter analyze .
+    description: Run `flutter analyze` in all packages.
+  test:flutter:
+    run: melos exec --dir-exists="test" --fail-fast -- flutter test --no-pub
+    description: Run Flutter tests for a specific package in this project.
+    select-package:
+      flutter: true
+      dir-exists: test
+  test:all:
+    run: melos run test:flutter --no-select
+    description: Run all Dart & Flutter tests in this project.
+
+  # Generate Resources
+  generate:resources:
+    run: melos exec -c 1 --depends-on="build_runner" --depends-on="flutter_gen_runner" -- "fluttergen -c pubspec.yaml"
+    select-package:
+      depends-on: flutter_gen_runner
+
+  generate:flutter:
+    run: melos exec -c 1 --depends-on="build_runner" --flutter -- "flutter pub run build_runner build --delete-conflicting-outputs && exit 0"
+    description: Build all generated files for a specific package in this project.
+    select-package:
+      flutter: true
+      depends-on: build_runner
