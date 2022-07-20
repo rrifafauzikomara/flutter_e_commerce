@@ -16,28 +16,18 @@ class HistoryCubit extends Cubit<HistoryState> {
         ));
 
   void getHistory() async {
-    emit(state.copyWith(historyState: ViewData.loading(message: 'Loading')));
 
-    final result = await getHistoryUseCase.call(const NoParams());
-    return result.fold(
-      (failure) => _onFailureGetHistory(failure),
-      (data) => _onSuccessGetHistory(data),
-    );
   }
 
   Future<void> _onFailureGetHistory(
     FailureResponse failure,
   ) async {
-    emit(state.copyWith(
-        historyState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+
   }
 
   Future<void> _onSuccessGetHistory(
     HistoryEntity data,
   ) async {
-    emit(state.copyWith(
-      historyState: ViewData.loaded(data: data),
-    ));
+
   }
 }

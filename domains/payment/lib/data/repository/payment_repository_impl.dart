@@ -83,20 +83,8 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
-  Future<Either<FailureResponse, HistoryEntity>> getHistory() async {
-    try {
-      final response = await remoteDataSource.getHistory();
-      return Right(
-        mapper.mapHistoryEntity(response.data),
-      );
-    } on DioError catch (error) {
-      return Left(
-        FailureResponse(
-          errorMessage:
-              error.response?.data[AppConstants.errorKey.message]?.toString() ??
-                  error.response.toString(),
-        ),
-      );
-    }
+  Future<Either<FailureResponse, HistoryEntity>> getHistory() {
+    // TODO: implement getHistory
+    throw UnimplementedError();
   }
 }

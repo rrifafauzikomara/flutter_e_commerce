@@ -27,8 +27,6 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.15
   flutter_widget_from_html_core: ^0.8.5+3
-  drift: ^1.7.0
-  drift_sqflite: ^1.0.0
 
 dev_dependencies:
   flutter_test:

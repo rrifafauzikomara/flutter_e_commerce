@@ -28,9 +28,7 @@ class ProductDependency {
       ),
     );
     sl.registerLazySingleton<ProductLocalDataSource>(
-      () => ProductLocalDataSourceImpl(
-        appDatabase: sl(),
-      ),
+      () => ProductLocalDataSourceImpl(),
     );
   }
 

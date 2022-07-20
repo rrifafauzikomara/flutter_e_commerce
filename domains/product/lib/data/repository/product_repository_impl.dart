@@ -124,37 +124,21 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<FailureResponse, bool>> deleteProduct(String productUrl) async {
-    try {
-      final response = await productLocalDataSource.deleteProduct(productUrl);
-      return Right(response);
-    } catch (error) {
-      return Left(FailureResponse(errorMessage: error.toString()));
-    }
+  Future<Either<FailureResponse, bool>> deleteProduct(String productUrl) {
+    // TODO: implement deleteProduct
+    throw UnimplementedError();
   }
 
   @override
-  Future<Either<FailureResponse, ProductDetailDataEntity>>
-      getFavoriteProductByUrl(String productUrl) async {
-    try {
-      final response =
-          await productLocalDataSource.getFavoriteProductByUrl(productUrl);
-      final data = mapper.mapProductDetailTableToEntity(response);
-      return Right(data);
-    } catch (error) {
-      return Left(FailureResponse(errorMessage: error.toString()));
-    }
+  Future<Either<FailureResponse, ProductDetailDataEntity>> getFavoriteProductByUrl(String productUrl) {
+    // TODO: implement getFavoriteProductByUrl
+    throw UnimplementedError();
   }
 
   @override
-  Future<Either<FailureResponse, bool>> saveProduct(
-      ProductDetailDataEntity data) async {
-    try {
-      final table = mapper.mapProductDetailDataEntityToTable(data);
-      final response = await productLocalDataSource.saveProduct(table);
-      return Right(response);
-    } catch (error) {
-      return Left(FailureResponse(errorMessage: error.toString()));
-    }
+  Future<Either<FailureResponse, bool>> saveProduct(ProductDetailDataEntity data) {
+    // TODO: implement saveProduct
+    throw UnimplementedError();
   }
+
 }

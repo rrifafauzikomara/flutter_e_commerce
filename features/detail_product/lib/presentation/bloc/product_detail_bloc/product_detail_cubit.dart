@@ -36,72 +36,43 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
         ));
 
   void getProductFavorite(String imageUrl) async {
-    final result = await getFavoriteProductByUrlUseCase.call(imageUrl);
-    return result.fold(
-      (_) => _onFailureGetProduct(),
-      (data) => _onSuccessGetProduct(),
-    );
+
   }
 
   void _onFailureGetProduct() {
-    emit(state.copyWith(isFavorite: false));
+
   }
 
   void _onSuccessGetProduct() {
-    emit(state.copyWith(isFavorite: true));
+
   }
 
   void saveProduct(ProductDetailDataEntity entity) async {
-    emit(
-        state.copyWith(saveProductState: ViewData.loading(message: 'Loading')));
 
-    final result = await saveProductUseCase.call(entity);
-    return result.fold(
-      (failure) => _onFailureSaveProduct(failure),
-      (data) => _onSuccessSaveProduct(data),
-    );
   }
 
   void _onFailureSaveProduct(
     FailureResponse failure,
   ) {
-    emit(state.copyWith(
-        saveProductState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+
   }
 
   void _onSuccessSaveProduct(bool data) {
-    emit(state.copyWith(
-      saveProductState: ViewData.loaded(data: data),
-      isFavorite: true,
-    ));
+
   }
 
   void deleteProduct(String productUrl) async {
-    emit(state.copyWith(
-        deleteProductState: ViewData.loading(message: 'Loading')));
 
-    final result = await deleteProductUseCase.call(productUrl);
-    return result.fold(
-      (failure) => _onFailureDeleteProduct(failure),
-      (data) => _onSuccessDeleteProduct(data),
-    );
   }
 
   void _onFailureDeleteProduct(
     FailureResponse failure,
   ) {
-    emit(state.copyWith(
-      deleteProductState:
-          ViewData.error(message: failure.errorMessage, failure: failure),
-    ));
+
   }
 
   void _onSuccessDeleteProduct(bool data) {
-    emit(state.copyWith(
-      deleteProductState: ViewData.loaded(data: data),
-      isFavorite: false,
-    ));
+
   }
 
   void addToChart(AddToChartEntity body) async {

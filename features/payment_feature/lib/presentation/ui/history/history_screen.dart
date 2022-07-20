@@ -12,64 +12,6 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorName.white,
-      appBar: AppBar(
-        backgroundColor: ColorName.white,
-        elevation: 0.0,
-        title: Container(
-          alignment: Alignment.centerLeft,
-          height: 35.h,
-          child: Text(
-            "Riwayat Belanja",
-            style: TextStyle(
-              color: ColorName.orange,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        iconTheme: const IconThemeData(color: ColorName.orange),
-      ),
-      body: Center(
-        child: BlocBuilder<HistoryCubit, HistoryState>(
-          builder: (context, state) {
-            if (state.historyState.status.isLoading) {
-              return const CustomCircularProgressIndicator();
-            } else if (state.historyState.status.isError) {
-              return Text(state.historyState.message);
-            } else if (state.historyState.status.isNoData) {
-              return Text(state.historyState.message);
-            } else if (state.historyState.status.isHasData) {
-              final histories = state.historyState.data?.data ?? [];
-              return ListView.builder(
-                itemCount: histories.length,
-                itemBuilder: (context, index) {
-                  final history = histories[index];
-
-                  final productLength = history.productData.length;
-                  int totalProduct = 0;
-                  if (productLength > 1) {
-                    totalProduct = productLength - 1;
-                  } else {
-                    totalProduct = productLength;
-                  }
-                  return HistoryCard(
-                    statusPayment: history.paymentTransaction.statusPayment,
-                    createdAt: history.createdAt,
-                    productUrl: history.productData.first.product.imageUrl,
-                    productName: history.productData.first.product.name,
-                    totalProduct: totalProduct,
-                    productPrice: history.productData.first.product.price,
-                  );
-                },
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
-      ),
-    );
+    return Scaffold();
   }
 }

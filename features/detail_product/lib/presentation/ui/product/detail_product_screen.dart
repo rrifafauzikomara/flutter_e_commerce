@@ -38,7 +38,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   void initState() {
     super.initState();
     _getProductDetail();
-    _getFavorite();
   }
 
   void _getProductDetail() {
@@ -47,20 +46,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
   void _addProductToChart(AddToChartEntity body) {
     context.read<ProductDetailCubit>().addToChart(body);
-  }
-
-  void _getFavorite() {
-    context
-        .read<ProductDetailCubit>()
-        .getProductFavorite(widget.argument.imageUrl);
-  }
-
-  void _saveProduct(ProductDetailDataEntity data) {
-    context.read<ProductDetailCubit>().saveProduct(data);
-  }
-
-  void _deleteProduct(String productUrl) {
-    context.read<ProductDetailCubit>().deleteProduct(productUrl);
   }
 
   @override
@@ -173,27 +158,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                       ),
                                     ),
                                   ),
-                                  BlocBuilder<ProductDetailCubit,
-                                      ProductDetailState>(
-                                    builder: (context, state) {
-                                      if (state.isFavorite) {
-                                        return InkWell(
-                                          onTap: () => _deleteProduct(
-                                              productData.imageUrl),
-                                          child: const Icon(
-                                            Icons.star,
-                                            color: ColorName.orange,
-                                          ),
-                                        );
-                                      }
-                                      return InkWell(
-                                        onTap: () => _saveProduct(productData),
-                                        child: const Icon(
-                                          Icons.star_border,
-                                          color: ColorName.orange,
-                                        ),
-                                      );
-                                    },
+                                  const Icon(
+                                    Icons.star_border,
+                                    color: ColorName.orange,
                                   ),
                                 ],
                               ),

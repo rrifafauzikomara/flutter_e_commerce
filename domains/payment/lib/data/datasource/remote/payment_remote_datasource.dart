@@ -66,14 +66,8 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
   }
 
   @override
-  Future<ProductHistoryResponseDto> getHistory() async {
-    try {
-      final response = await dio.get(
-        "${AppConstants.appApi.baseUrl}${AppConstants.appApi.history}",
-      );
-      return ProductHistoryResponseDto.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
+  Future<ProductHistoryResponseDto> getHistory() {
+    // TODO: implement getHistory
+    throw UnimplementedError();
   }
 }
