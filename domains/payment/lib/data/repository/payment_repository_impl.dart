@@ -95,6 +95,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
           errorMessage:
               error.response?.data[AppConstants.errorKey.message]?.toString() ??
                   error.response.toString(),
+          statusCode: error.response?.statusCode,
         ),
       );
     }

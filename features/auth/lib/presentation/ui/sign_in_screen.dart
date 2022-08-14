@@ -2,24 +2,23 @@ import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth/presentation/bloc/sign_in_bloc/sign_in_state.dart';
 import 'package:authentication/domain/entities/body/auth_request_entity.dart';
 import 'package:common/utils/constants/app_constants.dart';
-import 'package:common/utils/navigation/router/auth_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
+import 'package:component/widget/base/base_screen.dart';
 import 'package:component/widget/button/custom_button.dart';
 import 'package:component/widget/stack/loading_stack.dart';
 import 'package:component/widget/text_field/custom_text_field.dart';
 import 'package:component/widget/toast/custom_toast.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
-import 'package:dependencies/get_it/get_it.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:resources/colors.gen.dart';
 
 import '../bloc/sign_in_bloc/sign_in_event.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatelessWidget with BaseScreen {
   SignInScreen({Key? key}) : super(key: key);
-  final AuthRouter _authRouter = sl();
+
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -31,7 +30,7 @@ class SignInScreen extends StatelessWidget {
         listener: (context, state) {
           final status = state.signInState.status;
           if (status.isHasData) {
-            _authRouter.navigateToHome();
+            authRouter.navigateToHome();
           }
           if (status.isError) {
             if (state.signInState.message != AppConstants.errorKey.username &&
@@ -128,7 +127,7 @@ class SignInScreen extends StatelessWidget {
                             decoration: TextDecoration.underline,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => _authRouter.navigateToSignUp(),
+                            ..onTap = () => authRouter.navigateToSignUp(),
                         ),
                       ],
                     ),

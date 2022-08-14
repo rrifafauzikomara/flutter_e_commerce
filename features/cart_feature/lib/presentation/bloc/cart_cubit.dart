@@ -28,17 +28,15 @@ class CartCubit extends Cubit<CartState> {
   void deleteProduct({
     required String productId,
     required int amount,
+    required int index,
   }) async {
-    emit(state.copyWith(deleteCartState: ViewData.loading(message: 'Loading')));
+    emit(state.copyWith(deleteCartState: ViewData.loading(message: "Loading")));
 
-    final result = await deleteChartUseCase.call(AddToChartEntity(
-      productId: productId,
-      amount: amount,
-    ));
-
+    final result = await deleteChartUseCase
+        .call(AddToChartEntity(productId: productId, amount: amount));
     return result.fold(
       (failure) => _onFailureDeleteCart(failure),
-      (data) => _onSuccessDeleteCart(data),
+      (data) => _onSuccessDeleteCart(data, index),
     );
   }
 
@@ -46,12 +44,12 @@ class CartCubit extends Cubit<CartState> {
     FailureResponse failure,
   ) async {
     emit(state.copyWith(
-        deleteCartState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+        deleteCartState: ViewData.error(message: "Error", failure: failure)));
   }
 
   Future<void> _onSuccessDeleteCart(
     ChartDataEntity data,
+    int index,
   ) async {
     if (data.product.isEmpty) {
       emit(state.copyWith(
@@ -59,9 +57,32 @@ class CartCubit extends Cubit<CartState> {
         cartListState: ViewData.noData(message: "No Data"),
       ));
     } else {
+      /// from tmp
+      int amount = 0;
+
+      /// from state
+      final totalAmountState = state.totalAmount;
+      final selectAllState = state.selectAll;
+      final selectProductsState = state.selectProducts;
+
+      /// set data
+      final selectedProduct = selectProductsState[index];
+
+      if (selectAllState || selectedProduct) {
+        final priceSelected = data.product[index].product.price;
+        amount = totalAmountState - priceSelected;
+      } else {
+        amount = totalAmountState;
+      }
+
+      if (!selectedProduct) {
+        amount = totalAmountState;
+      }
+
       emit(state.copyWith(
         deleteCartState: ViewData.loaded(data: data),
         cartListState: ViewData.loaded(data: data),
+        totalAmount: amount,
       ));
     }
   }
@@ -69,17 +90,15 @@ class CartCubit extends Cubit<CartState> {
   void addProduct({
     required String productId,
     required int amount,
+    required int index,
   }) async {
-    emit(state.copyWith(addCartState: ViewData.loading(message: 'Loading')));
+    emit(state.copyWith(addCartState: ViewData.loading(message: "Loading")));
 
-    final result = await addToChartUseCase.call(AddToChartEntity(
-      productId: productId,
-      amount: amount,
-    ));
-
+    final result = await addToChartUseCase
+        .call(AddToChartEntity(productId: productId, amount: amount));
     return result.fold(
       (failure) => _onFailureAddCart(failure),
-      (data) => _onSuccessAddCart(data),
+      (data) => _onSuccessAddCart(data, index),
     );
   }
 
@@ -87,110 +106,129 @@ class CartCubit extends Cubit<CartState> {
     FailureResponse failure,
   ) async {
     emit(state.copyWith(
-        addCartState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+        addCartState: ViewData.error(message: "Error", failure: failure)));
   }
 
   Future<void> _onSuccessAddCart(
     ChartDataEntity data,
+    int index,
   ) async {
-    if (data.product.isEmpty) {
-      emit(state.copyWith(
-        addCartState: ViewData.noData(message: "No Data"),
-        cartListState: ViewData.noData(message: "No Data"),
-      ));
+    /// from tmp
+    int amount = 0;
+
+    /// from state
+    final totalAmountState = state.totalAmount;
+    final selectAllState = state.selectAll;
+    final selectProductsState = state.selectProducts;
+
+    /// set data
+    final selectedProduct = selectProductsState[index];
+
+    if (selectAllState || selectedProduct) {
+      final priceSelected = data.product[index].product.price;
+      amount = totalAmountState + priceSelected;
     } else {
-      emit(state.copyWith(
-        addCartState: ViewData.loaded(data: data),
-        cartListState: ViewData.loaded(data: data),
-      ));
+      amount = totalAmountState;
     }
+
+    if (!selectedProduct) {
+      amount = totalAmountState;
+    }
+
+    emit(state.copyWith(
+      addCartState: ViewData.loaded(data: data),
+      cartListState: ViewData.loaded(data: data),
+      totalAmount: amount,
+    ));
   }
 
   void selectAll(bool selected) {
-    int totalAmount = 0;
-    final selectProducts = state.selectProducts;
-    final newSelectProducts = <bool>[];
-    final data = state.cartListState.data;
+    /// from tmp
+    int amount = 0;
+    final selectProducts = <bool>[];
+
+    /// from state
+    final productsState = state.cartListState.data?.product ?? [];
 
     if (selected) {
-      final products = data?.product ?? [];
-
-      for (var i in products) {
-        if (i.quantity < 0) {
-          totalAmount += 0;
-        } else {
-          totalAmount += (i.product.price * i.quantity);
-        }
-      }
-
-      for (var i in selectProducts) {
-        debugPrint("Set to True: $i");
-        newSelectProducts.add(true);
+      for (var i in productsState) {
+        final price = i.product.price;
+        final qty = i.quantity;
+        amount += (price * qty);
+        selectProducts.add(true);
       }
 
       emit(state.copyWith(
+        totalAmount: amount,
         selectAll: selected,
-        totalAmount: totalAmount,
-        selectProducts: newSelectProducts,
-        cartListState: ViewData.loaded(data: data),
+        selectProducts: selectProducts,
       ));
     } else {
-      totalAmount = 0;
-
-      for (var i in selectProducts) {
-        debugPrint("Set to False: $i");
-        newSelectProducts.add(false);
+      for (var i in productsState) {
+        debugPrint("Select Product: ${i.product.name}");
+        selectProducts.add(false);
       }
 
       emit(state.copyWith(
-        selectAll: selected,
-        totalAmount: totalAmount,
-        selectProducts: newSelectProducts,
-        cartListState: ViewData.loaded(data: data),
+        totalAmount: 0,
+        selectAll: false,
+        selectProducts: selectProducts,
       ));
     }
   }
 
   void selectProduct(bool selected, int index) {
-    final selectProducts = state.selectProducts;
-    final newSelectProducts = <bool>[];
-    final data = state.cartListState.data;
-    var totalAmount = state.totalAmount;
-    var selectAll = false;
+    /// from tmp
+    int amount = 0;
+    final selectProducts = <bool>[];
+    bool selectAll = false;
 
-    final products = data?.product ?? [];
-    final selectedAmount = products[index].product.price;
-    newSelectProducts.addAll(selectProducts);
+    /// from state
+    final productsState = state.cartListState.data?.product ?? [];
+    final selectProductsState = state.selectProducts;
+    final amountState = state.totalAmount;
+
+    /// set data
+    selectProducts.addAll(selectProductsState);
+
     if (selected) {
-      final total = totalAmount + selectedAmount;
-      totalAmount = total;
-      newSelectProducts[index] = true;
-    } else {
-      final total = totalAmount - selectedAmount;
-      totalAmount = total;
-      newSelectProducts[index] = false;
-    }
-
-    for (var i in newSelectProducts) {
-      if (i) {
-        selectAll = true;
-      } else {
-        selectAll = false;
-        break;
+      selectProducts[index] = selected;
+      for (var i in selectProducts) {
+        if (i == true) {
+          selectAll = true;
+        } else {
+          selectAll = false;
+          break;
+        }
       }
-    }
 
-    emit(state.copyWith(
-      selectAll: selectAll,
-      totalAmount: totalAmount,
-      selectProducts: newSelectProducts,
-      cartListState: ViewData.loaded(data: data),
-    ));
+      final qtySelected = productsState[index].quantity;
+      final priceSelected = productsState[index].product.price;
+
+      amount = amountState + (priceSelected * qtySelected);
+
+      emit(state.copyWith(
+        selectProducts: selectProducts,
+        selectAll: selectAll,
+        totalAmount: amount,
+      ));
+    } else {
+      final qtySelected = productsState[index].quantity;
+      final priceSelected = productsState[index].product.price;
+
+      amount = amountState - (priceSelected * qtySelected);
+
+      selectProducts[index] = selected;
+      emit(state.copyWith(
+        selectAll: selectAll,
+        selectProducts: selectProducts,
+        totalAmount: amount,
+      ));
+    }
   }
 
   void getCart() async {
-    emit(state.copyWith(cartListState: ViewData.loading(message: 'Loading')));
+    emit(state.copyWith(cartListState: ViewData.loading(message: "Loading")));
 
     final result = await getChartUseCase.call(const NoParams());
     return result.fold(
@@ -203,8 +241,7 @@ class CartCubit extends Cubit<CartState> {
     FailureResponse failure,
   ) async {
     emit(state.copyWith(
-        cartListState:
-            ViewData.error(message: failure.errorMessage, failure: failure)));
+        cartListState: ViewData.error(message: "Error", failure: failure)));
   }
 
   Future<void> _onSuccessGetCart(
@@ -214,15 +251,17 @@ class CartCubit extends Cubit<CartState> {
       emit(state.copyWith(cartListState: ViewData.noData(message: "No Data")));
     } else {
       final selectProducts = <bool>[];
+
       for (var i in data.product) {
-        debugPrint("Product Name: ${i.product.name}");
+        debugPrint("Product: ${i.product.name}");
         selectProducts.add(false);
       }
+
       emit(state.copyWith(
         cartListState: ViewData.loaded(data: data),
+        totalAmount: 0,
         selectAll: false,
         selectProducts: selectProducts,
-        totalAmount: 0,
       ));
     }
   }

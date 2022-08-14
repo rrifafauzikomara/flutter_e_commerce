@@ -20,6 +20,9 @@ dependencies:
   cart:
     path: ../../domains/cart
 
+  common:
+    path: ../common
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

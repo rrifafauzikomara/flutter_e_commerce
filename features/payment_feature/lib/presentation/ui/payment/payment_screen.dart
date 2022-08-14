@@ -4,7 +4,7 @@ import 'package:common/utils/navigation/router/payment_router.dart';
 import 'package:common/utils/state/view_data_state.dart';
 import 'package:component/widget/divider/custom_divider.dart';
 import 'package:component/widget/toast/custom_toast.dart';
-import 'package:component/widget/progress_indicator/custom_circular_progress_indicator.dart';
+import 'package:component/widget/loading/dialog_loading.dart';
 import 'package:dependencies/bloc/bloc.dart';
 import 'package:dependencies/flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -52,11 +52,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return BlocListener<PaymentCubit, PaymentState>(
       listener: (context, state) {
-        if (state.createPaymentState.status.isError) {
+        if (state.createPaymentState.status.isLoading) {
+          DialogLoading.show(context);
+        } else if (state.createPaymentState.status.isError) {
+          DialogLoading.dismiss(context);
           CustomToast.showErrorToast(
               errorMessage:
                   state.createPaymentState.failure?.errorMessage ?? "");
         } else if (state.createPaymentState.status.isHasData) {
+          DialogLoading.dismiss(context);
           final data = state.selectedPaymentMethod;
           final va = state.createPaymentState.data?.externalData.data ?? "";
           _navigateToPaymentVa(PaymentVAArgument(
@@ -103,11 +107,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
               BlocBuilder<PaymentCubit, PaymentState>(
                 builder: (context, state) {
                   final data = state.selectedPaymentMethod;
-                  final isLoading = state.createPaymentState.status.isLoading;
-                  if (isLoading) {
-                    return const Center(
-                        child: CustomCircularProgressIndicator());
-                  }
                   return PaymentButton(
                     total: widget.argument.totalAmount,
                     textButton: (data == null) ? "Pilih Pembayaran" : "Bayar",
