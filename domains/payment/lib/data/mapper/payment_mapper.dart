@@ -82,12 +82,12 @@ class PaymentMapper {
     );
   }
 
-  HistoryEntity mapHistoryEntity(HistoryDataDto dto) {
+  HistoryEntity mapHistoryEntity(HistoryDataDto? dto) {
     return HistoryEntity(
-      count: dto.count ?? 0,
-      currentPage: dto.currentPage ?? 0,
-      countPerPage: dto.countPerPage ?? 0,
-      data: _mapListDataHistoryDtoToEntity(dto.data),
+      count: dto?.count ?? 0,
+      currentPage: dto?.currentPage ?? 0,
+      countPerPage: dto?.countPerPage ?? 0,
+      data: _mapListDataHistoryDtoToEntity(dto?.data ?? []),
     );
   }
 

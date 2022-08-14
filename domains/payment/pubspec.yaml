@@ -16,6 +16,8 @@ dependencies:
     path: ../../shared_libraries/common
   dependencies:
     path: ../../shared_libraries/dependencies
+  core:
+    path: ../../shared_libraries/core
 
 dev_dependencies:
   flutter_test:

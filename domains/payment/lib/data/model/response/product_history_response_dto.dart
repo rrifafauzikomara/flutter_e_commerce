@@ -1,25 +1,3 @@
-class ProductHistoryResponseDto {
-  ProductHistoryResponseDto({
-    required this.status,
-    required this.code,
-    required this.message,
-    required this.data,
-  });
-
-  final bool? status;
-  final int? code;
-  final String? message;
-  final HistoryDataDto data;
-
-  factory ProductHistoryResponseDto.fromJson(Map<String, dynamic> json) =>
-      ProductHistoryResponseDto(
-        status: json["status"],
-        code: json["code"],
-        message: json["message"],
-        data: HistoryDataDto.fromJson(json["data"]),
-      );
-}
-
 class HistoryDataDto {
   HistoryDataDto({
     required this.count,
