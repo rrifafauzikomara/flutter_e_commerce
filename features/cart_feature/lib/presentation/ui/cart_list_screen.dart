@@ -50,18 +50,26 @@ class _CartListScreenState extends State<CartListScreen> {
     BuildContext context, {
     required String productId,
     required int amount,
+    required int index,
   }) {
-    context.read<CartCubit>().addProduct(productId: productId, amount: amount);
+    context.read<CartCubit>().addProduct(
+          productId: productId,
+          amount: amount,
+          index: index,
+        );
   }
 
   void _deleteProduct(
     BuildContext context, {
     required String productId,
     required int amount,
+    required int index,
   }) {
-    context
-        .read<CartCubit>()
-        .deleteProduct(productId: productId, amount: amount);
+    context.read<CartCubit>().deleteProduct(
+          productId: productId,
+          amount: amount,
+          index: index,
+        );
   }
 
   @override
@@ -167,10 +175,18 @@ class _CartListScreenState extends State<CartListScreen> {
                             selected: value ?? false,
                             index: index,
                           ),
-                          addProductChanged: () => _addProduct(context,
-                              productId: cart.product.id, amount: 1),
-                          deleteProductChanged: () => _deleteProduct(context,
-                              productId: cart.product.id, amount: 1),
+                          addProductChanged: () => _addProduct(
+                            context,
+                            productId: cart.product.id,
+                            amount: 1,
+                            index: index,
+                          ),
+                          deleteProductChanged: () => _deleteProduct(
+                            context,
+                            productId: cart.product.id,
+                            amount: 1,
+                            index: index,
+                          ),
                           loadingAddProduct: addCartLoading,
                           loadingDeleteProduct: deleteCartLoading,
                         );
